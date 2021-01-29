@@ -1,0 +1,160 @@
+<nb-card [nbSpinner]="loading" class="ptc-no-box-shadow">
+  <nb-card-body>
+    <form [formGroup]="form">
+      <div class="row">
+        <div class="col-6">
+          <div class="row">
+            <div class="col-12 input-group">
+              <label class="col-sm-4 col-form-label"
+                for="CaseAssignmentProcessType">{{ translations.CASE_COMMON.ASSIGNMENT_MODE | translate }}</label>
+              <div class="col-sm-8">
+                <app-enum-select [(ngModel)]="model.CaseAssignmentProcessType"
+                  (ngModelChange)="onCaseAssignmentProcessTypeChange($event)"
+                  [placeholder]="translations.COMMON.SELECT_PLACEHOLDER | translate : {key: ''}"
+                  formControlName="CaseAssignmentProcessType" [enumName]="'CaseAssignmentProcessType'"
+                  [multiple]="false">
+                </app-enum-select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+
+            <ng-container #notice *ngIf="model?.CaseAssignmentProcessType == +caseAssignmentProcessType.Notice">
+              <app-ccmi2-n [case]="case" [model]="model"></app-ccmi2-n>
+            </ng-container>
+            <ng-container #complaint *ngIf="model?.CaseAssignmentProcessType == +caseAssignmentProcessType.Invoice">
+              <app-ccmi2-p [case]="case" [model]="model"></app-ccmi2-p>
+            </ng-container>
+            <ng-container #assign *ngIf="model?.CaseAssignmentProcessType == +caseAssignmentProcessType.Assignment">
+              <app-ccmi2-m [case]="case" [model]="model" [sourcekey]="sourcekey" [isGetAssignmentUser]="this.businessParameter?.CanGetAssignmentUser" (SetUsers)="getASSIGNMENTUserList($event)"></app-ccmi2-m>
+            </ng-container>
+            <ng-container #communication
+              *ngIf="model?.CaseAssignmentProcessType == +caseAssignmentProcessType.Communication">
+              <app-ccmi2-i [case]="case" [model]="model"></app-ccmi2-i>
+            </ng-container>
+          </div>
+          <div class="row">
+            <div class="col-12 input-group">
+              <label class="col-sm-4 col-form-label"
+                for="Files">{{ translations.CASE_COMMON.NOTICE_TYPE | translate }}</label>
+              <div class="col-sm-8">
+                <app-enum-select [(ngModel)]="model.NotificationBehaviors"
+                  [placeholder]="translations.COMMON.SELECT_PLACEHOLDER | translate : {key: ''}"
+                  [ngModelOptions]="{standalone: true}" [enumName]="'NotificationUIType'" [multiple]="true">
+                </app-enum-select>
+              </div>
+            </div>
+            <div class="col-12 input-group">
+              <label class="col-sm-4 col-form-label"
+                for="NotificationUsers">{{ translations.CASE_TEMPLATE.PARSING_BTN.NOTICE_USER | translate }}</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" [ngModelOptions]="{standalone: true}"
+                  [placeholder]="translations.COMMON.INPUT_NOTICEUSER_PLACEHOLDER | translate"
+                  [(ngModel)]="model.NotificationUsers" id="{{focusId}}">
+
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 input-group">
+              <label starsign
+                class="col-sm-4 col-form-label">{{ translations.CASE_COMMON.NOTIFY_DATETIME | translate }}</label>
+              <div class="col-sm-8">
+                <input type="text" validator class="form-control" formControlName="NotificationDateTime"
+                  [placeholder]="translations.CASE_COMMON.NOTIFY_DATETIME_PLACEHOLDER | translate : {key: ''}"
+                  [(ngModel)]="model.NotificationDateTime" datetimepicker>
+              </div>
+            </div>
+          </div>
+
+          <!--通知清單-->
+          <div class="row">
+            <div class="col-12 input-group">
+              <label class="col-4 col-form-label">{{ translations.CASE_COMMON.NOTICE_LIST | translate }}</label>
+              <div class="col-sm-8">
+                <button class="btn btn-sm btn-ptc-add-user m-3"
+                  (click)="btnAddGroupModal()">{{ translations.COMMON.BTN_ADD_GROUP | translate }}</button>
+                <button class="btn btn-sm btn-ptc-add-user m-3"
+                  (click)="btnAddUserModal()">{{ translations.EMAIL_NOTIFICATION.CREATE_USER_TITLE | translate }}</button>
+                <button class="btn btn-sm btn-ptc-add-user m-3"
+                  (click)="btnAddUnitModal()">{{ translations.EMAIL_NOTIFICATION.CHOSE_USER | translate }}</button>
+              </div>
+
+              <div class="col-sm-12">
+                <app-local-table [isVisibleBtnEdit]="false" [isVisibleBtnSearch]="false" [columns]="columns"
+                  [items]="users" [templateRefs]="{NotificationRemark: NotificationRemark}" [pageSize]="3"
+                  [pageSizeOptions]="[3,5,10,20]" (btnDelete)="btnDeleteUser($event)">
+                </app-local-table>
+                <ng-template #NotificationRemark let-row="row">
+                  <app-enum-select class="col-sm-10" [(ngModel)]="row.NotificationRemark"
+                    [placeholder]="translations.NOTIFICATION_GROUP.EMAIL_RECEIVER_TYPE | translate"
+                    [ngModelOptions]="{standalone: true}" [enumName]="'EmailReceiveType'">
+                  </app-enum-select>
+                </ng-template>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 input-group">
+              <label class="col-sm-4 col-form-label"
+                for="Files">{{ translations.COMMON.ATTACHMENT_UPLOAD | translate }}</label>
+              <div class="col-sm-8">
+                <input [options]="fileOpts" [ngModelOptions]="{standalone: true}" name="Files" type="file" fileInput
+                  multiple [(ngModel)]="model.Files" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--通知內容-->
+        <div class="col-6">
+          <div class="row">
+            <div class="col-12 input-group">
+              <div class="col-sm-4">
+                <div class=" col-12">
+                  {{ translations.CASE_COMMON.NOTIFY_CONTENT | translate }}
+                </div>
+                <div class=" col-12 p-0">
+                  <button class="btn btn-sm btn-ptc-template-selected m-3"
+                    (click)="btnCaseTemplateModal()">{{ translations.CASE_COMMON.TEMPLATE_SELECT | translate }}</button>
+                </div>
+                <div class=" col-12 p-0">
+                  <button class="btn btn-sm btn-ptc-default-template m-3"
+                    (click)="btnDefaultCaseTemplateModal()">{{ translations.CASE_COMMON.DEFAULT_TEMPLATE | translate }}</button>
+                </div>
+              </div>
+              <div class="col-sm-8">
+                <textarea rows="20" type="text" validator class="form-control" formControlName="Content"
+                  [(ngModel)]="model.Content" (click)="clickInput($event.target)" (change)="clickInput($event.target)"></textarea>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </form>
+  </nb-card-body>
+</nb-card>
+
+<!-- 組織選人 -->
+<ng-template #allNodeTreeSelector>
+  <div class="modal-header nb-card-header">
+    <span> {{ translations.CASE_COMMON.CHOSE_UNIT | translate }} </span>
+    <button class="close" aria-label="Close" (click)="dismissOrganizationModel()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body nb-card-body">
+    <app-all-node-tree-user-selector-for-cc #refenerce [isUserEnabled]="true" [model]="treemodel"
+      (onSelectedChange)="onSelecteChange($event)">
+    </app-all-node-tree-user-selector-for-cc>
+  </div>
+  <div class="modal-footer flex-center">
+    <button type="button" class="btn btn-md btn-ptc-confirm"
+      (click)="addOrganization(refenerce)">{{ translations.ROLE.ADD | translate }}</button>
+    <!-- <button type="button" class="btn btn-md btn-warning"
+      (click)="dismissOrganizationModel()">{{ translations.COMMON.BTN_BACK | translate }}</button> -->
+  </div>
+</ng-template>
+<!-- END 組織選人 -->

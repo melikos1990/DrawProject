@@ -1,0 +1,103 @@
+<form [formGroup]="form">
+
+  <div class="row">
+    <!-- 案件編號 -->
+    <div class="col-3 input-group">
+      <label class="col-sm-4 col-form-label">{{ translations.CASE_APPLY.CASE_ID | translate }}</label>
+      <div class="col-sm-8 col-form-label">
+        {{model.CaseID}}
+      </div>
+    </div>
+    <!-- 反應單號 -->
+    <div class="col-3 input-group">
+      <label class="col-sm-4 col-form-label">{{ translations.CASE_COMMON.INVOICE_ID | translate }}</label>
+      <div class="col-sm-8 col-form-label">
+        {{model.InvoiceID}}
+      </div>
+    </div>
+    <!-- 反應單狀態 -->
+    <div class="col-3 input-group">
+      <label class="col-sm-4 col-form-label">{{ translations.CASE_RELATE.CASE_ASSIGMENT_INVOICE_TYPE | translate }}</label>
+      <div class="col-sm-8 col-form-label">
+        {{model.CaseAssignmentComplaintInvoiceTypeName}}
+      </div>
+    </div>
+    <!-- 反應單類別 -->
+    <div class="col-3 input-group">
+      <label class="col-sm-4 col-form-label">{{ translations.CASE_RELATE.INVOICE_TYPE | translate }}</label>
+      <div class="col-sm-8 col-form-label">
+        {{model.InvoiceTypeName}}
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <!-- 通知時間 -->
+    <div class="col-3 input-group">
+      <label class="col-sm-4 col-form-label">{{ translations.CASE_COMMON.NOTIFY_DATETIME | translate }}</label>
+      <div class="col-sm-8 col-form-label">
+        {{model.NotificationDateTime | datetime}}
+      </div>
+    </div>
+    <!-- 通知動作 -->
+    <div class="col-3 input-group">
+      <label class="col-sm-4 col-form-label" for="Files">{{ translations.CASE_COMMON.NOTICE_TYPE | translate }}</label>
+      <div class="col-sm-8">
+        <app-enum-select [(ngModel)]="model.NotificationBehaviors" [placeholder]="translations.COMMON.SELECT_PLACEHOLDER | translate : {key: ''}"
+          [ngModelOptions]="{standalone: true}" [enumName]="'NotificationUIType'" [multiple]="true" disabled>
+        </app-enum-select>
+      </div>
+    </div>
+    <!-- 值機人員 -->
+    <div class="col-3 input-group">
+      <label class="col-sm-4 col-form-label" for="Files">{{ translations.CASE_COMMON.GOC | translate }}</label>
+      <div class="col-sm-8 col-form-label">
+        {{model.CreateUserName}}
+      </div>
+    </div>
+  </div>
+  <!-- 通知對象區塊-->
+  <div class="row">
+    <div class="col-12 input-group">
+      <app-local-table [columns]="columns" [items]="model.Users"
+        [templateRefs]="{NotificationRemark: NotificationRemark}" [pageSize]="20" [pageSizeOptions]="[5,10,20]">
+      </app-local-table>
+      <ng-template #NotificationRemark let-row="row">
+        <app-enum-select class="col-sm-10" [(ngModel)]="row.NotificationRemark"
+          placeholder="{{translations.NOTIFICATION_GROUP.EMAIL_RECEIVER_TYPE | translate}}"
+          [ngModelOptions]="{standalone: true}" [enumName]="'EmailReceiveType'" disabled>
+        </app-enum-select>
+      </ng-template>
+    </div>
+  </div>
+  <!-- 通知內容區塊-->
+  <div class="row">
+    <div class="col-12 input-group">
+      <label class="col-sm-2 col-form-label" for="Files">{{ translations.CASE_REMIND.CONTENT | translate }}</label>
+      <div class="col-sm-10">
+        <textarea rows="15" type="text" validator class="form-control" formControlName="Content"
+          [(ngModel)]="model.Content"></textarea>
+      </div>
+    </div>
+  </div>
+  <!-- 附件上傳 -->
+  <div class="row">
+    <div class="col-12 input-group">
+      <label class="col-sm-2 col-form-label" for="Files">{{ translations.COMMON.ATTACHMENT_UPLOAD | translate }}</label>
+      <div class="col-sm-10">
+        <input [options]="opts" [ngModelOptions]="{standalone: true}" name="Files" type="file" fileInput multiple
+          [(ngModel)]="model.Files" />
+      </div>
+    </div>
+  </div>
+  <!-- 下載EML -->
+  <div class="row">
+    <div class="col-12 input-group">
+      <label class="col-sm-2 col-form-label" for="Files">{{ translations.CASE_COMMON.DOWNLOAD_EMAIL_BACKUP | translate }}</label>
+      <div class="col-sm-10">
+        <a class="btn btn-sm btn-ptc-confirm" *ngIf="model.EMLFilePath" href="{{model.EMLFilePath?.toHostApiUrl()}}"
+          download>{{translations.COMMON.BTN_DOWNLOAD | translate}}</a>
+        <span *ngIf="!model.EMLFilePath"> {{ translations.CASE_COMMON.NOT_READY_NOTICE_EMAIL | translate }}</span>
+      </div>
+    </div>
+  </div>
+</form>

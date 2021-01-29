@@ -1,0 +1,16 @@
+
+<nb-card *ngIf="data.length > 0">
+  <nb-card-header class="p-1">
+    <i class="nb-close-circled" (click)='removeAll()'></i>
+  </nb-card-header>
+  <nb-card-body class="p-0" >
+    <div class="row py-0" [@openGuide]="expandState">
+      <div class="col-lg-12">
+        <app-note-list-item (onDismiss)="onItemDismiss($event)" [columnName]="columnName" [data]="item"
+          *ngFor="let item of data">
+        </app-note-list-item>
+      </div>
+    </div>
+  </nb-card-body>
+  <nb-card-footer class="py-2" (click)="changeState()">流程引導</nb-card-footer>
+</nb-card>

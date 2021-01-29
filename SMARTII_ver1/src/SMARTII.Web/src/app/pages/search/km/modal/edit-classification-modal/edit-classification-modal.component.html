@@ -1,0 +1,24 @@
+<div class="modal-header">
+    <span>{{ translations.KM.RENAME_CLASSIFICATION | translate }}({{ node.ClassificationName }}) </span>
+    <button (click)="closeModel()" class="close" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="form">
+      <div class="row ">
+        <!-- 節點名稱 -->
+        <div class="col-sm-12 input-group">
+          <label starsign for="name" class="col-sm-4 col-form-label">{{ translations.KM.CLASSIFICATION_NAME | translate }}</label>
+            <input type="text" validator class="form-control col-sm-8" formControlName="name" id="name"
+              placeholder="{{ translations.KM.CLASSIFICATION_NAME_PLACEHOLDER | translate }}" [(ngModel)]="name">
+        </div>
+        <!-- END 節點名稱 -->
+
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer flex-center">
+    <button class="btn btn-md btn-ptc-confirm"
+      (click)="updateNode(name , node)">{{ translations.COMMON.BTN_CONFIRM | translate }}</button>
+  </div>

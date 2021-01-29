@@ -1,0 +1,60 @@
+<div class="row">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header>表格設定</nb-card-header>
+      <nb-card-body>
+        <div class="row show-grid" cdkDropListGroup>
+          <div class="col-4 col-sm-4">
+            <div class="example-container">
+              <h2>表單類型</h2>
+              <div cdkDropList [id]="'left'" [cdkDropListData]="displayPayloads" (cdkDropListDropped)="drop($event)">
+                <div class="example-box" *ngFor="let displayPayload of displayPayloads" cdkDrag>
+                  <div class="example-custom-placeholder" *cdkDragPlaceholder></div>
+                  {{displayPayload.component}}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-8 col-sm-8">
+            <div class="example-container">
+              <h2>表單內容</h2>
+              <div cdkDropList [id]="'right'" [cdkDropListData]="implementPayloads" (cdkDropListDropped)="drop($event)">
+                <div class="example-box" *ngFor="let implementPayload of implementPayloads" cdkDrag>
+                  <div class="cancel" (click)="rowDelete(implementPayload)">-</div>
+                  <span (click)="rowEdit(implementPayload)"> {{implementPayload.component}} -
+                    ({{ implementPayload.id}})</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row show-grid">
+          <div class="col-6">
+            <div class="example-container">
+              <h2>瀏覽結果(HTML)</h2>
+              <ptc-dynamic-form [class]="'row'" [bindingData]="demo" [inputs]="inputs" [form]="demoForm">
+              </ptc-dynamic-form>
+            </div>
+          </div>
+
+          <div class="col-6">
+            <div class="example-container">
+              <h2>瀏覽結果(JSON)</h2>
+              <textarea class="form-control" id="Content" rows="5" [(ngModel)]="json"></textarea>
+            </div>
+          </div>
+        </div>
+        <!-- 設定按鈕 -->
+        <div class="mt-5">
+          <div class="row flex-center">
+            <button type="button" class="btn btn-sm btn-primary mx-5" (click)="btnJsonToObject()">json 轉為物件</button>
+            <button type="button" class="btn btn-sm btn-primary mx-5" (click)="btnPreview()">瀏覽</button>
+            <button type="button" class="btn btn-sm btn-warning mx-5" (click)="btnSave()">測試</button>
+          </div>
+        </div>
+        <!-- END 設定按鈕 -->
+
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

@@ -1,0 +1,77 @@
+<div class="modal-header" style="background-color: #5982a9!important; color: #ffffff!important;">
+  <span> {{ (uiActionType == actionType.Add ? translations.CASE_FINISHED_REASON.ADD_CLASSIFICATION :
+      translations.CASE_FINISHED_REASON.UPDATE_CLASSIFICATION) | translate }}</span>
+  <button (click)="closeModel()" class="close" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body" style="background-color: #d1e6f1!important;">
+  <form [formGroup]="form">
+    <div class="row ">
+      <!-- 企業別選單 -->
+      <div class="col-sm-12 input-group">
+        <label for="BuID" starsign class="col-sm-4 col-form-label">{{ translations.COMMON.BU_NAME | translate }}</label>
+        <app-bu-select validator class="col-sm-8" [disabled]="true" formControlName="NodeID" [(ngModel)]="model.NodeID"
+          [placeholder]="translations.COMMON.SELECT_BU_PLACEHOLDER | translate">
+        </app-bu-select>
+      </div>
+      <!-- END 企業別選單 -->
+
+    </div>
+    <div class="row ">
+      <!-- 類型名稱 -->
+      <div class="col-sm-12 input-group">
+        <label for="BuID" starsign
+          class="col-sm-4 col-form-label">{{ translations.CASE_FINISHED_REASON.CLASSIFICATION_NAME | translate }}</label>
+        <div class="col-sm-8">
+          <input class="form-control" validator formControlName="Title" [(ngModel)]="model.Title"
+            placeholder="{{ translations.CASE_FINISHED_REASON.CLASSIFICATION_NAME_PLACEHOLDER | translate }}" id="Title"
+            type="text" />
+        </div>
+      </div>
+      <!-- END 類型名稱 -->
+
+    </div>
+    <div class="row ">
+      <!-- 啟用狀態 -->
+      <div class="col-sm-12 input-group">
+        <label for="IsEnabled"
+          class="col-sm-4 col-form-label">{{ translations.CASE_FINISHED_REASON.IS_ENABLED | translate }}</label>
+        <nb-checkbox validator class="col-sm-8" formControlName="IsEnabled" id="IsEnabled"
+          [(ngModel)]="model.IsEnabled"></nb-checkbox>
+      </div>
+      <!-- END 啟用狀態 -->
+
+    </div>
+    <div class="row ">
+      <!-- 多選 -->
+      <div class="col-sm-12 input-group">
+        <label for="IsMultiple"
+          class="col-sm-4 col-form-label">{{ translations.CASE_FINISHED_REASON.IS_MULTIPLE | translate }}</label>
+        <nb-checkbox validator class="col-sm-8" formControlName="IsMultiple" id="IsMultiple"
+          [(ngModel)]="model.IsMultiple"></nb-checkbox>
+      </div>
+      <!-- END 多選 -->
+    </div>
+    <div class="row ">
+      <!-- 是否必填 -->
+      <div class="col-sm-12 input-group">
+        <label for="IsRequired"
+          class="col-sm-4 col-form-label">{{ translations.CASE_FINISHED_REASON.IS_REQUIRED | translate }}</label>
+        <nb-checkbox validator class="col-sm-8" formControlName="IsRequired" id="IsRequired"
+          [(ngModel)]="model.IsRequired"></nb-checkbox>
+      </div>
+      <!-- END 是否必填 -->
+    </div>
+  </form>
+</div>
+<div class="modal-footer flex-center">
+  <div class="col-12 row flex-center">
+    <button class="btn btn-md btn-ptc-confirm  mx-5 " *ngIf="uiActionType == actionType.Update"
+      (click)="updateClassification()">{{ translations.COMMON.BTN_CONFIRM | translate }}</button>
+    <button class="btn btn-md btn-ptc-confirm  mx-5 " *ngIf="uiActionType == actionType.Add"
+      (click)="addClassification()">{{ translations.COMMON.BTN_CONFIRM | translate }}</button>
+    <!-- <button type="button" class="btn btn-sm btn-warning mx-5"
+      (click)="btnBack($event)">{{ translations.COMMON.BTN_BACK | translate }}</button> -->
+  </div>
+</div>

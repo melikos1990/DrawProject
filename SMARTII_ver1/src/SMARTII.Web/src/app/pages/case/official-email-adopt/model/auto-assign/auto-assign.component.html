@@ -1,0 +1,71 @@
+<div class="row">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header class="nb-card-header">
+        <span> {{ translations.OFFICIAL_EMAIL_ADOPT.AUTO_ASSIGN_TITLE | translate }} </span>
+        <button class="close" aria-label="Close" (click)="btnClose()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </nb-card-header>
+      <nb-card-body class="nb-card-body">
+        <form [formGroup]="form">
+          <div class="row">
+
+            <!-- 指定人數 -->
+            <div class="col-sm-12 input-group">
+              <label starsign for="Account"
+                class="col-sm-4 col-form-label">{{ translations.OFFICIAL_EMAIL_ADOPT.SPECIFY_CASE_COUNT | translate }}</label>
+              <input type="number" class="form-control col-sm-8" formControlName="EachPersonMail" validator
+                [placeholder]="translations.OFFICIAL_EMAIL_ADOPT.SPECIFY_CASE_COUNT_PLACEHOLDER | translate"
+                [(ngModel)]="model.EachPersonMail">
+            </div>
+            <!-- 指定人數 -->
+
+            <!-- 指派對象 -->
+            <div class="col-sm-12 input-group my-2">
+              <label starsign for="Account"
+                class="col-sm-4 col-form-label">{{ translations.OFFICIAL_EMAIL_ADOPT.ASSIGN_TARGET_TITLE | translate }}</label>
+              <button class="btn btn-sm btn-ptc-confirm"
+                (click)="btnUserSelected()">{{ translations.OFFICIAL_EMAIL_ADOPT.BTN_SELECT | translate }}</button>
+            </div>
+            <!-- 指派對象 -->
+
+            <div class="col-sm-12">
+              <app-local-table [isVisibleBtnEdit]="false" [isVisibleBtnSearch]="false" [columns]="columns"
+                [items]="selectedUsers"
+                (btnDelete)="btnDeleteUser($event)">
+              </app-local-table>
+            </div>
+
+
+            <div class="col-sm-12 d-flex justify-content-center">
+              <button class="btn btn-sm mx-2 btn-ptc-confirm"
+                (click)="btnConfirm()">{{ translations.COMMON.BTN_CONFIRM | translate }}</button>
+              <!-- <button class="btn btn-sm btn-primary btn-warning"
+                (click)="btnClose()">{{ translations.COMMON.BTN_BACK | translate }}</button> -->
+            </div>
+
+          </div>
+
+
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+
+
+
+<ng-template #selector>
+  <div class="modal-header nb-card-header">
+    <span> {{translations.NOTIFICATION_GROUP.SELECT_USER | translate}} </span>
+  </div>
+  <div class="modal-body nb-card-body">
+    <app-callcenter-node-tree-user-selector [model]="{ IsEnabled: true ,IsSelf: true ,Goal:1 }" [isUserEnabled]="true" #refenerce>
+    </app-callcenter-node-tree-user-selector>
+  </div>
+  <div class="modal-footer flex-center">
+    <button class="btn btn-md btn-ptc-confirm"
+      (click)="btnModalAdd(refenerce)">{{translations.COMMON.BTN_CONFIRM | translate}}</button>
+  </div>
+</ng-template>

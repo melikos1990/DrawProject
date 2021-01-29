@@ -1,0 +1,31 @@
+<div class="modal-header">
+  <span>{{ translations.VENDOR_NODE.CREATE_TITLE | translate }} ({{ prefixNode.extend.Name }}) </span>
+  <button (click)="closeModel()" class="close" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form [formGroup]="form">
+    <div class="row ">
+      <!-- 節點名稱 -->
+      <div class="col-sm-12 input-group">
+        <label starsign for="Name" class="col-sm-4 col-form-label">{{ translations.VENDOR_NODE.NAME | translate }}</label>
+          <input type="text" validator class="form-control col-sm-8" formControlName="Name" id="Name"
+            [attr.readonly]="uiActionType == actionType.Read ? true : null"
+            placeholder="{{ translations.VENDOR_NODE.NAME_PLACEHOLDER | translate }}" [(ngModel)]="model.Name">
+      </div>
+      <!-- END 節點名稱 -->
+      <!--  啟用狀態 -->
+      <div class="col-sm-12 input-group">
+        <label for="IsEnabled"
+          class="col-sm-4 col-form-label">{{ translations.VENDOR_NODE.IS_ENABLED | translate }}</label>
+          <nb-checkbox class="col-sm-8" validator formControlName="IsEnabled" id="IsEnabled" [(ngModel)]="model.IsEnabled"></nb-checkbox>
+      </div>
+      <!-- END 啟用狀態 -->
+    </div>
+  </form>
+</div>
+<div class="modal-footer flex-center">
+  <button class="btn btn-md btn-ptc-confirm"
+    (click)="addOrgniazationNode(model , prefixNode)">{{ translations.COMMON.BTN_CONFIRM | translate }}</button>
+</div>

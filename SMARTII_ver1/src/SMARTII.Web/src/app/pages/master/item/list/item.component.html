@@ -1,0 +1,141 @@
+<!-- 查詢條件 -->
+<div class="row search-condition">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header class="nb-card-header">{{ translations.COMMON.SEARCH_CONDITION_TITLE | translate }}
+      </nb-card-header>
+      <nb-card-body class="nb-card-body">
+        <form [formGroup]="form" autocomplete="off" (keyup.enter)="btnRender()">
+          <div class="row">
+            <!-- 企業別選單 -->
+            <div class="col-sm-4 input-group">
+              <label starsign for="BuID"
+                class="col-sm-4 col-form-label">{{ translations.COMMON.BU_NAME | translate }}</label>
+              <div class="col-sm-8">
+                <app-bu-select validator formControlName="BuID" name="BuID"
+                  [placeholder]="translations.COMMON.SELECT_BU_PLACEHOLDER | translate " [(ngModel)]="model.NodeID"
+                  (onSelectedChange)="onBuChange()">
+                </app-bu-select>
+              </div>
+            </div>
+            <!-- END 企業別選單 -->
+            <!-- 商品名稱 -->
+            <div class="col-sm-4 input-group">
+              <label for="'Name'" class="col-sm-4 col-form-label">{{ translations.ITEM.NAME | translate }}</label>
+              <div class="col-sm-8">
+                <input class="form-control" formControlName="Name" [(ngModel)]="model.Name"
+                  placeholder="{{translations.ITEM.NAME_PLACEHOLDER | translate}}" id="Name" type="text" />
+              </div>
+            </div>
+            <!-- END 商品名稱 -->
+            <!-- 商品管理編號 -->
+            <div class="col-sm-4 input-group">
+              <label for="'Code'" class="col-sm-4 col-form-label">{{ translations.ITEM.ITEM_CODE | translate }}</label>
+              <div class="col-sm-8">
+                <input class="form-control" formControlName="Code" [(ngModel)]="model.Code"
+                  placeholder="{{translations.ITEM.ITEM_CODE_PLACEHOLDER   | translate}}" id="Code" type="text" />
+              </div>
+            </div>
+            <!-- END 商品管理編號 -->
+            <!-- 其他資訊 -->
+            <div class="col-sm-4 input-group">
+              <label for="'JContent'" class="col-sm-4 col-form-label">{{ translations.ITEM.J_CONTENT | translate }}</label>
+              <div class="col-sm-8">
+                <input class="form-control" formControlName="JContent" [(ngModel)]="model.J_Content"
+                  placeholder="{{translations.ITEM.J_CONTENT_PLACEHOLDER   | translate}}" id="JContent" type="text" />
+              </div>
+            </div>
+            <!-- END 其他資訊 -->
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <div class="offset-sm-6 col-sm-3">
+                <button type="button" class="btn btn-sm btn-ptc-search" [authorize]="authType.Read"
+                  (click)="btnRender()">{{ translations.COMMON.BTN_SEARCH | translate }}</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<!-- 查詢結果 -->
+<div class="row search-result" [attr.hidden]="isEnableResult">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header class="nb-card-header"> {{ translations.COMMON.SEARCH_RESULT_TITLE | translate }}
+
+        <button type="button" class="btn btn-sm btn-danger float-right mx-1" (click)="btnBatchDisable($event)"
+          [authorize]="authType.Admin">{{ translations.COMMON.BTN_DISABLED_RANGE | translate }}</button>
+
+        <button type="button" class="btn btn-sm btn-ptc-create float-right mx-1" (click)="btnAdd($event)"
+          [authorize]="authType.Add">{{ translations.COMMON.BTN_ADD | translate }}</button>
+
+        <input id="file" type="file" accept=".xlsx, .xls" (change)="btnUpload($event)" style="display: none" />
+        <button type="button" class="btn btn-sm btn-ptc-export float-right mx-1" onclick="file.click()"
+          [authorize]="authType.Add">{{ translations.COMMON.BTN_IMPORT | translate }}</button>
+
+        <button *ngIf="isEnable" type="button" class="btn btn-sm btn-ptc-advanced-search float-right mx-1"
+          (click)="btnAdvancedSearch()"
+          [authorize]="authType.Read">{{ translations.COMMON.BTN_ADVANCED_SEARCH | translate }}</button>
+
+      </nb-card-header>
+      <nb-card-body class="nb-card-body">
+        <!-- 進階查詢 -->
+
+        <nb-card *ngIf="inputs.length > 0">
+          <nb-card-header>{{ translations.ITEM.PARTICULAR | translate }}</nb-card-header>
+          <nb-card-body>
+            <form [formGroup]="form" autocomplete="off" (keyup.enter)="btnAdvancedRender($event)">
+              <div class="row">
+                <div class="col-sm-12 input-group">
+                  <div class="col-sm-12">
+                    <ptc-dynamic-form [class]="'row'" [bindingData]="particular" [inputs]="inputs">
+                    </ptc-dynamic-form>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="row">
+                  <div class="offset-sm-6 col-sm-3">
+                    <button type="button" class="btn btn-sm btn-ptc-search" [authorize]="authType.Read"
+                      (click)="btnAdvancedRender($event)">{{ translations.COMMON.BTN_SEARCH | translate }}</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </nb-card-body>
+        </nb-card>
+
+        <!-- 進階查詢 -->
+        <div [nbSpinner]="loading">
+          <app-local-table #table [columns]="columns" (btnEdit)="onBtnEdit($event)" (btnDelete)="onBtnDelete($event)"
+            (btnSearch)="onBtnSearch($event)" [items]="data"
+            [btnDeleteText]="translations.COMMON.BTN_DISABLED | translate">
+          </app-local-table>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<!-- 查詢結果 -->
+
+
+<!-- LocalTable template -->
+<ng-template #localTableExportTemp let-exportData>
+  <div class="row search-result">
+    <div class="col-lg-12">
+      <nb-card>
+        <nb-card-header class="nb-card-header"> {{ translations.COMMON.SEARCH_RESULT_TITLE | translate }}
+        </nb-card-header>
+        <nb-card-body class="nb-card-body">
+          <!-- table -->
+          <app-local-table [columns]="columnsExport" [items]="exportData" [isVisibleBtnEdit]="false"
+            [isVisibleBtnSearch]="false" [isVisibleBtnEdit]="false">
+          </app-local-table>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+</ng-template>

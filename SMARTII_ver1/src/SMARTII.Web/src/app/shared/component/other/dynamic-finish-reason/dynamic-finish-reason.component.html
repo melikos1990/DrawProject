@@ -1,0 +1,19 @@
+
+<div class="row">
+
+  <ng-container *ngFor="let classification of finishReasonClassification">
+
+    <div [ngClass]="labelCol">
+      <label class="col-sm-12 col-form-label">{{ classification.ClassificationName }}:</label>
+    </div>
+
+    <div [ngClass]="contentCol">
+      <ng-container *ngFor="let reason of classification.FinishReasons">
+        <nb-checkbox status="success" [value]="useDefault ? reason.Default : false" (change)="_change(reason)">{{ reason.Text }}</nb-checkbox>
+      </ng-container>
+    </div>
+
+  </ng-container>
+
+
+</div>

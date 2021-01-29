@@ -1,0 +1,55 @@
+<div class="row search-condition">
+  <div class="col-lg-12">
+    <div class="modal-header" style="background-color:#598da9e0; color:white;">
+      <button class="close" aria-label="Close" (click)="closeModel()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+
+    <div class="modal-body flex-center" style="background-color: #d1e6f1 !important;">
+      <div class="row">
+        <div class="col-sm-4 input-group">
+          <label for="NodeID"
+            class="col-sm-4 col-form-label">{{ translations.CASE_ASSIGN_GROUP.SELECT | translate }}</label>
+          <div class="col-sm-8">
+            <app-notification-group-select [ngModelOptions]="{standalone: true}"
+              [placeholder]="translations.COMMON.SELECT_PLACEHOLDER | translate: { key: '通知群組' } " [(ngModel)]="groupID"
+              [nodeID]="nodeID" id="NodeID">
+            </app-notification-group-select>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="row">
+          <div class="offset-sm-6 col-sm-3">
+            <button type="button" class="btn btn-sm btn-ptc-search"
+              (click)="btnRender()">{{ translations.COMMON.BTN_SEARCH | translate }}</button>
+          </div>
+        </div>
+      </div>
+      <!-- 查詢結果 -->
+      <div class="row search-result">
+        <div class="col-lg-12">
+          <nb-card>
+            <nb-card-header class="nb-card-header"> {{ translations.COMMON.SEARCH_RESULT_TITLE | translate }}</nb-card-header>
+            <nb-card-body class="nb-card-body">
+              <!-- table -->
+              <nb-card [nbSpinner]="loading" nbSpinnerStatus="info">
+                <app-local-table  [columns]="columns" [items]="data">
+                </app-local-table>
+              </nb-card>
+              <!-- end table -->
+            </nb-card-body>
+          </nb-card>
+        </div>
+      </div>
+      <!-- 查詢結果 -->
+    </div>
+    <div class="modal-footer flex-center">
+      <button type="button" class="btn btn-sm btn-ptc-confirm mx-5"
+        (click)="addUser()">{{ translations.COMMON.BTN_CONFIRM | translate }} </button>
+      <!-- <button type="button" class="btn btn-sm btn-warning mx-5"
+        (click)="closeModel()">{{ translations.COMMON.BTN_BACK | translate }}</button> -->
+    </div>
+  </div>
+</div>

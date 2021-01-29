@@ -1,0 +1,101 @@
+<!-- 案件清單 -->
+<nb-card>
+  <nb-card-header class="nb-card-header"> {{translations.PPCLIFE_EFFECTIVE_SENDER.CASE_LIST | translate}}
+    <h6>({{model?.PPCLifeArriveType}}-{{model?.InternationalBarcode}}-{{model?.CommodityName}})</h6>
+  </nb-card-header>
+  <nb-card-body class="nb-card-bodu">
+    <app-local-table [columns]="caseColums" [items]="caseData" #caseTable>
+    </app-local-table>
+  </nb-card-body>
+  <nb-card-footer>
+    <div>
+      <div class="row flex-center">
+        <button type="button" class="btn btn-sm btn-ptc-confirm mx-5"
+          (click)="btnNoIgnore()">{{translations.PPCLIFE_EFFECTIVE_SENDER.USER_BTN_NO_IGNORE | translate}}</button>
+      </div>
+    </div>
+  </nb-card-footer>
+</nb-card>
+<!-- 案件清單End -->
+
+<!-- 發送通知 -->
+
+<nb-card>
+  <nb-card-header>
+    <div class="row">
+      <div class="col-sm-4 text-left">
+        {{translations.PPCLIFE_EFFECTIVE_SENDER.USER_TITLE | translate}}
+      </div>
+      <div class="col-sm-8 input-group" style="text-align: right!important;">
+        <!-- 群組拷貝 -->
+        <button type="button" class="btn btn-sm btn-ptc-confirm float-right mx-1"
+          (click)="btnCopyGroupModal($event)">{{ translations.COMMON.BTN_ADD_GROUP | translate }}
+        </button>
+        <!-- END 群組拷貝 -->
+
+        <!-- 人員選擇 -->
+        <button type="button" class="btn btn-sm btn-ptc-add-user float-right mx-1"
+          (click)="btnSelectUserModal($event)">{{translations.COMMON.BTN_CHOICE_USER | translate}}</button>
+        <!-- END 人員選擇 -->
+      </div>
+    </div>
+  </nb-card-header>
+  <!-- 信件清單 -->
+  <nb-card-body>
+    <app-local-table [templateRefs]="{NotificationRemark: remark}" [columns]="columns" [items]="emailData"
+      [isVisibleBtnSearch]="false" [isVisibleBtnEdit]="false" (btnDelete)="btnDeleteUser($event)" #table>
+    </app-local-table>
+    <ng-template #remark let-row="row">
+      <app-enum-select class="col-sm-10 " [(ngModel)]="row.NotificationRemark"
+        placeholder="{{translations.NOTIFICATION_GROUP.EMAIL_RECEIVER_TYPE | translate}}"
+        [ngModelOptions]="{standalone: true}" [enumName]="'EmailReceiveType'" [(ngModel)]="row.NotificationRemark">
+      </app-enum-select>
+    </ng-template>
+  </nb-card-body>
+  <!-- 信件清單 End -->
+  <nb-card-footer>
+    <div *ngIf="model.EffectiveID">
+      <div class="row flex-center">
+        <button type="button" class="btn btn-sm btn-kind-finished mx-5"
+          (click)="btnSend()">{{translations.PPCLIFE_EFFECTIVE_SENDER.USER_BTN_SEND | translate}}</button>
+        <button type="button" class="btn btn-sm btn-ptc-delete mx-5"
+          (click)="btnNoSend()">{{translations.PPCLIFE_EFFECTIVE_SENDER.USER_BTN_NO_SEND | translate}}</button>
+      </div>
+    </div>
+  </nb-card-footer>
+
+</nb-card>
+
+<!-- 發送通知End -->
+
+<ng-template #mailsender>
+  <div class="modal-header nb-card-header">
+    <span> {{translations.EMAIL_NOTIFICATION.SENDER_TITLE| translate }} </span>
+    <button class="close" aria-label="Close" (click)="modalService.dismissAll()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body nb-card-body">
+    <app-mail-sender [senderList]="senderList" [buID]="sysParam.BuID" [model]="sender" (onSend)="onSend($event)"
+      (onBack)="modalService.dismissAll()">
+    </app-mail-sender>
+  </div>
+</ng-template>
+
+
+<ng-template #selector>
+  <div class="modal-header">
+    <span> {{translations.CASE_ASSIGN_GROUP.SELECT_USER | translate}} </span>
+    <button class="close" aria-label="Close" (click)="popupUserRef.close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <app-all-node-tree-user-selector #refenerce [isUserEnabled]="isUserEnabled">
+    </app-all-node-tree-user-selector>
+  </div>
+  <div class="modal-footer flex-center">
+    <button class="btn btn-md btn-ptc-create"
+      (click)="onUserSelected(refenerce)">{{translations.COMMON.BTN_ADD | translate}}</button>
+  </div>
+</ng-template>

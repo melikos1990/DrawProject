@@ -1,0 +1,55 @@
+<p class="title">
+  總部/門市首頁
+</p>
+<!-- 查詢條件 -->
+<div class="row search-condition">
+
+  <!-- 未銷案件 -->
+  <div class="col-sm-12">
+    <nb-accordion class="ptc-accordion">
+      <nb-accordion-item [collapsed]="false">
+        <nb-accordion-item-header>{{ translations.HOME.HQ_HOME_UNFINISH | translate }}
+        </nb-accordion-item-header>
+        <nb-accordion-item-body>
+          <app-counter-ball-group [model]="groupUnFinishItem" [bgColor]="'blue'"
+            (onDivClickCallBack)="onUnFinishClick($event)" [cuurentTarget]="cuurentTarget"
+            [templateRef]="hqUnFinishballitem">
+          </app-counter-ball-group>
+          <ng-template let-data="data" #hqUnFinishballitem>
+            <app-counter-ball [url]="'Summary/HeaderQuarterSummary/GetUnFinishCount'"
+              [params]="{searchType : data.TargetID}">
+            </app-counter-ball>
+            {{data.TargetName}}
+          </ng-template>
+        </nb-accordion-item-body>
+      </nb-accordion-item>
+    </nb-accordion>
+  </div>
+  <!-- END 未銷案件 -->
+</div>
+
+<br>
+<!-- 查詢結果 -->
+<div class="row search-result" [attr.hidden]="isEnable">
+  <div class="col-lg-12">
+    <nb-card class="ptc-card">
+      <nb-card-header class="nb-card-header"> {{ translations.COMMON.SEARCH_RESULT_TITLE | translate }}
+      </nb-card-header>
+      <nb-card-body class="nb-card-body">
+        <app-server-table #assignmentTable [attr.hidden]="isUnFinishTable" [ajax]="assignmentAjax"
+          [columns]="unFinishColumns" (critiria)="critiria($event)" (btnEdit)="onBtnEditAssignment($event)"
+          [templateRefs]="{CaseContent: caseContentRef}" [isVisibleBtnEdit]="isVisibleBtnEdit"
+          (btnSearch)="onBtnSearchAssignment($event)" [isVisibleBtnDelete]="false">
+        </app-server-table>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<!-- 查詢結果 -->
+
+
+<ng-template #caseContentRef let-row="row">
+  <div class="truncate" style="text-align:left !important;" [nbPopover]="row.CaseContent" nbPopoverTrigger="hover">
+    <span>{{ row.CaseContent }}</span>
+  </div>
+</ng-template>

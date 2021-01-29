@@ -1,0 +1,72 @@
+@import "../../../../../@theme/styles/themes";
+@import "../../../../../../basic.style.scss";
+@import "../../../../../../colors";
+
+nb-tabset ::ng-deep {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  ul {
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid map-get($case, tab-full-line-color) !important;
+  }
+
+  ul li a {
+    font-weight: nb-theme(font-weight-bolder);
+    padding: 0.75rem 1rem;
+
+    span{ color: map-get($case, tab-text-color); }
+
+  }
+
+  ul li.active {
+    position: relative;
+    background-color: nb-theme(layout-bg);
+    border-radius: nb-theme(radius) nb-theme(radius) 0 0;
+
+    &::before {
+      position: absolute;
+      content: "";
+      width: 100%;
+      height: 5px;
+      border-radius: 2.5px;
+      bottom: 0;
+      left: 0;
+      // background: map-get($case, tab-active-line-color);
+    }
+
+    a {
+      font-size: 1rem;
+    }
+
+    a::before {
+      // display: none;
+      background: map-get($case, tab-active-line-color) !important;
+    }
+  }
+
+  nb-tab {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem;
+  }
+}
+
+.nb-close-circled {
+  font-size: 3.5rem;
+}
+
+.pos-rigth{
+  position: absolute;
+  right: 60px;
+  z-index: 999;
+}
+
+.pos-rigth-10{
+  position: absolute;
+  right: 10px;
+  z-index: 999;
+}

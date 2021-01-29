@@ -1,0 +1,231 @@
+<div class="row">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header class="nb-card-header">{{ translations.CASE_TEMPLATE.TITLE | translate }}-{{ titleTypeString }}
+      </nb-card-header>
+      <nb-card-body class="nb-card-body">
+        <form [formGroup]="form">
+          <!-- ROW 1 -->
+          <div class="row ">
+            <!-- 企業別選單 -->
+            <div class="col-sm-4 input-group">
+              <label starsign for="BuID" starsign
+                class="col-sm-4 col-form-label">{{ translations.COMMON.BU_NAME | translate }}</label>
+
+              <app-bu-select validator class="col-sm-8"
+                [disabled]="(uiActionType == actionType.Read || uiActionType == actionType.Update) ? true : null"
+                formControlName="BuID" [(ngModel)]="model.BuID" (ngModelChange)="modelChange()"
+                [placeholder]="translations.COMMON.SELECT_BU_PLACEHOLDER | translate">
+              </app-bu-select>
+
+            </div>
+            <!-- END 企業別選單 -->
+            <!-- 分類別選單 -->
+            <div class="col-sm-4 input-group">
+              <label for="ClassificKey" starsign
+                class="col-sm-4 col-form-label">{{ translations.CASE_TEMPLATE.CASE_TEMPLATE_CLASSIFIC | translate }}</label>
+              <app-classification-select class="col-sm-8" validator
+                [disabled]="(uiActionType == actionType.Read || uiActionType == actionType.Update) ? true : null"
+                formControlName="ClassificKey" [(ngModel)]="model.ClassificKey"
+                [placeholder]="translations.CASE_TEMPLATE.CASE_TEMPLATE_CLASSIFIC_PLACEHOLDER | translate">
+              </app-classification-select>
+
+            </div>
+            <!-- END 分類別選單 -->
+
+            <!-- 快速結案/預設內容 -->
+            <div class="col-sm-4 input-group">
+              <!-- 不能快速結案的BU隱藏 -->
+              <nb-checkbox [hidden]="!canFastFinish || model.ClassificKey != caseTemplate.CaseFinish" class="col-sm-6"
+                [disabled]="(uiActionType == actionType.Read) ? true : null" formControlName="IsFastFinished"
+                [(ngModel)]="model.IsFastFinished">
+                {{ translations.CASE_TEMPLATE.FAST_FINISH_TITLE | translate }}</nb-checkbox>
+
+              <nb-checkbox class="col-sm-6" [disabled]="(uiActionType == actionType.Read) ? true : null"
+                formControlName="IsDefault" [(ngModel)]="model.IsDefault" [value]="true">
+                {{ translations.CASE_TEMPLATE.DEFAULT_CONTENT_TITLE | translate }}</nb-checkbox>
+            </div>
+            <!-- END 快速結案/預設內容 -->
+
+
+          </div>
+
+
+          <!-- 動態按鈕資訊 -->
+          <!-- 人員資訊 / 案件資訊-->
+          <nb-card>
+            <nb-card-header class="nb-card-header">{{ translations.CASE_TEMPLATE.SELECT_PATSING_TAG_TITLE | translate }}
+            </nb-card-header>
+            <nb-card-body>
+              <nb-tabset>
+                <nb-tab [tabTitle]="translations.CASE_TEMPLATE.SELECT_PATSING_USER_TAB | translate">
+                  <ng-container *ngTemplateOutlet="userInfoTemp"></ng-container>
+                </nb-tab>
+                <nb-tab [tabTitle]="translations.CASE_TEMPLATE.SELECT_PATSING_CASE_TAB | translate">
+                  <ng-container *ngTemplateOutlet="caseInfoTemp"></ng-container>
+                </nb-tab>
+              </nb-tabset>
+            </nb-card-body>
+          </nb-card>
+
+          <!-- END 動態按鈕資訊 -->
+
+          <!-- ROW 2 -->
+          <div class="row ">
+            <!-- 範本主旨 -->
+            <div class="col-sm-6 input-group">
+              <label for="Title" starsign
+                class="col-sm-2 col-form-label">{{ translations.CASE_TEMPLATE.CASE_TEMPLATE_TITLE | translate }}</label>
+              <input type="text" class="form-control col-sm-8" formControlName="Title" validator
+                [attr.readonly]="uiActionType == actionType.Read ? true : null"
+                placeholder="{{ translations.CASE_TEMPLATE.CASE_TEMPLATE_TITLE_PLACEHOLDER | translate }}"
+                [(ngModel)]="model.Title">
+            </div>
+            <!-- END 範本主旨 -->
+          </div>
+          <!-- ROW 3 -->
+          <div class="row ">
+            <!-- 範本內容 -->
+            <div class="col-sm-12 input-group">
+              <label for="Content" starsign
+                class="col-sm-1 col-form-label">{{ translations.CASE_TEMPLATE.CASE_TEMPLATE_CONTENT | translate }}</label>
+              <textarea class="form-control col-sm-11" rows="5" validator
+                [attr.readonly]="uiActionType == actionType.Read ? true : null" formControlName="Content"
+                placeholder="{{ translations.CASE_TEMPLATE.CASE_TEMPLATE_CONTEN_PLACEHOLDER | translate }}"
+                [(ngModel)]="model.Content" (click)="clickInput($event.target, 'Content')"
+                (change)="changeInputPos($event.target, 'Content')"></textarea>
+            </div>
+            <!-- END 範本內容 -->
+          </div>
+
+          <div class="row">
+            <!-- 項目(Email主旨) -->
+            <div class="col-sm-12 input-group">
+              <label for="Title"
+                class="col-sm-1 col-form-label">{{ translations.CASE_TEMPLATE.EMAIL_TITLE | translate }}</label>
+              <input type="text" class="form-control col-sm-11" formControlName="EmailTitle" validator
+                [attr.readonly]="uiActionType == actionType.Read ? true : null"
+                [placeholder]="translations.CASE_TEMPLATE.EMAIL_PLACEHOLDER | translate" [(ngModel)]="model.EmailTitle"
+                (click)="clickInput($event.target, 'EmailTitle')"
+                (change)="changeInputPos($event.target, 'EmailTitle')">
+            </div>
+            <!-- END 項目(Email主旨) -->
+          </div>
+
+          <ng-container *ngIf="uiActionType == actionType.Read || uiActionType == actionType.Update">
+            <div class="row ">
+              <div class="col-sm-6 input-group">
+                <label for="CreateUserName"
+                  class="col-sm-4 col-form-label">{{ translations.CASE_TEMPLATE.CREATE_USERNAME_LABEL | translate }}</label>
+                <input type="text" class="form-control col-sm-8" disabled validator formControlName="CreateUserName"
+                  placeholder="{{ translations.CASE_TEMPLATE.CREATE_USERNAME_PLACEHOLDER | translate }}"
+                  [(ngModel)]="model.CreateUserName">
+              </div>
+              <div class="col-sm-6 input-group">
+                <label for="CreateDateTime"
+                  class="col-sm-4 col-form-label">{{ translations.CASE_TEMPLATE.CREATE_DATETIME_LABEL | translate }}</label>
+
+                <input type="text" class="form-control col-sm-8" disabled formControlName="CreateDateTime" validator
+                  placeholder="{{ translations.CASE_TEMPLATE.CREATE_DATETIME_PLACEHOLDER | translate }}"
+                  [(ngModel)]="model.CreateDateTime">
+              </div>
+            </div>
+            <div class="row ">
+              <div class="col-sm-6 input-group">
+                <label for="UpdateUserName"
+                  class="col-sm-4 col-form-label">{{ translations.CASE_TEMPLATE.UPDATE_USERNAME_LABEL | translate }}</label>
+                <input type="text" class="form-control col-sm-8" disabled formControlName="UpdateUserName" validator
+                  placeholder="{{ translations.CASE_TEMPLATE.UPDATE_USERNAME_PLACEHOLDER | translate }}"
+                  [(ngModel)]="model.UpdateUserName">
+              </div>
+              <div class="col-sm-6 input-group">
+                <label for="UpdateDateTime"
+                  class="col-sm-4 col-form-label">{{ translations.CASE_TEMPLATE.UPDATE_DATETIME_LABEL | translate }}</label>
+                <input type="text" class="form-control col-sm-8" disabled formControlName="UpdateDateTime" validator
+                  placeholder="{{ translations.CASE_TEMPLATE.UPDATE_DATETIME_PLACEHOLDER | translate }}"
+                  [(ngModel)]="model.UpdateDateTime">
+              </div>
+            </div>
+          </ng-container>
+          <div class="mt-5">
+            <div class="row flex-center">
+              <button type="button" *ngIf="uiActionType == actionType.Update" class="btn btn-sm btn-ptc-confirm mx-5"
+                [authorize]="authType.Update"
+                (click)="btnEdit($event)">{{ translations.COMMON.BTN_CONFIRM | translate }}
+              </button>
+              <button type="button" *ngIf="uiActionType == actionType.Add" class="btn btn-sm btn-ptc-confirm mx-5"
+                authorize [authorize]="authType.Add"
+                (click)="btnAdd($event)">{{ translations.COMMON.BTN_CONFIRM | translate }}
+              </button>
+              <button type="button" class="btn btn-sm btn-kind-finished mx-5"
+                (click)="btnBack($event)">{{ translations.COMMON.BTN_BACK | translate }}</button>
+            </div>
+          </div>
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+
+
+
+<ng-template #userInfoTemp>
+  <div class="infoTemp">
+    <button class="btn-tag" nbButton status="primary"
+      (click)="insertTag(caseTemplateTag.CONCAT_USER)">{{ translations.CASE_TEMPLATE.PARSING_BTN.CONCAT_USER | translate }}</button>
+    <button class="btn-tag" nbButton status="primary"
+      (click)="insertTag(caseTemplateTag.COMPLAINTED_USER)">{{ translations.CASE_TEMPLATE.PARSING_BTN.COMPLAINTED_USER | translate }}</button>
+    <button class="btn-tag" nbButton status="primary"
+      (click)="insertTag(caseTemplateTag.COMPLAINT_NOTICE_USERS)">{{ translations.CASE_TEMPLATE.PARSING_BTN.COMPLAINT_NOTICE_USERS | translate }}</button>
+    <button class="btn-tag" nbButton status="primary"
+      (click)="insertTag(caseTemplateTag.ASSIGNMENT_NOTIFY_USERS)">{{ translations.CASE_TEMPLATE.PARSING_BTN.ASSIGNMENT_NOTIFY_USERS | translate }}</button>
+    <button class="btn-tag" nbButton status="primary"
+      (click)="insertTag(caseTemplateTag.COMPLAINT_INVOICE_USERS)">{{ translations.CASE_TEMPLATE.PARSING_BTN.COMPLAINT_INVOICE_USERS | translate }}</button>
+    <button class="btn-tag" nbButton status="primary"
+      (click)="insertTag(caseTemplateTag.ASSIGNMENT_USER)">{{ translations.CASE_TEMPLATE.PARSING_BTN.ASSIGNMENT_USER | translate }}</button>
+    <button class="btn-tag" nbButton status="primary"
+      (click)="insertTag(caseTemplateTag.INVOICE_TITLE_21_NODE_NAME)">{{ translations.CASE_TEMPLATE.PARSING_BTN.INVOICE_TITLE_21_NODE_NAME | translate }}</button>
+    <button class="btn-tag" nbButton status="primary"
+      (click)="insertTag(caseTemplateTag.INVOICE_TITLE_NODE_NAME)">{{ translations.CASE_TEMPLATE.PARSING_BTN.INVOICE_TITLE_NODE_NAME | translate }}</button>
+    <button class="btn-tag" nbButton status="primary"
+      (click)="insertTag(caseTemplateTag.CREATE_USER_NAME)">{{ translations.CASE_TEMPLATE.PARSING_BTN.CREATE_USER_NAME | translate }}</button>
+    <button class="btn-tag" nbButton status="primary"
+      (click)="insertTag(caseTemplateTag.CONCAT_USER_NAME)">{{ translations.CASE_TEMPLATE.PARSING_BTN.CONCAT_USER_NAME | translate }}</button>
+    <button class="btn-tag" nbButton status="primary"
+      (click)="insertTag(caseTemplateTag.CONCAT_USER_PHONE)">{{ translations.CASE_TEMPLATE.PARSING_BTN.CONCAT_USER_PHONE | translate }}</button>
+    <button class="btn-tag" nbButton status="primary"
+      (click)="insertTag(caseTemplateTag.COMPLAINTED_USER_INFO)">{{ translations.CASE_TEMPLATE.PARSING_BTN.COMPLAINTED_USER_INFO | translate }}</button>
+  </div>
+</ng-template>
+
+
+<ng-template #caseInfoTemp class="infoTemp">
+  <div class="infoTemp">
+    <button class="btn-tag" nbButton status="primary"
+      (click)="insertTag(caseTemplateTag.CASE_ID)">{{ translations.CASE_TEMPLATE.PARSING_BTN.CASE_ID | translate }}</button>
+    <button class="btn-tag" nbButton status="primary"
+      (click)="insertTag(caseTemplateTag.CASE_CONTENT)">{{ translations.CASE_TEMPLATE.PARSING_BTN.CASE_CONTENT | translate }}</button>
+    <button class="btn-tag" nbButton status="primary"
+      (click)="insertTag(caseTemplateTag.INVOICE_ID)">{{ translations.CASE_TEMPLATE.PARSING_BTN.INVOICE_ID | translate }}</button>
+    <button class="btn-tag" nbButton status="primary"
+      (click)="insertTag(caseTemplateTag.ASSIGNMENT_CONTENT)">{{ translations.CASE_TEMPLATE.PARSING_BTN.ASSIGNMENT_CONTENT | translate }}</button>
+    <button class="btn-tag" nbButton status="primary"
+      (click)="insertTag(caseTemplateTag.SOURCE_EMAIL_TITLE)">{{ translations.CASE_TEMPLATE.PARSING_BTN.SOURCE_EMAIL_TITLE | translate }}</button>
+    <button class="btn-tag" nbButton status="primary"
+      (click)="insertTag(caseTemplateTag.NOTIFY_TIME)">{{ translations.CASE_TEMPLATE.PARSING_BTN.NOTIFY_TIME | translate }}</button>
+    <button class="btn-tag" nbButton status="primary"
+      (click)="insertTag(caseTemplateTag.UNIT_CODE)">{{ translations.CASE_TEMPLATE.PARSING_BTN.UNIT_CODE | translate }}</button>
+    <button class="btn-tag" nbButton status="primary"
+      (click)="insertTag(caseTemplateTag.CREATE_DATE_TIME)">{{ translations.CASE_TEMPLATE.PARSING_BTN.CREATE_DATE_TIME | translate }}</button>
+    <button class="btn-tag" nbButton status="primary"
+      (click)="insertTag(caseTemplateTag.QUESTION_CLASSIFICATION)">{{ translations.CASE_TEMPLATE.PARSING_BTN.QUESTION_CLASSIFICATION | translate }}</button>
+    <button class="btn-tag" nbButton status="primary"
+      (click)="insertTag(caseTemplateTag.QUESTION_CLASSIFICATION_LEVEL1)">{{ translations.CASE_TEMPLATE.PARSING_BTN.QUESTION_CLASSIFICATION_LEVEL1 | translate }}</button>
+    <button class="btn-tag" nbButton status="primary"
+      (click)="insertTag(caseTemplateTag.QUESTION_CLASSIFICATION_LEVEL2)">{{ translations.CASE_TEMPLATE.PARSING_BTN.QUESTION_CLASSIFICATION_LEVEL2 | translate }}</button>
+    <button class="btn-tag" nbButton status="primary"
+      (click)="insertTag(caseTemplateTag.QUESTION_CLASSIFICATION_LEVEL3)">{{ translations.CASE_TEMPLATE.PARSING_BTN.QUESTION_CLASSIFICATION_LEVEL3 | translate }}</button>
+    <button class="btn-tag" nbButton status="primary"
+      (click)="insertTag(caseTemplateTag.QUESTION_CLASSIFICATION_LEVEL4)">{{ translations.CASE_TEMPLATE.PARSING_BTN.QUESTION_CLASSIFICATION_LEVEL4 | translate }}</button>
+  </div>
+</ng-template>

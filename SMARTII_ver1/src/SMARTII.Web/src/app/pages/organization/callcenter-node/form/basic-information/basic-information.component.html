@@ -1,0 +1,145 @@
+<ng-template *ngIf="(model.ID !== undefined); then hasdata; else nodata"></ng-template>
+
+<ng-template #hasdata>
+  <form [formGroup]="form">
+
+    <div class="row">
+      <!-- 客服中心 -->
+      <div class="col-sm-6 input-group">
+        <label for="Name" class="col-sm-4 col-form-label">{{ translations.NODE_DEFINITION.CC | translate }}</label>
+        <label class="col-sm-8 col-form-label">{{model.CallCenterName}}</label>
+      </div>
+      <!-- END 客服中心 -->
+      <!-- 組織定義 -->
+      <div class="col-sm-6 input-group">
+        <label starsign for="DefindID"
+          class="col-sm-4 col-form-label">{{ translations.CALLCENTER_NODE.DEFINITION | translate }}</label>
+        <div class="col-sm-8 p-0">
+          <app-node-definition-select validator formControlName="DefindID" [(ngModel)]="model.DefindID" [multiple]="false"
+            [searchTerm]="{BUID : model.CallCenterID , OrganizationType : organizationType.CallCenter, IncludeDefKey: (isCallCenterOrgDef ? definitionKey.CALLCENTER  : null) }"
+            [compare]="nodeDefCompare | bind: {this: this, trigger: model.ID}"
+            [placeholder]="translations.CALLCENTER_NODE.DEFINITION_PLACEHOLDER | translate" [disabled]="isDisabled"
+            (onSelectedChange)="changeOrgDefType($event)">
+          </app-node-definition-select>
+        </div>
+      </div>
+      <!-- END 組織定義 -->
+    </div>
+
+    <div class="row ">
+      <!-- 節點名稱 -->
+      <div class="col-sm-6 input-group">
+        <label starsign for="Name" class="col-sm-4 col-form-label">{{ translations.CALLCENTER_NODE.NAME | translate }}</label>
+        <input type="text" validator class="form-control col-sm-8" formControlName="Name"
+          [attr.readonly]="isDisabled ? true : null"
+          placeholder="{{ translations.CALLCENTER_NODE.NAME_PLACEHOLDER | translate }}" [(ngModel)]="model.Name">
+      </div>
+      <!-- END 節點名稱 -->
+      <!--  啟用狀態 -->
+      <div class="col-sm-6 input-group">
+        <label for="IsEnabled"
+          class="col-sm-4 col-form-label">{{ translations.CALLCENTER_NODE.IS_ENABLED | translate }}</label>
+        <nb-checkbox validator class="col-sm-8" formControlName="IsEnabled" [(ngModel)]="model.IsEnabled" [disabled]="isDisabled"></nb-checkbox>
+      </div>
+    </div>
+
+
+    <form [formGroup]="groupForm" [hidden]="orgType !== definitionKey.GROUP">
+      <div class="row">
+        <div class="col-sm-6 input-group">
+          <label for="DefindID"
+            class="col-sm-4 col-form-label">{{ translations.CALLCENTER_NODE.WORK_PROCESS_TYPE | translate }}</label>
+          <app-enum-select class="col-sm-8 p-0" validator formControlName="WorkProcessType" [(ngModel)]="model.WorkProcessType"
+            [placeholder]="translations.COMMON.SELECT_PLACEHOLDER | translate: { key: '' } " [disabled]="isDisabled"
+            [enumName]="'WorkProcessType'">
+          </app-enum-select>
+        </div>
+        <div class="col-sm-6 input-group">
+          <label for="IsWorkProcessNotice"
+            class="col-sm-4 col-form-label">{{ translations.CALLCENTER_NODE.IS_WORK_PROCESS_NOTICE | translate }}</label>
+          <nb-checkbox validator class="col-sm-8" formControlName="IsWorkProcessNotice"
+            [(ngModel)]="model.IsWorkProcessNotice" [disabled]="isDisabled"></nb-checkbox>
+        </div>
+      </div>
+    </form>
+
+
+    <!-- END 啟用狀態 -->
+    <ng-container *ngIf="uiActionType == actionType.Read || uiActionType == actionType.Update">
+      <div class="row">
+        <!-- 建立人員 -->
+        <div class="col-sm-6 input-group">
+          <label for="CreateUserName"
+            class="col-sm-4 col-form-label">{{ translations.CALLCENTER_NODE.CREATE_USERNAME_LABEL | translate }}</label>
+          <input type="text" validator class="form-control col-sm-8" disabled formControlName="CreateUserName"
+            id="CreateUserName" placeholder="{{ translations.CALLCENTER_NODE.CREATE_USERNAME_PLACEHOLDER | translate }}"
+            [(ngModel)]="model.CreateUserName">
+        </div>
+        <!-- END 建立人員 -->
+        <!-- 建立時間 -->
+        <div class="col-sm-6 input-group">
+          <label for="CreateDateTime"
+            class="col-sm-4 col-form-label">{{ translations.CALLCENTER_NODE.CREATE_DATETIME_LABEL | translate }}</label>
+          <input type="text" validator class="form-control col-sm-8" disabled formControlName="CreateDateTime"
+            id="CreateDateTime" placeholder="{{ translations.CALLCENTER_NODE.CREATE_DATETIME_PLACEHOLDER | translate }}"
+            [(ngModel)]="model.CreateDateTime">
+        </div>
+        <!-- END 建立時間 -->
+      </div>
+      <div class="row">
+        <!-- 更新人員 -->
+        <div class="col-sm-6 input-group">
+          <label for="UpdateUserName"
+            class="col-sm-4 col-form-label">{{ translations.CALLCENTER_NODE.UPDATE_USERNAME_LABEL | translate }}</label>
+          <input type="text" validator class="form-control col-sm-8" disabled formControlName="UpdateUserName"
+            id="UpdateUserName" placeholder="{{ translations.CALLCENTER_NODE.UPDATE_USERNAME_PLACEHOLDER | translate }}"
+            [(ngModel)]="model.UpdateUserName">
+        </div>
+        <!-- END 更新人員 -->
+        <!-- 更新時間 -->
+        <div class="col-sm-6 input-group">
+          <label for="UpdateDateTime"
+            class="col-sm-4 col-form-label">{{ translations.CALLCENTER_NODE.UPDATE_DATETIME_LABEL | translate }}</label>
+          <input type="text" validator class="form-control col-sm-8" disabled formControlName="UpdateDateTime"
+            id="UpdateDateTime" placeholder="{{ translations.CALLCENTER_NODE.UPDATE_DATETIME_PLACEHOLDER | translate }}"
+            [(ngModel)]="model.UpdateDateTime">
+        </div>
+        <!-- END 更新時間 -->
+      </div>
+    </ng-container>
+
+    <!-- 服務企業 -->
+
+    <form [formGroup]="groupForm" [hidden]="orgType != definitionKey.GROUP">
+      <div class="row my-3">
+        <div class="col-sm-12">
+          <nb-card>
+            <nb-card-header> {{translations.COMMON.SERVING_BU | translate}}
+            </nb-card-header>
+            <nb-card-body>
+              <app-dual-list [ajaxOpt]="daulListAjaxOpt" keyField="id" textField="text" formControlName="ServingBu"
+                [(ngModel)]="model.ServingBu"></app-dual-list>
+            </nb-card-body>
+          </nb-card>
+        </div>
+      </div>
+    </form>
+
+
+    <!-- 設定按鈕 -->
+    <div class="mt-5">
+      <div class="row flex-center">
+        <button type="button" *ngIf="uiActionType == actionType.Update" class="btn btn-sm btn-ptc-confirm mx-5"
+          [authorize]="authType.Update" (click)="btnEdit($event)">{{ translations.COMMON.BTN_CONFIRM | translate }}
+        </button>
+      </div>
+    </div>
+    <!-- END 設定按鈕 -->
+  </form>
+</ng-template>
+
+<ng-template #nodata>
+  <div>{{translations.HEADERQUARTER_NODE.SELECT_BASIC_INFO_HINT | translate}}</div>
+</ng-template>
+
+

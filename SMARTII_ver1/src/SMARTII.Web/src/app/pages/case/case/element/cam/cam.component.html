@@ -1,0 +1,43 @@
+<form [formGroup]="form">
+
+  <div class="row">
+    <!-- 案件編號 -->
+    <div class="col-3 input-group">
+      <label class="col-sm-4 col-form-label">{{ translations.CASE_COMMON.CASE_ID  | translate }}</label>
+      <div class="col-sm-8 col-form-label">
+        {{model.CaseID}}
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <!-- 值機人員 -->
+    <div class="col-3 input-group">
+      <label class="col-sm-4 col-form-label" for="Files">{{ translations.CASE_COMMON.GOC  | translate }}</label>
+      <div class="col-sm-8 col-form-label">
+        {{model.CreateUserName}}
+      </div>
+    </div>
+  </div>
+
+  <!-- 通知內容區塊-->
+  <div class="row">
+    <div class="col-12 input-group">
+      <label class="col-sm-2 col-form-label" for="Files">{{ translations.CASE_REMIND.CONTENT  | translate }}</label>
+      <div class="col-sm-10">
+        <textarea rows="15" type="text" validator class="form-control" formControlName="Content"
+          [(ngModel)]="model.Content"></textarea>
+      </div>
+    </div>
+  </div>
+  <!-- 下載EML -->
+  <div class="row">
+    <div class="col-12 input-group">
+      <label class="col-sm-2 col-form-label" for="Files">{{ translations.CASE_COMMON.DOWNLOAD_EMAIL_BACKUP | translate }}</label>
+      <div class="col-sm-10">
+        <a class="btn btn-sm btn-ptc-confirm" *ngIf="model.EMLFilePath" href="{{model.EMLFilePath?.toHostApiUrl()}}"
+          download>{{translations.COMMON.BTN_DOWNLOAD | translate}}</a>
+        <span *ngIf="!model.EMLFilePath"> {{ translations.CASE_COMMON.NOT_READY_NOTICE_EMAIL  | translate }}</span>
+      </div>
+    </div>
+  </div>
+</form>

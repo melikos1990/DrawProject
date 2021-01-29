@@ -1,0 +1,210 @@
+<div class="row">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header class="nb-card-header">{{translations.APPLICATION.FEATURE.CASE_REMIND | translate}}-{{ titleTypeString }}
+      </nb-card-header>
+      <nb-card-body class="nb-card-body">
+        <form [formGroup]="form">
+          <!-- ROW 1 -->
+          <div class="row ">
+            <!-- 案件編號 -->
+            <div class="col-sm-6 input-group">
+              <label starsign for="CaseID"
+                class="col-sm-4 col-form-label">{{ translations.CASE_REMIND.CASE_ID | translate }}</label>
+              <input type="text" class="form-control col-sm-4" formControlName="CaseID" validator
+                [attr.readonly]="(uiActionType == actionType.Read || uiActionType == actionType.Update) ? true : null"
+                placeholder="{{ translations.CASE_REMIND.CASE_ID_PLACEHOLDER | translate }}" [(ngModel)]="model.CaseID">
+              <div class="offset-sm-2 col-sm-2">
+                <button type="button" class="btn btn-sm btn-ptc-search" (click)="btnCaseSearch($event)"
+                  [authorize]="authType.Read">{{ translations.COMMON.BTN_SEARCH | translate }}</button>
+              </div>
+            </div>
+            <!-- END 案件編號 -->
+            <!-- 轉派編號 -->
+            <div class="col-sm-6 input-group">
+              <label for="AssignmentID"
+                class="col-sm-4 col-form-label">{{ translations.CASE_REMIND.CASE_ASSIGNMENT_ID | translate }}</label>
+              <input type="text" class="form-control col-sm-8" formControlName="AssignmentID" validator
+                [attr.readonly]="(uiActionType == actionType.Read || uiActionType == actionType.Update) ? true : null"
+                placeholder="{{ translations.CASE_REMIND.CASE_ASSIGNMENT_ID_PLACEHOLDER | translate }}"
+                [(ngModel)]="model.AssignmentID">
+            </div>
+            <!-- END 轉派編號 -->
+          </div>
+          <!-- END ROW 1 -->
+          <!-- ROW 2 -->
+          <div class="row ">
+            <!-- 通知等級 -->
+            <div class="col-sm-6 input-group">
+              <label starsign for="Level"
+                class="col-sm-4 col-form-label">{{translations.CASE_REMIND.LEVEL  | translate}}</label>
+              <app-enum-select class="col-sm-8" [(ngModel)]="model.Level"
+                [placeholder]="translations.CASE_REMIND.LEVEL_PLACEHOLDER  | translate" validator
+                [disabled]="uiActionType == actionType.Read ? true : null" formControlName="Level"
+                [enumName]="'CaseRemindType'">
+              </app-enum-select>
+            </div>
+            <!-- END 通知等級 -->
+            <!-- 生效時間 -->
+            <div class="col-sm-6 input-group">
+              <label starsign for="ActiveDateTimeRange"
+                class="col-sm-4 col-form-label">{{ translations.CASE_REMIND.ACTIVE_DATETIME_RANGE | translate }}</label>
+              <div class="col-sm-8">
+                <input *ngIf="!model.IsLock; else onlyReadRange" type="text" validator
+                  formControlName="ActiveDateTimeRange" class="form-control"
+                  [attr.disabled]="(uiActionType == actionType.Read) ? true : (model.IsLock ? true : null)"
+                  placeholder="{{ translations.CASE_REMIND.ACTIVE_DATETIME_RANGE_PLACEHOLDER | translate }}"
+                  [(ngModel)]="model.ActiveDateTimeRange" daterangepicker/>
+
+                <ng-template #onlyReadRange>
+                  <input type="text" class="form-control" formControlName="ActiveDateTimeRange"
+                    [(ngModel)]="model.ActiveDateTimeRange">
+                </ng-template>
+              </div>
+            </div>
+            <!-- END 生效時間 -->
+          </div>
+          <!-- END ROW 2 -->
+          <!-- ROW 3 -->
+          <div class="row ">
+            <!-- 通知內容 -->
+            <div class="col-sm-6 input-group">
+              <label starsign for="Content"
+                class="col-sm-4 col-form-label">{{ translations.CASE_REMIND.CONTENT | translate }}</label>
+              <textarea class="form-control col-sm-8" rows="5" validator
+                [attr.readonly]="uiActionType == actionType.Read ? true : null" formControlName="Content"
+                placeholder="{{ translations.CASE_REMIND.CONTENT_PLACEHOLDER | translate }}"
+                [(ngModel)]="model.Content"></textarea>
+            </div>
+            <!-- END 通知內容 -->
+
+            <!-- 處理狀態 -->
+            <div class="col-sm-6 input-group"
+              *ngIf="uiActionType == actionType.Read || uiActionType == actionType.Update">
+              <label for="IsConfirm"
+                class="col-sm-4 col-form-label">{{ translations.CASE_REMIND.CONFIEM_STATUS | translate }}</label>
+              <nb-checkbox class="col-sm-8" formControlName="IsConfirm" id="IsConfirm"
+                [disabled]="uiActionType == actionType.Read  || uiActionType == actionType.Update ? true : null"
+                [(ngModel)]="model.IsConfirm">
+              </nb-checkbox>
+            </div>
+            <!-- END 處理狀態 -->
+          </div>
+          <!-- END ROW 3 -->
+
+
+          <!-- ROW 4 -->
+          <!-- 通知對象 -->
+          <div class="row">
+            <div class="col-sm-4 input-group">
+              <label starsign class="col-sm-4 col-form-label">{{translations.CASE_REMIND.USER_IDS | translate}}</label>
+              <button type="button" class="btn btn-sm btn-ptc-confirm" *ngIf="noticePersonEnable"
+                (click)="btnSelectUserModal($event)">{{translations.COMMON.BTN_CHOICE | translate}}</button>
+            </div>
+          </div>
+          <div class="row search-result">
+            <div class="col-lg-12">
+              <nb-card>
+                <nb-card-header></nb-card-header>
+                <nb-card-body>
+                  <app-local-table [isVisibleBtnEdit]="false" [isVisibleBtnSearch]="false" [columns]="columns"
+                    [items]="model.Users" (btnDelete)="btnDeleteUser($event)">
+                  </app-local-table>
+                </nb-card-body>
+              </nb-card>
+            </div>
+            <!-- END 通知對象 -->
+          </div>
+          <!--END ROW 4 -->
+
+          <ng-container *ngIf="uiActionType == actionType.Read || uiActionType == actionType.Update">
+            <div class="row ">
+              <div class="col-sm-6 input-group">
+                <label for="CreateUserName"
+                  class="col-sm-4 col-form-label">{{ translations.CASE_REMIND.CREATE_USERNAME_LABEL | translate }}</label>
+                <input type="text" class="form-control col-sm-8" disabled validator formControlName="CreateUserName"
+                  placeholder="{{ translations.CASE_REMIND.CREATE_USERNAME_PLACEHOLDER | translate }}"
+                  [(ngModel)]="model.CreateUserName">
+              </div>
+              <div class="col-sm-6 input-group">
+                <label for="CreateDateTime"
+                  class="col-sm-4 col-form-label">{{ translations.CASE_REMIND.CREATE_DATETIME_LABEL | translate }}</label>
+
+                <input type="text" class="form-control col-sm-8" disabled formControlName="CreateDateTime" validator
+                  placeholder="{{ translations.CASE_REMIND.CREATE_DATETIME_PLACEHOLDER | translate }}"
+                  [(ngModel)]="model.CreateDateTime">
+              </div>
+            </div>
+            <div class="row ">
+              <div class="col-sm-6 input-group">
+                <label for="UpdateUserName"
+                  class="col-sm-4 col-form-label">{{ translations.CASE_REMIND.UPDATE_USERNAME_LABEL | translate }}</label>
+                <input type="text" class="form-control col-sm-8" disabled formControlName="UpdateUserName" validator
+                  placeholder="{{ translations.CASE_REMIND.UPDATE_USERNAME_PLACEHOLDER | translate }}"
+                  [(ngModel)]="model.UpdateUserName">
+              </div>
+              <div class="col-sm-6 input-group">
+                <label for="UpdateDateTime"
+                  class="col-sm-4 col-form-label">{{ translations.CASE_REMIND.UPDATE_DATETIME_LABEL | translate }}</label>
+                <input type="text" class="form-control col-sm-8" disabled formControlName="UpdateDateTime" validator
+                  placeholder="{{ translations.CASE_REMIND.UPDATE_DATETIME_PLACEHOLDER | translate }}"
+                  [(ngModel)]="model.UpdateDateTime">
+              </div>
+            </div>
+            <div class="row ">
+              <div class="col-sm-6 input-group">
+                <label for="ConfirmUserName"
+                  class="col-sm-4 col-form-label">{{ translations.CASE_REMIND.CONFIRM_USERNAME_LABEL | translate }}</label>
+                <input type="text" class="form-control col-sm-8" disabled formControlName="ConfirmUserName" validator
+                  placeholder="{{ translations.CASE_REMIND.CONFIRM_USERNAME_PLACEHOLDER | translate }}"
+                  [(ngModel)]="model.ConfirmUserName">
+              </div>
+              <div class="col-sm-6 input-group">
+                <label for="ConfirmDateTime"
+                  class="col-sm-4 col-form-label">{{ translations.CASE_REMIND.CONFIRM_DATETIME_LABEL | translate }}</label>
+                <input type="text" class="form-control col-sm-8" disabled formControlName="ConfirmDateTime" validator
+                  placeholder="{{ translations.CASE_REMIND.CONFIRM_DATETIME_PLACEHOLDER | translate }}"
+                  [(ngModel)]="model.ConfirmDateTime">
+              </div>
+            </div>
+          </ng-container>
+
+          <div class="mt-5">
+            <div class="row flex-center">
+              <button type="button" *ngIf="uiActionType == actionType.Update ? (!model.IsConfirm) : false"
+                class="btn btn-sm btn-ptc-confirm mx-5" [authorize]="authType.Update"
+                (click)="btnConfirm($event)">{{ translations.COMMON.BTN_FINISH | translate }}
+              </button>
+              <button type="button" *ngIf="editEnable ? (!model.IsConfirm) : false" class="btn btn-sm btn-ptc-confirm mx-5"
+                [authorize]="authType.Update"
+                (click)="btnEdit($event)">{{ translations.COMMON.BTN_CONFIRM | translate }}
+              </button>
+              <button type="button" *ngIf="uiActionType == actionType.Add" class="btn btn-sm btn-ptc-confirm mx-5" authorize
+                [authorize]="authType.Add" (click)="btnAdd($event)">{{ translations.COMMON.BTN_CONFIRM | translate }}
+              </button>
+              <button type="button" class="btn btn-sm btn-kind-finished mx-5"
+                (click)="btnBack($event)">{{ translations.COMMON.BTN_BACK | translate }}</button>
+            </div>
+          </div>
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+
+<ng-template #selector>
+  <div class="modal-header nb-card-header">
+    <span> {{translations.CASE_REMIND.USER_IDS | translate}} </span>
+    <button class="close" aria-label="Close" (click)="closeModel()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body nb-card-body">
+    <app-callcenter-node-tree-user-selector [model]="{IsSelf: true, Goal:organizationType.CallCenter}" [isUserEnabled]="true" #refenerce>
+    </app-callcenter-node-tree-user-selector>
+  </div>
+  <div class="modal-footer flex-center">
+    <button class="btn btn-md btn-ptc-confirm"
+      (click)="onUserSelected(refenerce)">{{translations.COMMON.BTN_CONFIRM | translate}}</button>
+  </div>
+</ng-template>

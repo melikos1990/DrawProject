@@ -1,0 +1,27 @@
+<form [formGroup]="form" autocomplete="off" *ngIf="buVisiable">
+  <div class="row">
+    <div class="col-sm-4 input-group">
+      <label starsign class="col-sm-4 col-form-label">{{ translations.STORE.BU_NAME | translate }}</label>
+      <div class="col-sm-8">
+        <app-bu-select validator formControlName="buID" name="buID" [disabled]="disabled" [buID]="buID"
+          [(ngModel)]="buID" [placeholder]="translations.STORE.BU_NAME_PLACEHOLDER | translate"
+          (onSelectedChange)="onChange($event)">
+        </app-bu-select>
+      </div>
+    </div>
+  </div>
+</form>
+
+<div class="row">
+  <ng-container *ngFor="let item of items;let recordIndex = index">
+    <div class="col-sm-4 input-group mt-3">
+      <label class="col-sm-4 col-form-label">{{item.text}}</label>
+      <div class="col-sm-8">
+        <app-definition-step-select [disabled]="disabled"
+          [placeholder]="translations.COMMON.SELECT_PLACEHOLDER | translate: { key: item.text }" [buID]="buID"
+          [(ngModel)]="arrayId[recordIndex]" [level]="item.id" [refs]="definitions" [isSelf]="isSelf">
+        </app-definition-step-select>
+      </div>
+    </div>
+  </ng-container>
+</div>

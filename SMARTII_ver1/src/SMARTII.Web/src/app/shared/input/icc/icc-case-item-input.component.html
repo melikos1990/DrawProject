@@ -1,0 +1,23 @@
+<div class="row">
+  <button type="button" class="btn btn-sm btn-ptc-create mx-5" [disabled]="input.disabled"
+    (click)="addItemModal()">{{ translateService.instant('COMMON.BTN_ADD')  }}
+  </button>
+</div>
+<app-local-table [columns]="column" [items]="items" [pageSize]="5" [templateRefs]="{
+    CardNumber : cardNumber,
+    Operator : operator
+  }" [pageSizeOptions]="[3,5,10,20]">
+</app-local-table>
+
+<ng-template #operator let-row="row">
+  <div class="mx-3">
+    <button type="button" class="btn btn-sm btn-ptc-delete mx-3" (click)="deleteItem(row)" [disabled]="input.disabled">{{ translateService.instant('COMMON.BTN_DELETE')  }}</button>
+  </div>
+</ng-template>
+
+<ng-template #cardNumber let-row="row">
+  <div class="mx-3">
+    <input type="text" [ngModelOptions]="{standalone: true}" class="form-control" placeholder="{{ translateService.instant('COMMON.INPUT_PLACEHOLDER',{key : translateService.instant('CASE_COMMON.TABLE.CARD_ID') }) }}"
+      [disabled]="input.disabled" [(ngModel)]="row.CardNumber">
+  </div>
+</ng-template>

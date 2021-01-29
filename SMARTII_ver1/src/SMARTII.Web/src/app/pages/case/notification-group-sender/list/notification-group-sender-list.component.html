@@ -1,0 +1,13 @@
+<nb-card>
+  <nb-card-header class="nb-card-header">{{translations.NOTIFICATION_GROUP_SENDER.LIST_TITLE | translate}}</nb-card-header>
+  <nb-card-body class="nb-card-body">
+    <app-server-table #table (rowSelect)="onRowSelect($event)" [ajax]="ajax" [columns]="columns"
+      [templateRefs]="{Targets : targetsRef}">
+    </app-server-table>
+  </nb-card-body>
+
+</nb-card>
+<ng-template #targetsRef let-row="row">
+  <button *ngFor="let target of row.Targets" outline status="success" nbButton class="m-1" size="xsmall">
+    {{ target }}</button>
+</ng-template>

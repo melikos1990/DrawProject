@@ -1,0 +1,33 @@
+<!-- 查詢條件 -->
+<div class="row search-condition">
+
+
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header class="nb-card-header">{{translations.APPLICATION.FEATURE.BILLBOARD_DISPLAY | translate}}</nb-card-header>
+      <nb-card-body class="nb-card-body">
+        <div class="row">
+          <div class="input-group">
+            <label for="Name"
+              class="col-sm-2 col-form-label">{{translations.BILLBOARD.BILLBOARD_WARNING_TYPE | translate}}</label>
+            <app-enum-select class="col-sm-4" (ngModelChange)="selectedChange()"
+              [(ngModel)]="model.BillboardWarningType"
+              [placeholder]="translations.COMMON.SELECT_PLACEHOLDER | translate: { key: '' } "
+              [enumName]="'BillboardWarningType'">
+            </app-enum-select>
+          </div>
+        </div>
+        &nbsp;
+        <div >
+          <div *ngIf="(list$| async)?.length == 0">
+           無公告
+          </div>
+          <div *ngFor="let item of list$ | async">
+            <app-billboard-display-item [model]="item"></app-billboard-display-item>
+          </div>
+        </div>
+
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

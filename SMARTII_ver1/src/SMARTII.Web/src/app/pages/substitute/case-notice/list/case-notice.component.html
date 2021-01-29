@@ -1,0 +1,46 @@
+<!-- 查詢條件 -->
+<div class="row search-condition">
+
+
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header class="nb-card-header">{{translations.APPLICATION.FEATURE.CASE_NOTICE | translate}}</nb-card-header>
+      <nb-card-body class="nb-card-body">
+        <form autocomplete="off" (keyup.enter)="selectedChange($event)">
+          <div class="row">
+            <div class="col-sm-4 input-group">
+              <label for="CaseNoticeType"
+                class="col-sm-4 col-form-label">{{translations.CASE_NOTICE.CASE_NOTICE_TYPE | translate}}</label>
+              <div class="col-sm-8">
+                <app-enum-select class="col-sm-4" (ngModelChange)="selectedChange($event)"
+                  [(ngModel)]="model.CaseNoticeType"
+                  [placeholder]="translations.COMMON.SELECT_PLACEHOLDER | translate: { key: '' } "
+                  [ngModelOptions]="{standalone: true}" [enumName]="'CaseNoticeType'">
+                </app-enum-select>
+              </div>
+            </div>
+          </div>
+        </form>
+        <nb-card>
+          <nb-card-header class="nb-card-header"> {{ translations.COMMON.SEARCH_RESULT_TITLE | translate }}
+            <button type="button" class="btn btn-sm float-right mx-1" style="background-color: #1e4a75;" (click)="btnNoticeRnage($event)"
+              [authorize]="authType.Delete">{{ translations.COMMON.BTN_CONFIRM | translate }}</button>
+          </nb-card-header>
+          <nb-card-body [nbSpinner]="loading" nbSpinnerStatus="info" class="nb-card-body">
+            <app-local-table #table [pageSize]="pageSize" [columns]="columns"
+              [templateRefs]="{CaseContent: caseContentRef}"
+              [items]="data" (btnEdit)="onBtnEdit($event)" [isVisibleBtnDelete]="false" [isVisibleBtnSearch]="false">
+            </app-local-table>
+          </nb-card-body>
+        </nb-card>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+
+
+<ng-template #caseContentRef let-row="row">
+  <div style="text-align:left !important;" class="truncate" [nbPopover]="row.CaseContent" nbPopoverTrigger="hover">
+    <span>{{ row.CaseContent }}</span>
+  </div>
+</ng-template>

@@ -1,0 +1,32 @@
+<div class="row" [ngClass]="contentClass">
+
+  <ng-container *ngFor="let item of _maxLevel; let idx = index">
+
+    <ng-container *ngIf="isValidSelect(idx); else basic">
+      <ng-container
+        *ngTemplateOutlet="validTempRef; context: {$implicit: (idx+1), buID: buID, groupName: groupName, disabled: disabled}">
+      </ng-container>
+    </ng-container>
+
+    <ng-template #basic>
+      <div class="input-group" [ngClass]="colClass">
+        <label for="account"
+          class="col-sm-4 col-form-label">{{ translations.QUESTIONCATEGORY.QUESTIONLEVEL | translate: {level: (idx + 1)} }}</label>
+        <div class="col-sm-8">
+          <app-question-category-select
+            (onItemChange)="change($event)"
+            [disabled]="disabled" 
+            [groupName]="groupName" 
+            [buID]="buID" 
+            [level]="idx + 1" 
+            [hasClearOption]="hasClearOption"
+            [isEnabled]="isEnabled"
+            [placeholder]="translations.COMMON.SELECT_PLACEHOLDER | translate : {key: ''} ">
+          </app-question-category-select>
+        </div>
+      </div>
+    </ng-template>
+
+  </ng-container>
+
+</div>

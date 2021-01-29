@@ -1,0 +1,79 @@
+<p>
+  客服首頁
+</p>
+<!-- 查詢條件 -->
+<div class="row search-condition">
+  <div class="col-lg-12">
+    <!-- 個人案件(未結案) -->
+    <nb-accordion>
+      <nb-accordion-item [collapsed]="false">
+        <nb-accordion-item-header class="accordionHeaderBlue">{{ translations.HOME.CC_HOME_PERSONAL | translate }}
+        </nb-accordion-item-header>
+        <nb-accordion-item-body class="bodyStyle">
+          <app-counter-ball-group [url]="'Summary/CallCenterSummary/GetProviderBUs'" [bgColor]="'blue'"
+            (onDivClickCallBack)="onPersonalClick($event)" [cuurentTarget]="cuurentTarget" [templateRef]="ccballitem">
+          </app-counter-ball-group>
+          <ng-template let-data="data" #ccballitem>
+            <app-counter-ball [url]="'Summary/CallCenterSummary/GetOwnCount'" [params]="{buID : data.TargetID}">
+            </app-counter-ball>
+            {{data.TargetName}}
+          </ng-template>
+        </nb-accordion-item-body>
+      </nb-accordion-item>
+    </nb-accordion>
+    <!-- END 個人案件(未結案) -->
+    <br>
+    <!-- 全部案件(未結案) -->
+    <nb-accordion>
+      <nb-accordion-item [collapsed]="false">
+        <nb-accordion-item-header class="accordionHeaderOrange">{{ translations.HOME.CC_HOME_TOTAL | translate }}
+        </nb-accordion-item-header>
+        <nb-accordion-item-body class="bodyStyle">
+          <app-counter-ball-group [url]="'Summary/CallCenterSummary/GetProviderBUs'" [bgColor]="'orange'"
+            (onDivClickCallBack)="onTotalClick($event)" [cuurentTarget]="cuurentTarget" [templateRef]="ccballitemTotal">
+          </app-counter-ball-group>
+          <ng-template let-data="data" #ccballitemTotal>
+            <app-counter-ball [url]="'Summary/CallCenterSummary/GetAllCount'" [params]="{buID : data.TargetID}">
+            </app-counter-ball>
+            {{data.TargetName}}
+          </ng-template>
+        </nb-accordion-item-body>
+      </nb-accordion-item>
+    </nb-accordion>
+    <!-- END 全部案件(未結案) -->
+  </div>
+</div>
+<br>
+<!-- 查詢結果 -->
+<div class="row search-result" [attr.hidden]="isEnable">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header class="nb-card-header"> {{ translations.COMMON.SEARCH_RESULT_TITLE | translate }}
+        <div class="float-right col-sm-4 input-group">
+          <label for="IsAttention"
+            class="col-sm-4 col-form-label">{{ translations.HOME.IS_ATTENSION | translate }}</label>
+          <div class="col-sm-8">
+            <app-open-select class="classButton" [placeholder]="translations.HOME.CC_HOME_IS_ATTENSION_SELECTOR | translate"
+              (onSelectedChange)="onisAttentsionChange($event)" [ngModelOptions]="{standalone: true}"
+              [(ngModel)]="model.IsAttention" [items]="isAttentsionItems">
+            </app-open-select>
+          </div>
+        </div>
+      </nb-card-header>
+      <nb-card-body class="nb-card-body">
+        <app-server-table #table [ajax]="ajax" [columns]="columns" (critiria)="critiria($event)"
+          [templateRefs]="{CaseContent: caseContentRef}" (btnEdit)="onBtnEdit($event)" (btnSearch)="onBtnSearch($event)"
+          [isVisibleBtnDelete]="false">
+        </app-server-table>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<!-- 查詢結果 -->
+
+
+<ng-template #caseContentRef let-row="row">
+  <div class="truncate" style="text-align:left !important;" [nbPopover]="row.CaseContent" nbPopoverTrigger="hover">
+    <span>{{ row.CaseContent }}</span>
+  </div>
+</ng-template>

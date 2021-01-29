@@ -1,0 +1,27 @@
+<div class="row">
+  <div class="col-sm-12 input-group">
+    <label for="keyword" class="col-sm-4 col-form-label">{{ translations.COMMON.KEYWORD | translate }}
+    </label>
+    <div class="col-sm-8">
+      <input id="keyword" class="form-control" name="keyword" type="text"
+        placeholder="{{translations.COMMON.KEYWORD_PLACEHOLDER | translate}}" #keywordRef />
+    </div>
+  </div>
+</div>
+
+<app-ptc-tree #ptcTree [options]="options" oncontextmenu="return false;" [searchVal]="keywordRef?.value" [nodes]="nodes"  (onMoveNode)="onMoveNode($event)">
+  <ng-template #treeNode let-node="node" let-index>
+    <div class="grid-container" (click)="onClick($event , node)">
+
+      <div class="treeNode-item">
+        <ng-container *ngIf="node.data.extend.IsRoot">
+          <h4 title="{{node.data.name}}" (contextmenu)="onRootRightClick($event, node)"> <i class="nb-home"></i>{{node.data.name}}</h4>
+        </ng-container>
+        <ng-container *ngIf="node.data.extend.IsRoot == false">
+          <h5 title="{{node.data.name}}" (contextmenu)="onItemRightClick($event, node)"> <i class="nb-edit"></i>{{node.data.name}}</h5>
+        </ng-container>
+      </div>
+
+    </div>
+  </ng-template>
+</app-ptc-tree>

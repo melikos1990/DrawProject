@@ -1,0 +1,123 @@
+<nb-card [nbSpinner]="loading" class="ptc-no-box-shadow">
+  <nb-card-body>
+    <form [formGroup]="form">
+      <div class="row">
+        <div class="col-6">
+          <div class="row">
+            <div class="col-12 input-group">
+              <label starsign class="col-sm-4 col-form-label">{{ translations.CASE_COMMON.FINISH_CONTENT | translate }} :
+                <button class="btn btn-sm btn-ptc-template-selected m-3" *ngIf="uiActionType !== actionType.Read"
+                  (click)="btnCaseFinishTemplateModal()">{{ translations.CASE_COMMON.TEMPLATE_SELECT | translate }}</button>
+              </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <textarea rows="15" type="text" validator class="form-control" formControlName="FinishContent"
+                id="{{focusId}}" [attr.readonly]="uiActionType == actionType.Read ? true : null"
+                [(ngModel)]="model.FinishContent" [placeholder]="translations.CASE_COMMON.FINISH_CONTENT_PLACEHOLDER | translate"
+                (click)="finishclickInput($event.target)" (change)="finishclickInput($event.target)"></textarea>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 input-group">
+              <label class="col-sm-4 col-form-label" for="FinishFiles">{{ translations.CASE_COMMON.CASE_FINISH_ATTACHMENT_UPLOAD | translate }}</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 input-group">
+              <input [options]="fileOptions" [ngModelOptions]="{standalone: true}" name="FinishFiles" type="file"
+                [attr.readonly]="uiActionType == actionType.Read ? true : null" fileInput multiple
+                [(ngModel)]="model.FinishFiles" />
+            </div>
+          </div>
+        </div>
+        <div class="col-6" *ngIf="uiActionType !== actionType.Read">
+          <div class="row">
+            <div class="col-12 input-group">
+              <label class="col-sm-12 col-form-label">{{ translations.CASE_COMMON.MAIL_REPLY | translate }}
+                <button class="btn btn-sm btn-ptc-template-selected mx-3" (click)="btnCaseEmailTemplateModal()">{{ translations.CASE_COMMON.TEMPLATE_SELECT | translate }}</button>
+                <button class="btn btn-sm btn-ptc-default-template m-3" (click)="btnDefaultCaseTemplateModal()">{{ translations.CASE_COMMON.DEFAULT_TEMPLATE | translate }}</button>
+              </label>
+
+            </div>
+          </div>
+          <div class="row">
+              <div class="col-12 input-group">
+                <label class="col-sm-2 col-form-label" for="finishEmailSubject"> {{ translations.CASE_COMMON.MAIL_REPLY_SUBJECT | translate }}</label>
+                <input type="text" id="finishEmailSubject" class="col-sm-10 form-control"
+                  [(ngModel)]="emailSubject" [ngModelOptions]="{standalone: true}"
+                  [placeholder]="translations.CASE_COMMON.MAIL_REPLY_SUBJECT_PLACEHOLDER | translate"/>
+              </div>
+            </div>
+          <div class="row">
+            <div class="col-12">
+              <textarea rows="20" type="text" class="form-control" [ngModelOptions]="{standalone: true}"
+                [(ngModel)]="emailContent" [placeholder]="translations.CASE_COMMON.MAIL_REPLY_CONTENT_PLACEHOLDER | translate"
+                (click)="mailclickInput($event.target)" (change)="mailclickInput($event.target)"></textarea>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 input-group">
+              <label class="col-sm-12 col-form-label"> Email {{ translations.COMMON.REPLY_FOR | translate }}
+                <button class="btn btn-sm btn-ptc-add-user mx-3" (click)="btnAddUserModal()">{{ translations.EMAIL_NOTIFICATION.CREATE_USER_TITLE | translate }}</button>
+                <button class="btn btn-sm btn-ptc-send mx-3" (click)="btnSenderModal()">{{ translations.COMMON.BTN_SEND | translate }}</button>
+              </label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 input-group">
+              <app-local-table [isVisibleBtnEdit]="false" [isVisibleBtnSearch]="false" [columns]="columns"
+                [items]="users" [templateRefs]="{NotificationRemark: NotificationRemark}" [pageSize]="3"
+                [pageSizeOptions]="[3,5,10,20]" (btnDelete)="btnDeleteUser($event)">
+              </app-local-table>
+              <ng-template #NotificationRemark let-row="row">
+                <app-enum-select class="col-sm-10" [(ngModel)]="row.NotificationRemark"
+                  [placeholder]="translations.NOTIFICATION_GROUP.EMAIL_RECEIVER_TYPE | translate"
+                  [ngModelOptions]="{standalone: true}" [enumName]="'EmailReceiveType'">
+                </app-enum-select>
+              </ng-template>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 input-group">
+              <nb-card>
+                <nb-card-header>{{ translations.COMMON.CLOSE_REPLY | translate }}Email</nb-card-header>
+                <nb-card-body>
+                  <div class="row col-12">
+                    <label class="col-sm-10" style="text-align: right;">
+                    <a class="btn btn-sm btn-ptc-confirm" *ngIf="model.FinishEMLFilePath"
+                      href="{{model.FinishEMLFilePath?.toHostApiUrl()}}"
+                      download>{{translations.COMMON.BTN_DOWNLOAD | translate}}</a>
+                      回信時間:{{ model.FinishReplyDateTime | date:'yyyy/MM/dd HH:mm:ss' }}
+                    </label>
+                    <span *ngIf="!model.FinishEMLFilePath">{{ translations.COMMON.NOT_REPLY_EMAIL | translate }}</span>
+                  </div>
+                </nb-card-body>
+              </nb-card>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+    </form>
+  </nb-card-body>
+</nb-card>
+
+
+
+<ng-template #mailsender>
+  <div class="modal-header nb-card-header">
+    <span> {{translations.EMAIL_NOTIFICATION.SENDER_TITLE| translate }} </span>
+    <button class="close" aria-label="Close" (click)="modalService.dismissAll()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body nb-card-body">
+    <app-mail-sender [senderList]="senderList" [buID]="model.NodeID" [model]="sender" [caseID]="model.CaseID" (onSend)="btnSend($event)"
+      (onBack)="modalService.dismissAll()">
+    </app-mail-sender>
+  </div>
+</ng-template>

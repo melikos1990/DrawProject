@@ -1,0 +1,106 @@
+<nb-card>
+  <nb-card-body class="ptc-case-card-body">
+    <form [formGroup]="form">
+      <div class="row">
+        <!-- 關注案件 -->
+        <div class="col-3 input-group">
+          <label class="col-sm-4 col-form-label" for="IsAttension">{{ translations.HOME.IS_ATTENSION  | translate }}</label>
+          <div class="col-sm-8">
+            <nb-checkbox validator class="col-sm-4" formControlName="IsAttension" id="IsAttension"
+              [(ngModel)]="model.IsAttension">
+            </nb-checkbox>
+          </div>
+        </div>
+        <!-- 案件標籤-->
+        <div class="col-9 input-group">
+          <label class="col-sm-1 col-form-label">{{ translations.CALL_CENTER_CASE_SEARCH.CASE_TAG | translate }}</label>
+          <div class="col-sm-11">
+            <app-hashtag #hashtag [buID]="this.model.NodeID" [isEnabled]="true">
+            </app-hashtag>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <!-- 反應者資訊 -->
+        <div class="col-sm-6 input-group">
+          <nb-accordion>
+            <nb-accordion-item [collapsed]="false">
+              <nb-accordion-item-header class="accordionHeaderBlue">
+                <div class="col-sm-12">
+                  {{ translations.CASE_COMMON.CONCATUSER_INFO | translate }}
+                  <button type="button" class="btn btn-sm btn-ptc-create float-right"
+                    *ngIf="model.CaseConcatUsers[0].UnitType !== null && model.CaseConcatUsers[0].UnitType !== undefined"
+                    (click)="btnAddConcatUserModal($event)" stop-propagation>{{ translations.CASE_COMMON.ADD_CONCATUSER | translate }}</button>
+                </div>
+              </nb-accordion-item-header>
+              <nb-accordion-item-body>
+                <app-uco [form]="ucoform" [sourcekey]="sourcekey" [visibleTable]="false"
+                  [onSetUser]="model.CaseConcatUsers[0]" #uco>
+                </app-uco>
+              </nb-accordion-item-body>
+
+            </nb-accordion-item>
+          </nb-accordion>
+
+        </div>
+        <!-- END 反應者資訊 -->
+        <!-- 被反應者資訊 -->
+        <div class="col-sm-6 input-group">
+          <nb-accordion>
+            <nb-accordion-item [collapsed]="false">
+              <nb-accordion-item-header class="accordionHeaderBlue">
+                <div class="col-sm-12">
+                  {{ translations.CASE_COMMON.COMPLAINEDUSER_INFO | translate }}
+                  <button type="button" class="btn btn-sm btn-ptc-create float-right"
+                    *ngIf="model.CaseComplainedUsers[0] && model.CaseComplainedUsers[0]?.UnitType !== undefined && model.CaseComplainedUsers[0]?.UnitType !== null"
+                    (click)="btnAddComplaintUserModal($event)" stop-propagation>{{ translations.CASE_COMMON.ADD_COMPLAINEDUSER | translate }}</button>
+                </div>
+              </nb-accordion-item-header>
+              <nb-accordion-item-body>
+                <app-ucm [sourcekey]="sourcekey" [visibleTable]="false" [onSetUser]="model.CaseComplainedUsers[0] || {}"
+                  #ucm>
+                </app-ucm>
+                <button type="button" class="btn btn-sm btn-ptc-delete"
+                  *ngIf="model.CaseComplainedUsers[0] && !!model.CaseComplainedUsers[0].UnitType"
+                  (click)="btnRemoveComplaintUser($event)" stop-propagation>{{ translations.CASE_COMMON.CLEAR | translate }}</button>
+              </nb-accordion-item-body>
+            </nb-accordion-item>
+          </nb-accordion>
+
+        </div>
+        <!-- END 被反應者資訊 -->
+      </div>
+      <div class="row" [attr.hidden]="hasInput">
+        <!-- 其他資訊 -->
+        <div class="col-sm-12 input-group" id="other-info">
+          <nb-accordion>
+            <nb-accordion-item [collapsed]="false">
+              <nb-accordion-item-header class="accordionHeaderBlue">{{ translations.CASE_COMMON.OTHER_INFO | translate }}</nb-accordion-item-header>
+              <nb-accordion-item-body>
+                <app-cco [sourcekey]="sourcekey" [model]="model" (hasInputChange)="hasInputChange($event)" #cco></app-cco>
+              </nb-accordion-item-body>
+            </nb-accordion-item>
+          </nb-accordion>
+
+        </div>
+        <!-- END 其他資訊 -->
+      </div>
+      <div class="row">
+        <!-- 反應內容 -->
+        <div class="col-sm-12 input-group">
+          <nb-accordion>
+            <nb-accordion-item [collapsed]="false">
+              <nb-accordion-item-header class="accordionHeaderBlue">{{ translations.CASE_COMMON.CONCAT_CONTENT | translate }}</nb-accordion-item-header>
+              <nb-accordion-item-body>
+                <app-ccc [form]="form" [sourcekey]="sourcekey" [model]="model"></app-ccc>
+              </nb-accordion-item-body>
+            </nb-accordion-item>
+          </nb-accordion>
+
+        </div>
+        <!-- END 反應內容 -->
+      </div>
+    </form>
+
+  </nb-card-body>
+</nb-card>

@@ -1,0 +1,104 @@
+<div class="modal-header">
+  <span>{{ translations.VENDOR_NODE.ITEM_LIST | translate }}</span>
+  <button (click)="closeModel()" class="close" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <form [formGroup]="form" autocomplete="off" (keyup.enter)="btnRender()">
+      <!-- 企業別選單 -->
+      <div class="row">
+
+        <div class="col-sm-12 input-group">
+          <label starsign for="NodeID"
+            class="col-sm-4 col-form-label">{{ translations.COMMON.BU_NAME | translate }}</label>
+          <div class="col-sm-8">
+            <app-bu-select name="NodeID" [placeholder]="translations.COMMON.SELECT_BU_PLACEHOLDER | translate "
+              [(ngModel)]="model.NodeID" [ngModelOptions]="{standalone: true}" disabled>
+            </app-bu-select>
+          </div>
+        </div>
+      </div>
+
+      <!-- END 企業別選單 -->
+      <!-- 商品管理編號 -->
+      <div class="row">
+        <div class="col-sm-12 input-group">
+          <label for="'Code'" class="col-sm-4 col-form-label">{{ translations.ITEM.ITEM_CODE | translate }}</label>
+          <div class="col-sm-8">
+            <input class="form-control" [(ngModel)]="model.Code" [ngModelOptions]="{standalone: true}"
+              placeholder="{{translations.ITEM.ITEM_CODE_PLACEHOLDER | translate}}" id="Code" type="text" />
+          </div>
+        </div>
+      </div>
+      <!-- END 商品管理編號 -->
+      <!-- 商品名稱 -->
+      <div class="row">
+        <div class="col-sm-12 input-group">
+          <label for="'Name'" class="col-sm-4 col-form-label">{{ translations.ITEM.NAME | translate }}</label>
+          <div class="col-sm-8">
+            <input class="form-control" [(ngModel)]="model.Name" [ngModelOptions]="{standalone: true}"
+              placeholder="{{translations.ITEM.NAME_PLACEHOLDER | translate}}" id="Name" type="text" />
+          </div>
+        </div>
+      </div>
+      <!-- END 商品名稱 -->
+      <!-- 其他資訊 -->
+      <div class="row">
+        <div class="col-sm-12 input-group">
+          <label for="'JContent'" class="col-sm-4 col-form-label">{{ translations.ITEM.J_CONTENT | translate }}</label>
+          <div class="col-sm-8">
+            <input class="form-control" [(ngModel)]="model.J_Content" [ngModelOptions]="{standalone: true}"
+              placeholder="{{translations.ITEM.J_CONTENT_PLACEHOLDER | translate}}" id="JContent" type="text" />
+          </div>
+        </div>
+      </div>
+      <!-- END 其他資訊 -->
+      <!-- 啟用狀態 -->
+      <div class="row">
+        <div class="col-sm-12 input-group">
+          <label for="IsEnabled"
+            class="col-sm-4 col-form-label">{{ translations.NODE_DEFINITION.IS_ENABLED | translate }}</label>
+          <app-open-select class="col-sm-8" [ngModelOptions]="{standalone: true}" name="IsEnabled"
+            [(ngModel)]="model.IsEnabled"
+            [placeholder]="translations.NODE_DEFINITION.IS_ENABLED_PLACEHOLDER | translate" [items]="items">
+          </app-open-select>
+        </div>
+      </div>
+      <!-- END 啟用狀態 -->
+
+
+      <div class="form-group">
+        <div class="row flex-center">
+
+          <button type="button" class="btn btn-sm btn-ptc-search"
+            (click)="btnRender()">{{ translations.COMMON.BTN_SEARCH | translate }}</button>
+
+        </div>
+      </div>
+    </form>
+  </div>
+  <!-- 查詢結果 -->
+  <div class="row search-result" [attr.hidden]="isEnableResult">
+    <div class="col-lg-12">
+      <nb-card>
+        <nb-card-header class="nb-card-header"> {{ translations.COMMON.SEARCH_RESULT_TITLE | translate }}
+        </nb-card-header>
+        <nb-card-body class="nb-card-body">
+          <div [nbSpinner]="loading">
+            <app-local-table #table [columns]="columns" [items]="data">
+            </app-local-table>
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+  <!-- 查詢結果 -->
+</div>
+<div class="modal-footer flex-center">
+  <button class="btn btn-sm btn-ptc-confirm mx-5"
+    (click)="addItem()">{{ translations.COMMON.BTN_CONFIRM | translate }}</button>
+  <!-- <button type="button" class="btn btn-sm btn-warning mx-5"
+    (click)="btnBack($event)">{{ translations.COMMON.BTN_BACK | translate }}</button> -->
+</div>

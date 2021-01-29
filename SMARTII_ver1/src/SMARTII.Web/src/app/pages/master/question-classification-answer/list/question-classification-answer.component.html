@@ -1,0 +1,87 @@
+<!-- 查詢條件 -->
+<div class="row search-condition">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header class="nb-card-header">{{ translations.COMMON.SEARCH_CONDITION_TITLE | translate }}</nb-card-header>
+      <nb-card-body class="nb-card-body">
+        <form [formGroup]="form" autocomplete="off" (keyup.enter)="btnRender($event)">
+          <!-- 企業別代號 -->
+          <div class="row">
+            <div class="col-sm-4 input-group">
+              <label starsign for="NodeID"
+                class="col-sm-4 col-form-label">{{ translations.QUESTION_CLASSIFICATION_ANSWER.BU_TITLE | translate }}</label>
+              <!-- BUID => NodeID -->
+              <div class="col-sm-8">
+                <app-bu-select validator formControlName="NodeID" [(ngModel)]="model.NodeID" name="NodeID"
+                  [placeholder]="translations.NODE_DEFINITION.BU_PLACEHOLDER | translate "></app-bu-select>
+              </div>
+            </div>
+            <div class="col-sm-4 input-group">
+              <label for="'Keyword'"
+                class="col-sm-4 col-form-label">{{ translations.QUESTION_CLASSIFICATION_ANSWER.KEYWORD | translate }}</label>
+              <div class="col-sm-8">
+                <input class="form-control" formControlName="Keyword" [(ngModel)]="model.Keyword"
+                  placeholder="{{translations.QUESTION_CLASSIFICATION_ANSWER.KEYWORD_PLACEHOLDER | translate}}"
+                  id="Keyword" type="text" />
+              </div>
+            </div>
+          </div>
+          <!-- 關鍵字 -->
+          <div class="row full-name-inputs">
+
+          </div>
+
+          <!-- 查詢 -->
+          <div class="form-group">
+            <div class="row">
+              <div class="offset-sm-6 col-sm-3">
+                <button type="button" class="btn btn-sm btn-ptc-search" [authorize]="authType.Read"
+                  (click)="btnRender($event)">{{ translations.COMMON.BTN_SEARCH | translate }}</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<!-- 查詢條件 -->
+
+<!-- 查詢結果 -->
+<div class="row search-result" [attr.hidden]="isEnable">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header class="nb-card-header"> {{ translations.COMMON.SEARCH_RESULT_TITLE | translate }}
+        <button type="button" class="btn btn-sm btn-ptc-create float-right mx-1" (click)="btnAdd($event)"
+          [authorize]="authType.Add">{{ translations.COMMON.BTN_ADD | translate }}</button>
+      </nb-card-header>
+      <nb-card-body class="nb-card-body">
+        <app-server-table #table [ajax]="ajax" [columns]="columns" (critiria)="criteria($event)"
+          (btnDelete)="onBtnDelete($event)" (btnEdit)="onBtnEdit($event)" (btnSearch)="onBtnSearch($event)"
+          [btnDeleteText]="translations.COMMON.BTN_DELETE | translate" [templateRefs]="{Content: contentRef, Names: questionNames}">
+        </app-server-table>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<!-- 查詢結果 -->
+
+<!-- Server Table 客製化欄位 -->
+
+<!-- 問題分類 -->
+<ng-template #questionNames let-row="row">
+  <div class="d-flex">
+    <nb-card class="questionItem" *ngFor="let name of row.Names">
+      <nb-card-body>
+        <p >{{ name }}</p>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</ng-template>
+
+<!-- 常用語 -->
+<ng-template #contentRef let-row="row">
+  <div class="truncate" style="text-align:left !important;" [nbPopover]="row.Content" nbPopoverTrigger="hover">
+    <span>{{ row.Content }}</span>
+  </div>
+</ng-template>

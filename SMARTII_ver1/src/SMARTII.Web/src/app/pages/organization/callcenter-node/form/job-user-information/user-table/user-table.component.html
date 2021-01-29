@@ -1,0 +1,23 @@
+<ng-template *ngIf="(model.ID !== undefined); then hasdata; else nodata"></ng-template>
+
+<ng-template #hasdata>
+  <nb-card>
+    <nb-card-header>{{translations.CALLCENTER_NODE.USER_LIST | translate}} ({{model?.Name}})
+      <button type="button" *ngIf="uiActionType == actionType.Update" class="btn btn-sm btn-ptc-confirm mx-5"
+        [authorize]="authType.Update"
+        (click)="btnUserSelector($event)">{{ translations.COMMON.BTN_CHOICE | translate }} </button>
+    </nb-card-header>
+    <nb-card-body>
+      <app-smart-local-table (delete)="btnDeleteUser($event)" [options]="options" [data]="model?.Users">
+      </app-smart-local-table>
+    </nb-card-body>
+  </nb-card>
+</ng-template>
+<ng-template #nodata>
+  <nb-card>
+    <nb-card-body>
+      {{translations.CALLCENTER_NODE.SELECT_JOB_USER_INFO_HINT | translate}}
+    </nb-card-body>
+  </nb-card>
+
+</ng-template>

@@ -1,0 +1,19 @@
+<!-- 輸入項目 -->
+<app-ucoi #ucoi *ngIf="visibleInput && uiActionType != actionType.Read" [(uiActionType)]="uiActionType"
+  [organizationSearchTerm]="{NotIncludeDefKey: [definitionKey.STORE], IsEnabled: true}" [(user)]="onSetUser"
+  [sourcekey]="sourcekey" [displayWithConcatUser]="displayWithConcatUser" [form]="form">
+</app-ucoi>
+<!-- END 輸入項目 -->
+
+<div class="row flex-center" *ngIf="visibleTable && visibleInput">
+  <button *ngIf="uiActionType == actionType.Add" type="button" class="btn btn-md btn-ptc-create m-1"
+    (click)="btnAddUser()">{{ translations.COMMON.BTN_ADD | translate }}</button>
+  <button *ngIf="uiActionType == actionType.Update" type="button" class="btn btn-md btn-ptc-modify m-1"
+    (click)="btnUpdateUser()">{{ translations.COMMON.BTN_EDIT | translate }}</button>
+</div>
+
+<!-- 顯示項目 -->
+<app-ucot #ucot *ngIf="visibleTable" [uiActionType]="uiActionType" [(users)]="concatUsers" [isShowDelete]="isShowDelete"
+  (customerRowSelect)="onCustomerRowSelect($event)" (unitRowSelect)="onUnitRowSelect($event)">
+</app-ucot>
+<!-- END 顯示項目 -->

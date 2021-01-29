@@ -1,0 +1,107 @@
+<!-- 查詢條件 -->
+<div class="row search-condition">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header class="nb-card-header">{{ translations.COMMON.SEARCH_CONDITION_TITLE | translate }}</nb-card-header>
+      <nb-card-body class="nb-card-body">
+        <form [formGroup]="form" autocomplete="off" (keyup.enter)="btnRender($event)">
+          <div class="row">
+            <!-- 企業組織選單 -->
+            <div class="col-sm-12 input-group">
+              <div class="col-sm-12">
+                <app-bu-nodedef-level-select #allNodeSelector [isSelf]="false" (btnBuSelect)="onBuChange()">
+                </app-bu-nodedef-level-select>
+              </div>
+            </div>
+            <!-- END 企業組織選單 -->
+          </div>
+          <div class="row">
+            <!-- 店名 -->
+            <div class="col-sm-4 input-group">
+              <label for="Name" class="col-sm-4 col-form-label">{{ translations.STORE.NAME | translate }}</label>
+              <div class="col-sm-8">
+                <input class="form-control" [(ngModel)]="model.Name"
+                  formControlName="Name"
+                  placeholder="{{translations.STORE.NAME_PLACEHOLDER | translate}}" id="Name" type="text" />
+              </div>
+            </div>
+            <div class="col-sm-4 input-group">
+              <label for="Name"
+                class="col-sm-4 col-form-label">{{ translations.STORE.STORE_OPEN_DATETIME | translate }}</label>
+              <div class="col-sm-8">
+                <input class="form-control" formControlName="StoreOpenDateTime" [(ngModel)]="model.StoreOpenDateTime"
+                  placeholder="{{translations.STORE.STORE_OPEN_DATETIME_PLACEHOLDER | translate}}"
+                  id="StoreOpenDateTime" type="text" datetimepicker />
+              </div>
+            </div>
+            <div class="col-sm-4 input-group">
+              <label for="Name"
+                class="col-sm-4 col-form-label">{{ translations.STORE.STORE_CLOSE_DATETIME | translate }}</label>
+              <div class="col-sm-8">
+                <input class="form-control" formControlName="StoreCloseDateTime" [(ngModel)]="model.StoreCloseDateTime"
+                  placeholder="{{translations.STORE.STORE_CLOSE_DATETIME_PLACEHOLDER | translate}}"
+                  id="StoreCloseDateTime" type="text" datetimepicker />
+              </div>
+            </div>
+            <!-- END 店名 -->
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <div class="offset-sm-6 col-sm-3">
+                <button type="button" class="btn btn-sm btn-ptc-advanced-search" [authorize]="authType.Read"
+                  (click)="btnRender($event)">{{ translations.COMMON.BTN_SEARCH | translate }}</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<!-- 查詢結果 -->
+<div class="row search-result" [attr.hidden]="isEnableResult">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header class="nb-card-header"> {{ translations.COMMON.SEARCH_RESULT_TITLE | translate }}
+
+        <button *ngIf="isEnable" type="button" class="btn btn-sm btn-ptc-advanced-search float-right mx-1"
+          (click)="btnAdvancedSearch($event)"
+          [authorize]="authType.Read">{{ translations.STORE.BTN_ADVANCED_SEARCH | translate }}</button>
+
+      </nb-card-header>
+      <nb-card-body class="nb-card-body">
+        <!-- 進階查詢 -->
+
+        <nb-card *ngIf="inputs.length > 0">
+          <nb-card-header>{{ translations.STORE.PARTICULAR | translate }}</nb-card-header>
+          <nb-card-body>
+            <form [formGroup]="form" autocomplete="off" (keyup.enter)="btnRender($event)">
+              <div class="row">
+                <div class="col-sm-12 input-group">
+                  <div class="col-sm-12">
+                    <ptc-dynamic-form [class]="'row'" [bindingData]="particular" [inputs]="inputs">
+                    </ptc-dynamic-form>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="row">
+                  <div class="offset-sm-6 col-sm-3">
+                    <button type="button" class="btn btn-sm btn-warning" [authorize]="authType.Read"
+                      (click)="btnAdvancedRender()">{{ translations.COMMON.BTN_SEARCH | translate }}</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </nb-card-body>
+        </nb-card>
+
+        <!-- 進階查詢 -->
+        <app-server-table #table [ajax]="ajax" [columns]="columns" (btnEdit)="onBtnEdit($event)"
+          (btnSearch)="onBtnSearch($event)" (critiria)="critiria($event)" [isVisibleBtnDelete]="false">
+        </app-server-table>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<!-- 查詢結果 -->

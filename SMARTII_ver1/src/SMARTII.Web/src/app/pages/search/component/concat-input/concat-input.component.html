@@ -1,0 +1,90 @@
+<!-- 連絡者 -->
+<form [formGroup]="form">
+  <div class="row mb-2">
+    <div class="col-sm-3 input-group">
+      <label for="ApplyUserID"
+        class="col-sm-4 col-form-label">{{ translations.SEARCH_COMMON.CASE_CONCAT_UNIT_TYPE | translate }}</label>
+      <div class="col-sm-8">
+        <app-enum-select [placeholder]="translations.COMMON.SELECT_PLACEHOLDER | translate : {key: ''} "
+          [enumName]="'UnitType'" [(ngModel)]="model.CaseConcatUnitType" formControlName="CaseConcatUnitType"
+          (onSelectedChange)="_onSelectedChange($event)">
+        </app-enum-select>
+      </div>
+    </div>
+
+    <ng-container [ngSwitch]="model.CaseConcatUnitType">
+
+      <!-- 消費者 -->
+      <ng-container *ngSwitchCase="unitType.Customer">
+        <!-- 姓名 -->
+        <div class="col-sm-3 input-group">
+          <label for="ApplyUserID"
+            class="col-sm-4 col-form-label">{{ translations.SEARCH_COMMON.CUSTOMER_NAME | translate }}</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" formControlName="ConcatName" [(ngModel)]="model.ConcatName" 
+            [placeholder]="translations.COMMON.INPUT_PLACEHOLDER | translate : {key: translations.SEARCH_COMMON.CUSTOMER_NAME | translate}" />
+          </div>
+        </div>
+
+        <!-- 電話 -->
+        <div class="col-sm-3 input-group">
+          <label for="ApplyUserID"
+            class="col-sm-4 col-form-label">{{ translations.SEARCH_COMMON.CUSTOMER_PHONE | translate }}</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" formControlName="ConcatTelephone"
+              [(ngModel)]="model.ConcatTelephone" [placeholder]="translations.COMMON.INPUT_PLACEHOLDER | translate : {key: translations.SEARCH_COMMON.CUSTOMER_PHONE | translate }" />
+          </div>
+        </div>
+
+
+        <!-- Email -->
+        <div class="col-sm-3 input-group">
+          <label for="ApplyUserID"
+            class="col-sm-4 col-form-label">{{ translations.SEARCH_COMMON.CUSTOMER_EMAIL | translate }}</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" formControlName="ConcatEmail" [(ngModel)]="model.ConcatEmail" 
+            [placeholder]="translations.COMMON.INPUT_PLACEHOLDER | translate : {key: translations.SEARCH_COMMON.CUSTOMER_EMAIL | translate}" />
+          </div>
+        </div>
+      </ng-container>
+
+      <!-- 門市 -->
+      <ng-container *ngSwitchCase="unitType.Store">
+        <!-- 店名 -->
+        <div class="col-sm-3 input-group">
+          <label for="ApplyUserID"
+            class="col-sm-4 col-form-label">{{ translations.SEARCH_COMMON.STORE_NAME | translate }}</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" formControlName="ConcatStoreName"
+              [(ngModel)]="model.ConcatStoreName" [placeholder]="translations.COMMON.INPUT_PLACEHOLDER | translate : {key: translations.SEARCH_COMMON.STORE_NAME | translate}" />
+          </div>
+        </div>
+        <!-- 店號 -->
+        <div class="col-sm-3 input-group">
+          <label for="ApplyUserID"
+            class="col-sm-4 col-form-label">{{ translations.SEARCH_COMMON.STORE_CODE | translate }}</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" formControlName="ConcatStoreNo" [(ngModel)]="model.ConcatStoreNo"
+            [placeholder]="translations.COMMON.INPUT_PLACEHOLDER | translate : {key: translations.SEARCH_COMMON.STORE_CODE | translate}" />
+          </div>
+        </div>
+      </ng-container>
+
+      <!-- 組織 -->
+      <ng-container *ngSwitchCase="unitType.Organization">
+        <!-- 單位名稱 -->
+        <div class="col-sm-3 input-group">
+          <label for="ApplyUserID"
+            class="col-sm-4 col-form-label">{{ translations.CALL_CENTER_CASE_SEARCH.ORGANIZAITON_NAME | translate }}</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" formControlName="ConcatNodeName"
+              [(ngModel)]="model.ConcatNodeName" [placeholder]="translations.COMMON.INPUT_PLACEHOLDER | translate : {key: translations.CALL_CENTER_CASE_SEARCH.ORGANIZAITON_NAME | translate}" />
+          </div>
+        </div>
+      </ng-container>
+
+    </ng-container>
+
+   
+  </div>
+</form>

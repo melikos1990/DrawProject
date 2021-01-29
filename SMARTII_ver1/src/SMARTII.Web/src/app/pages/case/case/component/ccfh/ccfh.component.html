@@ -1,0 +1,11 @@
+<ng-container *ngFor="let classification of layouts.CaseFinishReasonClassifications">
+  <div *ngIf="classification.CaseFinishDatas.length > 0" class="p-3">
+    <h4>{{classification.Title}} ({{classification.IsMultiple ? 
+      (translations.COMMON.MULTIPLE | translate) : (translations.COMMON.SINGLE | translate)}})</h4>
+    <mat-checkbox #cbx class="m-3" (change)="onChange($event)" *ngFor="let data of classification.CaseFinishDatas"
+      [disabled]="(uiActionType == actionType.Read) ? true : null" [value]="classification.ID + '-' + data.ID"
+      [checked]="isChecked(classification.ID , data.ID , data.Default)">{{data.Text}}
+      <span *ngIf="data.Default">({{ translations.COMMON.DEFAULT | translate }})</span>
+      </mat-checkbox>
+  </div>
+</ng-container>

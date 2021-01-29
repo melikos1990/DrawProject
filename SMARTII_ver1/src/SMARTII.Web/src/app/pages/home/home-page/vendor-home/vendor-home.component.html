@@ -1,0 +1,55 @@
+<p>
+  廠商 首頁
+</p>
+<!-- 查詢條件 -->
+<div class="row search-condition">
+  <div class="col-lg-12">
+    <!-- 未銷案件 -->
+    <nb-accordion>
+      <nb-accordion-item [collapsed]="false">
+        <nb-accordion-item-header class="accordionHeaderBlue">{{ translations.HOME.VENDOR_HOME | translate }}
+        </nb-accordion-item-header>
+        <nb-accordion-item-body>
+          <app-counter-ball-group [model]="groupItem" [bgColor]="'blue'" (onDivClickCallBack)="onUnFinishClick($event)"
+            [cuurentTarget]="cuurentTarget" [templateRef]="vendorballitem">
+          </app-counter-ball-group>
+          <ng-template let-data="data" #vendorballitem>
+            <app-counter-ball [url]="'Summary/VendorSummary/GetUnFinishCount'" [params]="{searchType : data.TargetID}">
+            </app-counter-ball>
+            {{data.TargetName}}
+          </ng-template>
+        </nb-accordion-item-body>
+      </nb-accordion-item>
+    </nb-accordion>
+  </div>
+  <!-- END 未銷案件 -->
+</div>
+<br>
+<!-- 查詢結果 -->
+<div class="row search-result" [attr.hidden]="isEnable">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header class="nb-card-header"> {{ translations.COMMON.SEARCH_RESULT_TITLE | translate }}
+      </nb-card-header>
+      <nb-card-body class="nb-card-body">
+        <app-server-table #table [ajax]="ajax" [columns]="columns" [templateRefs]="{CaseContent: caseContentRef, NoticeContent: noticeContentRef}"
+          (critiria)="critiria($event)" (btnEdit)="onBtnEdit($event)" (btnSearch)="onBtnSearch($event)"
+          [isVisibleBtnDelete]="false">
+        </app-server-table>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<!-- 查詢結果 -->
+
+<ng-template #caseContentRef let-row="row">
+  <div class="truncate" style="text-align:left !important;" [nbPopover]="row.CaseContent" nbPopoverTrigger="hover">
+    <span>{{ row.CaseContent }}</span>
+  </div>
+</ng-template>
+
+<ng-template #noticeContentRef let-row="row">
+  <div class="truncate" style="text-align:left !important;" [nbPopover]="row.NoticeContent" nbPopoverTrigger="hover">
+    <span>{{ row.NoticeContent }}</span>
+  </div>
+</ng-template>

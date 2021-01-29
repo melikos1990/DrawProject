@@ -1,0 +1,20 @@
+<div class="row">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-body>
+        <button type="button" class="btn btn-sm btn-ptc-create pos-rigth-10" (click)="btnCreateSource()"
+          stop-propagation>{{ translations.ROLE.ADD | translate }}</button>
+        <nb-tabset #tabs *ngIf="menu.length > 0">
+          <nb-tab tabTitle="{{item.id}}" *ngFor="let item of menu" lazyLoad>
+            <div class="pos-rigth" id="icon-group" (click)="closeCaseSource(item.key)" *ngIf="menu?.length > 1">
+              <i class="nb-close-circled test"></i>
+            </div>
+            <app-cs1 *ngIf="isNew(item.id)" [key]="item.key" [sourceTab]="menu"></app-cs1>
+            <app-cs2 [uiActionType]="uiActionType" *ngIf="isNew(item.id) === false" [key]="item.key" [focusCaseID]="item.focusCaseID" [sourceTab]="menu"></app-cs2>
+          </nb-tab>
+        </nb-tabset>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <app-totop-button></app-totop-button>
+</div>

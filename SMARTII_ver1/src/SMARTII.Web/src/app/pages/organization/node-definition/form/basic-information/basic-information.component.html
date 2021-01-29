@@ -1,0 +1,170 @@
+<form [formGroup]="form">
+  <!-- ROW 1 -->
+  <div class="row ">
+    <!-- 組織定義名稱 -->
+    <div class="col-sm-6 input-group">
+      <label starsign for="Name"
+        class="col-sm-4 col-form-label">{{ translations.NODE_DEFINITION.NAME | translate }}</label>
+      <input type="text" validator class="form-control col-sm-8" formControlName="Name" id="Name"
+        [attr.readonly]="uiActionType == actionType.Read ? true : null"
+        placeholder="{{ translations.NODE_DEFINITION.NAME_PLACEHOLDER | translate }}" [(ngModel)]="model.Name">
+    </div>
+    <!-- END 組織定義名稱 -->
+    <!-- 啟用狀態 -->
+    <div class="col-sm-6 input-group">
+      <label for="IsEnabled"
+        class="col-sm-4 col-form-label">{{ translations.NODE_DEFINITION.IS_ENABLED | translate }}</label>
+      <nb-checkbox class="col-sm-8" validator [disabled]="(uiActionType == actionType.Read) ? true : null"
+        formControlName="IsEnabled" id="IsEnabled" [(ngModel)]="model.IsEnabled">
+      </nb-checkbox>
+    </div>
+    <!-- END 啟用狀態 -->
+  </div>
+  <!-- END ROW 1 -->
+  <!-- ROW 2 -->
+  <div class="row">
+    <!-- 組織定義層級 -->
+    <div class="col-sm-6 input-group">
+      <label starsign for="Level"
+        class="col-sm-4 col-form-label">{{ translations.NODE_DEFINITION.LEVEL | translate }}</label>
+      <input type="number" validator class="form-control col-sm-8" formControlName="Level" id="Level"
+        [attr.readonly]="uiActionType == actionType.Read ? true : null"
+        placeholder="{{ translations.NODE_DEFINITION.LEVEL_PLACEHOLDER | translate }}" [(ngModel)]="model.Level">
+    </div>
+    <!-- END 組織定義層級 -->
+  </div>
+  <!-- END ROW 2 -->
+  <!-- ROW 3 -->
+  <div class="row">
+    <!-- 組織定義選單 -->
+    <div class="col-sm-6 input-group">
+      <label starsign for="OrganizationType"
+        class="col-sm-4 col-form-label">{{ translations.NODE_DEFINITION.ORGANIZATION_TYPE | translate }}</label>
+      <app-enum-select validator class="col-sm-8"
+        [disabled]="(uiActionType == actionType.Update || uiActionType == actionType.Read) ? true : null"
+        formControlName="OrganizationType" [(ngModel)]="model.OrganizationType"
+        [placeholder]="translations.NODE_DEFINITION.ORGANIZATION_TYPE_PLACEHOLDER | translate"
+        [enumName]="'OrganizationType'" (onSelectedChange)="onChange($event)">
+      </app-enum-select>
+    </div>
+    <!-- END 組織定義選單 -->
+    <!--
+      識別值清單 (根據組織定義不同 , 會有不同的識別值清單)
+      廠商 > definition : VENDOR
+      總部 > definition : BU
+      CC  >  definition : CC
+    -->
+    <div class="col-sm-6 input-group">
+      <ng-container *ngIf="model.OrganizationType == organizationType.Vendor">
+        <label for="Vendor"
+          class="col-sm-4 col-form-label">{{ translations.NODE_DEFINITION.VENDOR | translate }}</label>
+        <div class="col-sm-8">
+          <app-vendor-select [id]="'Vendor'"
+            [disabled]="(uiActionType == actionType.Update || uiActionType == actionType.Read) ? true : null"
+            [placeholder]="translations.NODE_DEFINITION.VENDOR_PLACEHOLDER | translate "
+            (onSelectedChange)="onSelectedChange($event)" [(ngModel)]="model.Identification"
+            [ngModelOptions]="{standalone: true}" [isSelf]="false">
+          </app-vendor-select>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="model.OrganizationType == organizationType.HeaderQuarter">
+        <label for="BU" class="col-sm-4 col-form-label">{{ translations.NODE_DEFINITION.BU | translate }}</label>
+        <div class="col-sm-8">
+          <app-bu-select [id]="'BU'"
+            [disabled]="(uiActionType == actionType.Update || uiActionType == actionType.Read) ? true : null"
+            [placeholder]="translations.NODE_DEFINITION.BU_PLACEHOLDER | translate "
+            (onSelectedChange)="onSelectedChange($event)" [(ngModel)]="model.Identification"
+            [ngModelOptions]="{standalone: true}" [isSelf]="false">
+          </app-bu-select>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="model.OrganizationType == organizationType.CallCenter">
+        <label for="CC" class="col-sm-4 col-form-label">{{ translations.NODE_DEFINITION.CC | translate }}</label>
+        <div class="col-sm-8">
+          <app-cc-select [id]="'CC'"
+            [disabled]="(uiActionType == actionType.Update || uiActionType == actionType.Read) ? true : null"
+            [placeholder]="translations.NODE_DEFINITION.CC_PLACEHOLDER | translate "
+            (onSelectedChange)="onSelectedChange($event)" [(ngModel)]="model.Identification"
+            [ngModelOptions]="{standalone: true}" [isSelf]="false">
+          </app-cc-select>
+        </div>
+      </ng-container>
+    </div>
+    <!-- END  識別值清單 -->
+  </div>
+  <!-- END ROW 3 -->
+  <!-- ROW 4 -->
+  <div class="row">
+    <!-- 組織定義識別值 -->
+    <div class="col-sm-6 input-group" [attr.readOnly]="uiActionType == actionType.Read ? true : false" >
+      <label for="Key"
+        class="col-sm-4 col-form-label">{{ translations.NODE_DEFINITION.KEY | translate }}</label>
+      <app-open-select validator class="col-sm-8"
+        name="Key"
+        formControlName="Key"
+        [(ngModel)]="model.Key"
+        [placeholder]="translations.NODE_DEFINITION.KEY_PLACEHOLDER | translate" [items]="items"
+        [disabled]="uiActionType == actionType.Read ? true : false" >
+      </app-open-select>
+    </div>
+    <!-- END 組織定義識別值 -->
+  </div>
+  <!-- END ROW 4 -->
+  <!-- 更新 / 建立時間 -->
+  <ng-container *ngIf="uiActionType == actionType.Read || uiActionType == actionType.Update">
+    <div class="row ">
+      <!-- 建立人員 -->
+      <div class="col-sm-6 input-group">
+        <label for="CreateUserName"
+          class="col-sm-4 col-form-label">{{ translations.NODE_DEFINITION.CREATE_USERNAME_LABEL | translate }}</label>
+        <input type="text" validator class="form-control col-sm-8" disabled formControlName="CreateUserName"
+          id="CreateUserName" placeholder="{{ translations.NODE_DEFINITION.CREATE_USERNAME_PLACEHOLDER | translate }}"
+          [(ngModel)]="model.CreateUserName">
+      </div>
+      <!-- END 建立人員 -->
+      <!-- 建立時間 -->
+      <div class="col-sm-6 input-group">
+        <label for="CreateDateTime"
+          class="col-sm-4 col-form-label">{{ translations.NODE_DEFINITION.CREATE_DATETIME_LABEL | translate }}</label>
+        <input type="text" validator class="form-control col-sm-8" disabled formControlName="CreateDateTime"
+          id="CreateDateTime" placeholder="{{ translations.NODE_DEFINITION.CREATE_DATETIME_PLACEHOLDER | translate }}"
+          [(ngModel)]="model.CreateDateTime">
+      </div>
+      <!-- END 建立時間 -->
+    </div>
+    <div class="row">
+      <!-- 更新人員 -->
+      <div class="col-sm-6 input-group">
+        <label for="UpdateUserName"
+          class="col-sm-4 col-form-label">{{ translations.NODE_DEFINITION.UPDATE_USERNAME_LABEL | translate }}</label>
+        <input type="text" validator class="form-control col-sm-8" disabled formControlName="UpdateUserName"
+          id="UpdateUserName" placeholder="{{ translations.NODE_DEFINITION.UPDATE_USERNAME_PLACEHOLDER | translate }}"
+          [(ngModel)]="model.UpdateUserName">
+      </div>
+      <!-- END 更新人員 -->
+      <!-- 更新時間 -->
+      <div class="col-sm-6 input-group">
+        <label for="UpdateDateTime"
+          class="col-sm-4 col-form-label">{{ translations.NODE_DEFINITION.UPDATE_DATETIME_LABEL | translate }}</label>
+        <input type="text" validator class="form-control col-sm-8" disabled formControlName="UpdateDateTime"
+          id="UpdateDateTime" placeholder="{{ translations.NODE_DEFINITION.UPDATE_DATETIME_PLACEHOLDER | translate }}"
+          [(ngModel)]="model.UpdateDateTime">
+      </div>
+      <!-- END 更新時間 -->
+    </div>
+  </ng-container>
+  <!-- END 更新 / 建立時間 -->
+  <!-- 設定按鈕 -->
+  <div class="mt-5">
+    <div class="row flex-center">
+      <button type="button" *ngIf="uiActionType == actionType.Update" class="btn btn-sm btn-ptc-confirm mx-5"
+        [authorize]="authType.Update" (click)="btnEdit($event)">{{ translations.COMMON.BTN_CONFIRM | translate }}
+      </button>
+      <button type="button" *ngIf="uiActionType == actionType.Add" class="btn btn-sm btn-ptc-confirm mx-5"
+        [authorize]="authType.Add" (click)="btnAdd($event)">{{ translations.COMMON.BTN_CONFIRM | translate }} </button>
+      <button type="button" class="btn btn-sm btn-kind-finished mx-5"
+        (click)="btnBack($event)">{{ translations.COMMON.BTN_BACK | translate }}</button>
+    </div>
+  </div>
+  <!-- END 設定按鈕 -->
+</form>

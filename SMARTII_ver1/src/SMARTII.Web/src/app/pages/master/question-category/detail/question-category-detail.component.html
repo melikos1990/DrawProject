@@ -1,0 +1,252 @@
+<div class="row">
+  <div class="col-lg-12">
+    <nb-card>
+      <!-- <nb-card-header>明細</nb-card-header>  context: {$implicit: form} -->
+      <nb-card-header class="nb-card-header">{{ translations.QUESTIONCATEGORY.QUESTIONCLASSIFICATION | translate }}-{{ titleTypeString }}
+      </nb-card-header>
+      <nb-card-body class="nb-card-body">
+        <form autocomplete="off" [formGroup]="form">
+          <ng-container *ngTemplateOutlet="questionTemp; context: {$implicit: form}"></ng-container>
+          <ng-container *ngIf="uiActionType == actionType.Read || uiActionType == actionType.Update">
+            <ng-container *ngTemplateOutlet="updateInfo; context: {$implicit: form}"></ng-container>
+          </ng-container>
+
+          <!-- <nb-tab [tabTitle]="translations.QUESTIONCATEGORY.COMMON_EXPRESSIONS | translate">
+              <ng-container *ngTemplateOutlet="answerTemp; context: {$implicit: form}"></ng-container>
+            </nb-tab> -->
+
+          <!-- 設定按鈕 -->
+          <div class="mt-5">
+            <div class="row flex-center">
+              <button type="button" *ngIf="uiActionType == actionType.Update" class="btn btn-sm btn-ptc-confirm mx-5"
+                [authorize]="authType.Update"
+                (click)="btnEdit($event)">{{ translations.COMMON.BTN_CONFIRM | translate }}
+              </button>
+              <button type="button" *ngIf="uiActionType == actionType.Add" class="btn btn-sm btn-ptc-confirm mx-5"
+                [authorize]="authType.Add" (click)="btnAdd($event)">{{ translations.COMMON.BTN_CONFIRM | translate }}
+              </button>
+              <button type="button" class="btn btn-sm btn-kind-finished mx-5"
+                (click)="btnBack($event)">{{ translations.COMMON.BTN_BACK | translate }}</button>
+            </div>
+          </div>
+          <!-- END 設定按鈕 -->
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+
+
+</div>
+
+
+<!-- 問題分類 template -->
+<ng-template #questionTemp let-form>
+  <form [formGroup]="form" autocomplete="off" class="pt-4">
+
+    <!-- 企業別 -->
+    <div class="row ">
+      <div class="col-sm-4 input-group">
+        <label for="account"
+          class="col-sm-4  col-form-label">{{ translations.QUESTIONCATEGORY.BU_TITLE | translate }}</label>
+        <div class="col-sm-8 ">
+          <app-bu-select validator [(ngModel)]="detail.BuID" name="BuID" formControlName="BuID"
+            [placeholder]="translations.NODE_DEFINITION.BU_PLACEHOLDER | translate "
+            [disabled]="(uiActionType == actionType.Read || uiActionType == actionType.Update || uiActionType == actionType.Add) ? true : null">
+          </app-bu-select>
+        </div>
+      </div>
+    </div>
+    <!-- END 企業別 -->
+
+
+    <!-- 問題分類動態 -->
+    <div class="row">
+      <div class="col-sm-12 input-group px-0">
+
+        <app-dynamic-question-select [buID]="detail.BuID" [contentClass]="'px-3'"
+          [colClass]="'col-sm-4'" [needValidSelect]="[1]" [validTempRef]="valid"
+          [disabled]="uiActionType == actionType.Read" [selectedItems]="detail.ParentNodePath" #dynamicSelect>
+        </app-dynamic-question-select>
+
+        <ng-template #valid let-level let-buID="buID" let-disabled="disabled" let-groupName="groupName">
+          <div class="input-group col-sm-4">
+            <label for="account"
+              class="col-sm-4 col-form-label">{{ translations.QUESTIONCATEGORY.QUESTIONLEVEL | translate: {level: level} }}</label>
+            <div class="col-sm-8">
+              <app-question-category-select [disabled]="disabled" [groupName]="groupName" [buID]="buID" [level]="level"
+                [placeholder]="translations.QUESTIONCATEGORY.QUESTION_PLACEHOLDER | translate" >
+              </app-question-category-select>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+    </div>
+    <!-- END 問題分類動態 -->
+
+    <!-- 問類名稱 -->
+    <div class="row">
+      <div class="col-sm-12 px-0 input-group">
+        <div class="col-sm-4 input-group ">
+          <label for="account" starsign
+            class="col-sm-4  col-form-label">{{ translations.QUESTIONCATEGORY.QUESTIONCLASSIFICATION | translate }}
+          </label>
+          <div class="col-sm-8">
+            <input type="text" validator class="form-control" formControlName="Name"
+              placeholder="{{ translations.QUESTIONCATEGORY.QUESTION_PLACEHOLDER | translate }}"
+              [(ngModel)]="detail.Name" [attr.readonly]="uiActionType == actionType.Read ? true : null">
+
+          </div>
+        </div>
+
+        <div class="col-sm-6 input-group " *ngIf="uiActionType == actionType.Update">
+          <label for="account" class="col-sm-12  col-form-label text-danger">
+            目前分類: {{ detail.ParentNamePath | replace: {replaceStr:'@', insteadStr: '－', isRegExp: true} }}
+          </label>
+        </div>
+      </div>
+
+    </div>
+    <!-- END 問類名稱 -->
+
+    <!-- 啟用狀態 -->
+    <div class="row">
+      <div class="col-sm-4 input-group ">
+        <label for="account" class="col-sm-4  col-form-label">{{ translations.QUESTIONCATEGORY.ENABLE | translate }}
+        </label>
+        <div class="col-sm-8 ">
+          <nb-checkbox class="d-flex justify-content-center" status="primary" [(ngModel)]="detail.IsEnable"
+            formControlName="IsEnable" name="IsEnable" [disabled]="(uiActionType == actionType.Read) ? true : null">
+          </nb-checkbox>
+        </div>
+      </div>
+    </div>
+    <!-- END 啟用狀態 -->
+
+  </form>
+
+</ng-template>
+
+
+<!-- 常用語 template -->
+<ng-template #answerTemp let-form>
+  <button type="button" class="btn btn-sm btn-ptc-create mx-5"
+    *ngIf="uiActionType != actionType.Read">{{ translations.COMMON.BTN_ADD | translate }}</button>
+  <form [formGroup]="form" autocomplete="off" class="p-3">
+    <nb-card class="shadow p-3 mb-5 bg-white rounded">
+      <nb-card-header>
+        <div class="row">
+          <div class="col-sm-3">
+            <h5 class="pl-0 pr-0">{{ translations.QUESTIONCATEGORY.ANSWER_TITLE | translate }}</h5>
+          </div>
+          <div [ngClass]="{'col-sm-6': uiActionType == actionType.Read, 'col-sm-9': uiActionType != actionType.Read }">
+            <h5 class="pl-4 pr-0">{{ translations.QUESTIONCATEGORY.ANSWER_CONTENT | translate }}</h5>
+          </div>
+          <ng-template [ngIf]="uiActionType == actionType.Read">
+            <h5 class="col-sm-1 pl-0 pr-0 ">{{ translations.QUESTIONCATEGORY.ANSWER_EDIT_USERNAME | translate }}</h5>
+            <h5 class="col-sm-2 pl-5 pr-0">{{ translations.QUESTIONCATEGORY.ANSWER_EDIT_TIME | translate }}</h5>
+          </ng-template>
+        </div>
+      </nb-card-header>
+      <nb-card-body>
+        <div class="row mb-2" formArrayName="Answers" *ngFor="let answer of answerForm.controls; let idx = index">
+          <ng-container [formGroupName]="idx">
+            <!-- 主旨 -->
+            <div class="col-sm-3">
+              <input type="text" validator class="form-control col-sm-8" formControlName="Title" name="Title"
+                [placeholder]="translations.QUESTIONCATEGORY.ANSWER_TITLE_PLACEHOLDER | translate"
+                [attr.readonly]="uiActionType == actionType.Read ? true : null">
+
+            </div>
+
+            <!-- 內容 -->
+            <div
+              [ngClass]="{'col-sm-6': uiActionType == actionType.Read, 'col-sm-9': uiActionType != actionType.Read }">
+
+              <div class="col-sm-12">
+                <textarea validator class="form-control input-area col-sm-8" rows="8" formControlName="Content"
+                  name="Content" [attr.readonly]="uiActionType == actionType.Read ? true : null"></textarea>
+
+              </div>
+              <div class="d-flex justify-content-end">
+                <button *ngIf="uiActionType != actionType.Read" nbButton status="danger">
+                  <i class="control-icon ion ion-ios-remove"></i>
+                  {{ translations.COMMON.BTN_DELETE | translate }}
+                </button>
+
+              </div>
+
+            </div>
+
+            <ng-template [ngIf]="uiActionType == actionType.Read">
+              <div class="col-sm-1 d-flex ">
+                <label class="col-form-label align-self-center h4">{{ answer.get('UpdateUserName').value }}</label>
+              </div>
+              <div class="col-sm-2 d-flex">
+                <label
+                  class="col-form-label align-self-center h4">{{ answer.get('UpdateTime').value | date: 'yyyy-MM-dd HH:mm' }}</label>
+              </div>
+            </ng-template>
+          </ng-container>
+
+
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </form>
+</ng-template>
+
+
+
+<!-- 更新資訊 template -->
+<ng-template #updateInfo let-form>
+
+  <form [formGroup]="form" autocomplete="off" class="mt-5">
+    <div class="row full-name-inputs">
+      <!-- 建立人員 -->
+      <div class="col-sm-6 input-group">
+        <label for="CreateUserName"
+          class="col-sm-4 col-form-label">{{ translations.QUESTIONCATEGORY.CREATE_USERNAME_LABEL | translate }}</label>
+        <input type="text" validator class="form-control col-sm-8" disabled formControlName="CreateUserName"
+          id="CreateUserName" placeholder="{{ translations.QUESTIONCATEGORY.CREATE_USERNAME_PLACEHOLDER | translate }}"
+          [(ngModel)]="detail.CreateUserName">
+      </div>
+      <!-- END 建立人員 -->
+      <!-- 建立時間 -->
+      <div class="col-sm-6 input-group">
+        <label for="CreateTime"
+          class="col-sm-4 col-form-label">{{ translations.QUESTIONCATEGORY.CREATE_DATETIME_LABEL | translate }}</label>
+        <input type="text" validator class="form-control col-sm-8" disabled formControlName="CreateTime" id="CreateTime"
+          placeholder="{{ translations.QUESTIONCATEGORY.CREATE_DATETIME_PLACEHOLDER | translate }}"
+          [(ngModel)]="detail.CreateTime">
+      </div>
+      <!-- END 建立時間 -->
+    </div>
+    <div class="row full-name-inputs">
+      <!-- 更新人員 -->
+      <div class="col-sm-6 input-group">
+        <label for="UpdateUserName"
+          class="col-sm-4 col-form-label">{{ translations.QUESTIONCATEGORY.UPDATE_USERNAME_LABEL | translate }}</label>
+        <input type="text" class="form-control col-sm-8" validator disabled formControlName="UpdateUserName"
+          id="UpdateUserName" placeholder="{{ translations.QUESTIONCATEGORY.UPDATE_USERNAME_PLACEHOLDER | translate }}"
+          [(ngModel)]="detail.UpdateUserName">
+      </div>
+      <!-- END 更新人員 -->
+      <!-- 更新時間 -->
+      <div class="col-sm-6 input-group">
+        <label for="UpdateTime"
+          class="col-sm-4 col-form-label">{{ translations.QUESTIONCATEGORY.UPDATE_DATETIME_LABEL | translate }}</label>
+        <input type="text" class="form-control col-sm-8" validator disabled formControlName="UpdateTime" id="UpdateTime"
+          placeholder="{{ translations.QUESTIONCATEGORY.UPDATE_DATETIME_PLACEHOLDER | translate }}"
+          [(ngModel)]="detail.UpdateTime">
+      </div>
+      <!-- END 更新時間 -->
+    </div>
+  </form>
+</ng-template>
+
+
+
+<!-- <div class="col-sm-6 align-self-center">
+  <label for="account" class="col-sm-6  h5"
+    *ngIf="true">{{ translations.QUESTIONCATEGORY.QUESTIONCLASSIFICATION_EDIT_TITLE | translate }}</label>
+</div> -->

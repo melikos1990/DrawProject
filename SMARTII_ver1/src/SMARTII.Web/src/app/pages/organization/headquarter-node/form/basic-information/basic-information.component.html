@@ -1,0 +1,169 @@
+<ng-template *ngIf="(model.ID !== undefined); then hasdata; else nodata"></ng-template>
+
+<ng-template #hasdata>
+  <form [formGroup]="form">
+
+    <div class="row">
+      <div class="col-sm-6 input-group">
+        <label for="Name" class="col-sm-4 col-form-label">{{ translations.COMMON.BU_NAME | translate }}</label>
+        <label class="col-sm-8">
+          <div>{{model.BUName}}</div>
+        </label>
+      </div>
+      <!-- 組織定義 -->
+      <div class="col-sm-6 input-group">
+          <label starsign for="DefindID"
+            class="col-sm-4 col-form-label">{{ translations.HEADERQUARTER_NODE.DEFINITION | translate }}</label>
+          <div class="col-sm-8 p-0">
+            <app-node-definition-select validator formControlName="DefindID" [(ngModel)]="model.DefindID"
+              [searchTerm]="{BUID : model.BUID , OrganizationType : organizationType.HeaderQuarter, IncludeDefKey: (isBuOrgDef ? definitionKey.BU : null)}" [multiple]="false" [compare]="nodeDefCompare | bind: {this: this, trigger: model.ID}"
+              [placeholder]="translations.HEADERQUARTER_NODE.DEFINITION_PLACEHOLDER | translate" (onSelectedChange)="changeOrgDefType($event)"
+              [disabled]="uiActionType == actionType.Read ? true : null">
+            </app-node-definition-select>
+
+          </div>
+        </div>
+        <!-- END 組織定義 -->
+    </div>
+    <div class="row ">
+      <!-- 節點名稱 -->
+      <div class="col-sm-6 input-group">
+        <label starsign for="Name" class="col-sm-4 col-form-label">{{ translations.HEADERQUARTER_NODE.NAME | translate }}</label>
+        <input type="text" validator class="form-control col-sm-8" formControlName="Name"
+          [attr.readonly]="uiActionType == actionType.Read ? true : null"
+          placeholder="{{ translations.HEADERQUARTER_NODE.NAME_PLACEHOLDER | translate }}" [(ngModel)]="model.Name">
+      </div>
+      <!-- END 節點名稱 -->
+      <!--  啟用狀態 -->
+      <div class="col-sm-6 input-group">
+        <label for="IsEnabled"
+          class="col-sm-4 col-form-label">{{ translations.HEADERQUARTER_NODE.IS_ENABLED | translate }}</label>
+        <nb-checkbox validator class=" col-sm-8" formControlName="IsEnabled" [(ngModel)]="model.IsEnabled" [disabled]="uiActionType == actionType.Read ? true : null">
+        </nb-checkbox>
+      </div>
+    </div>
+    <!-- END 啟用狀態 -->
+
+    <ng-template [ngIf]="orgType == definitionKey.STORE">
+        <ng-container *ngTemplateOutlet="StoreTemp; context: {$implicit: form}"></ng-container>
+    </ng-template>
+
+    <ng-template [ngIf]="orgType == definitionKey.BU">
+        <ng-container *ngTemplateOutlet="BuTemp; context: {$implicit: form}"></ng-container>
+    </ng-template>
+
+
+    <ng-container *ngIf="uiActionType == actionType.Read || uiActionType == actionType.Update">
+      <div class="row">
+        <!-- 建立人員 -->
+        <div class="col-sm-6 input-group">
+          <label for="CreateUserName"
+            class="col-sm-4 col-form-label">{{ translations.HEADERQUARTER_NODE.CREATE_USERNAME_LABEL | translate }}</label>
+          <input type="text" validator class="form-control col-sm-8" disabled formControlName="CreateUserName"
+            id="CreateUserName"
+            placeholder="{{ translations.HEADERQUARTER_NODE.CREATE_USERNAME_PLACEHOLDER | translate }}"
+            [(ngModel)]="model.CreateUserName">
+        </div>
+        <!-- END 建立人員 -->
+        <!-- 建立時間 -->
+        <div class="col-sm-6 input-group">
+          <label for="CreateDateTime"
+            class="col-sm-4 col-form-label">{{ translations.HEADERQUARTER_NODE.CREATE_DATETIME_LABEL | translate }}</label>
+          <input type="text" validator class="form-control col-sm-8" disabled formControlName="CreateDateTime"
+            id="CreateDateTime"
+            placeholder="{{ translations.HEADERQUARTER_NODE.CREATE_DATETIME_PLACEHOLDER | translate }}"
+            [(ngModel)]="model.CreateDateTime">
+        </div>
+        <!-- END 建立時間 -->
+      </div>
+      <div class="row">
+        <!-- 更新人員 -->
+        <div class="col-sm-6 input-group">
+          <label for="UpdateUserName"
+            class="col-sm-4 col-form-label">{{ translations.HEADERQUARTER_NODE.UPDATE_USERNAME_LABEL | translate }}</label>
+          <input type="text" validator class="form-control col-sm-8" disabled formControlName="UpdateUserName"
+            id="UpdateUserName"
+            placeholder="{{ translations.HEADERQUARTER_NODE.UPDATE_USERNAME_PLACEHOLDER | translate }}"
+            [(ngModel)]="model.UpdateUserName">
+        </div>
+        <!-- END 更新人員 -->
+        <!-- 更新時間 -->
+        <div class="col-sm-6 input-group">
+          <label for="UpdateDateTime"
+            class="col-sm-4 col-form-label">{{ translations.HEADERQUARTER_NODE.UPDATE_DATETIME_LABEL | translate }}</label>
+          <input type="text" validator class="form-control col-sm-8" disabled formControlName="UpdateDateTime"
+            id="UpdateDateTime"
+            placeholder="{{ translations.HEADERQUARTER_NODE.UPDATE_DATETIME_PLACEHOLDER | translate }}"
+            [(ngModel)]="model.UpdateDateTime">
+        </div>
+        <!-- END 更新時間 -->
+      </div>
+    </ng-container>
+
+
+    <!-- 設定按鈕 -->
+    <div class="mt-5">
+      <div class="row flex-center">
+        <button type="button" *ngIf="uiActionType == actionType.Update" class="btn btn-sm btn-ptc-confirm mx-5"
+          [authorize]="authType.Update" (click)="btnEdit($event)">{{ translations.COMMON.BTN_CONFIRM | translate }}
+        </button>
+      </div>
+    </div>
+    <!-- END 設定按鈕 -->
+  </form>
+</ng-template>
+
+<ng-template #nodata>
+  <div>{{translations.HEADERQUARTER_NODE.SELECT_BASIC_INFO_HINT | translate}}</div>
+</ng-template>
+
+
+<ng-template let-form #BuTemp>
+  <form [formGroup]="form">
+      <div class="row">
+          <!-- 企業別代號 -->
+          <div class="col-sm-6 input-group">
+            <label starsign for="BUkey" class="col-sm-4 col-form-label">{{ translations.HEADERQUARTER_NODE.BU_CORE | translate }}</label>
+            <input type="text" validator class="form-control col-sm-8" formControlName="BUkey"
+              [attr.readonly]="uiActionType == actionType.Read ? true : null" [attr.disabled]="model.CanModifyBuCode | bit: { true: null, false: '' }"
+              placeholder="{{ translations.HEADERQUARTER_NODE.NAME_PLACEHOLDER | translate }}" [(ngModel)]="model.BUkey">
+          </div>
+          <!-- END 企業別代號 -->
+          <!-- 集團別 -->
+          <div class="col-sm-6 input-group">
+              <label for="EnterpriseID"
+                class="col-sm-4 col-form-label">{{ translations.HEADERQUARTER_NODE.ENTERPRISE | translate }}</label>
+              <div class="col-sm-8 p-0">
+                <app-enterprise-select formControlName="EnterpriseID" [(ngModel)]="model.EnterpriseID" [multiple]="false"
+                  [placeholder]="translations.HEADERQUARTER_NODE.ENTERPRISE_PLACEHOLDER | translate"
+                  [disabled]="uiActionType == actionType.Read ? true : false">
+                </app-enterprise-select>
+              </div>
+            </div>
+            <!-- END 集團別 -->
+        </div>
+  </form>
+</ng-template>
+
+<ng-template let-form #StoreTemp>
+  <form [formGroup]="form">
+      <div class="row">
+        <!-- 店號 -->
+        <div class="col-sm-6 input-group">
+          <label starsign for="StoreName" class="col-sm-4 col-form-label">{{ translations.HEADERQUARTER_NODE.STORE_NAME | translate }}</label>
+          <input type="text" validator class="form-control col-sm-8" formControlName="StoreName"
+            [attr.readonly]="uiActionType == actionType.Read ? true : null"
+            placeholder="{{ translations.HEADERQUARTER_NODE.STORE_NAME_PLACEHOLDER | translate }}" [(ngModel)]="model.StoreName">
+        </div>
+        <!-- END 店號 -->
+        <!-- 店名 -->
+        <div class="col-sm-6 input-group">
+          <label starsign for="StoreCode" class="col-sm-4 col-form-label">{{ translations.HEADERQUARTER_NODE.STORE_CODE | translate }}</label>
+          <input type="text" validator class="form-control col-sm-8" formControlName="StoreCode"
+            [attr.readonly]="uiActionType == actionType.Read ? true : null"
+            placeholder="{{ translations.HEADERQUARTER_NODE.STORE_CODE_PLACEHOLDER | translate }}" [(ngModel)]="model.StoreCode">
+        </div>
+        <!-- END 店名 -->
+      </div>
+  </form>
+</ng-template>

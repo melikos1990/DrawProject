@@ -1,0 +1,21 @@
+<nb-card>
+  <nb-card-header>{{ translations.COMMON.USER_LIST | translate }}</nb-card-header>
+  <nb-card-body>
+
+    <div class="row">
+      <div class="col-sm-12 input-group">
+        <label for="userName" class="col-sm-4 col-form-label">{{ translations.USER.USER_NAME | translate }}
+        </label>
+        <div class="col-sm-8">
+          <input id="userName" class="form-control" name="userName" type="text" [(ngModel)]="userName"
+            [formControl]="nameControl"  placeholder="{{translations.USER.USER_NAME.KEYWORD_PLACEHOLDER | translate}}" />
+        </div>
+      </div>
+    </div>
+
+    <app-server-table #table [ajax]="ajax" [columns]="columns"
+      (critiria)="critiria($event)">
+    </app-server-table>
+
+  </nb-card-body>
+</nb-card>

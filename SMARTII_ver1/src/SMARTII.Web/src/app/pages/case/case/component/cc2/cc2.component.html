@@ -1,0 +1,264 @@
+<app-case-resume [caseID]="model.CaseID"></app-case-resume>
+
+<div class="row pl-4 py-2">
+  <div *ngFor="let lookupUser of model.LookupUsers" nbPopover="{{lookupUser.text}}" nbPopoverMode="hover">
+    <i class="nb-person" style="font-size: 2rem;color: #40dc7e"></i></div>
+</div>
+
+<div class="float-right" id="icon-group" (click)="closeTab.emit({sourceKey: sourcekey, caseKey: caseKey})">
+  <i class="nb-close"></i>
+</div>
+
+<nb-card [nbSpinner]="loading" class="mb-0 ptc-no-box-shadow">
+  <nb-card-body class="ptc-case-card-body">
+    <form [formGroup]="form">
+
+      <div class="row">
+        <!-- 案件編號 -->
+        <div class="col-3 input-group">
+          <label
+            class="col-sm-4 col-form-label">{{ translations.CASE_TEMPLATE.PARSING_BTN.CASE_ID  | translate }}</label>
+          <div class="col-sm-8 col-form-label">
+            {{model.CaseID}}
+          </div>
+        </div>
+        <!-- 關注案件 -->
+        <div class="col-3 input-group">
+          <label class="col-sm-4 col-form-label"
+            for="IsAttension">{{ translations.HOME.IS_ATTENSION  | translate }}</label>
+          <div class="col-sm-8">
+            <nb-checkbox validator class="col-sm-8" formControlName="IsAttension" id="IsAttension"
+              [disabled]="uiActionType == actionType.Read ? true : null" [(ngModel)]="model.IsAttension">
+            </nb-checkbox>
+          </div>
+        </div>
+        <!-- 案件標籤-->
+        <div class="col-6 input-group">
+          <label
+            class="col-sm-2 col-form-label">{{ translations.CALL_CENTER_CASE_SEARCH.CASE_TAG  | translate }}</label>
+          <div class="col-sm-10">
+            <app-hashtag #hashtag [disabled]="(uiActionType == actionType.Read) ? true : null" [buID]="model.NodeID"
+              [isEnabled]="true" [tags]="model?.CaseTagsMark || []">
+            </app-hashtag>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <!-- 案件狀態 -->
+        <div class="col-3 input-group">
+          <label class="col-sm-4 col-form-label">{{ translations.CASE_COMMON.CASE_TYPE  | translate }}</label>
+          <div class="col-sm-8 col-form-label">
+            {{model.CaseTypeName}}
+          </div>
+        </div>
+        <!-- 值機員 -->
+        <div class="col-3 input-group">
+          <label class="col-sm-4 col-form-label">{{ translations.CASE_COMMON.GOC  | translate }}</label>
+          <div class="col-sm-8 col-form-label">
+            {{model.CreateUserName}}
+          </div>
+        </div>
+        <!-- 立案時間 -->
+        <div class="col-3 input-group">
+          <label class="col-sm-4 col-form-label">{{ translations.CASE_APPLY.CREATE_DATETIME  | translate }}</label>
+          <div class="col-sm-8 col-form-label">
+            {{model.CreateDateTime | datetime}}
+          </div>
+        </div>
+        <!-- 案件期限 -->
+        <div class="col-3 input-group">
+          <label class="col-sm-4 col-form-label">{{ translations.CASE_COMMON.CASE_DEADLINE  | translate }}</label>
+          <div class="col-sm-8 col-form-label">
+            {{model.PromiseDateTime | datetime}}
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <!-- 案件等級 -->
+        <div class="col-3 input-group">
+          <label class="col-sm-4 col-form-label">{{ translations.CASE_COMMON.CASE_WARNING_ID  | translate }}</label>
+          <div class="col-sm-8 col-form-label">
+            {{model.CaseWarningName}}
+          </div>
+        </div>
+        <!-- 案件負責人 -->
+        <div class="col-3 input-group">
+          <label class="col-sm-4 col-form-label">{{ translations.CASE_APPLY.APPLY_USER_ID  | translate }}</label>
+          <div class="col-sm-8 col-form-label">
+            {{model.ApplyUserName}}
+          </div>
+        </div>
+        <!-- 結案時間 -->
+        <div class="col-3 input-group">
+          <label class="col-sm-4 col-form-label">{{ translations.CASE_APPLY.CLOSE_DATETIME  | translate }}</label>
+          <div class="col-sm-8 col-form-label">
+            {{model.FinishDateTime | datetime}}
+          </div>
+        </div>
+        <!-- 期望期限 -->
+        <div class="col-3 input-group">
+          <label class="col-sm-4 col-form-label">{{ translations.CASE_COMMON.EXPECT_DATETIME  | translate }}</label>
+          <div class="col-sm-8 col-form-label">
+            {{expectTime | datetime}}
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <!-- 勾稽案件編號-->
+        <div class="col-12 input-group">
+          <label class="col-sm-1 col-form-label">{{ translations.CASE_COMMON.RELATED_CASE_ID  | translate }}</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" [placeholder]="translations.CASE_COMMON.PLEASE_ENTER  | translate"
+              [attr.readonly]="uiActionType == actionType.Read ? true : null" [ngModelOptions]="{standalone: true}"
+              [(ngModel)]="checkableCaseID" (keyup.enter)="btnCheckCase()">
+          </div>
+          <div class="col-sm-12">
+            <div class="row">
+              <nb-card class="m-3 p-3 prevention-case-card" *ngFor="let relationCaseID of model.RelationCaseIDs"
+                (click)="btnPreviewCase(relationCaseID)">
+                <span>{{relationCaseID}} <i class="nb-close-circled small-close text-right" stop-propagation
+                    (click)="btnRemovePreviewCase(relationCaseID)"></i></span>
+              </nb-card>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <!-- 反應者資訊 -->
+        <div class="col-sm-6 input-group">
+          <nb-accordion class="ptc-accordion-only-header">
+            <nb-accordion-item [collapsed]="false">
+              <nb-accordion-item-header class="case-item-header">
+                {{ translations.CASE_COMMON.CONCATUSER_INFO  | translate }} </nb-accordion-item-header>
+              <nb-accordion-item-body>
+                <app-uco (concatUsersChange)="setFinistConcat($event)" [uiActionType]="uiActionType"
+                  [(concatUsers)]="this.model.CaseConcatUsers" [sourcekey]="sourcekey" #uco></app-uco>
+              </nb-accordion-item-body>
+            </nb-accordion-item>
+          </nb-accordion>
+
+        </div>
+        <!-- END 反應者資訊 -->
+        <!-- 被反應者資訊 -->
+        <div class="col-sm-6 input-group">
+          <nb-accordion class="ptc-accordion-only-header">
+            <nb-accordion-item [collapsed]="false">
+              <nb-accordion-item-header>
+                {{ translations.CASE_COMMON.COMPLAINEDUSER_INFO  | translate }} </nb-accordion-item-header>
+              <nb-accordion-item-body>
+                <app-ucm [uiActionType]="uiActionType" [(complainedUsers)]="this.model.CaseComplainedUsers"
+                  [sourcekey]="sourcekey" #ucm>
+                </app-ucm>
+              </nb-accordion-item-body>
+            </nb-accordion-item>
+          </nb-accordion>
+
+        </div>
+        <!-- END 被反應者資訊 -->
+      </div>
+      <div class="row" [attr.hidden]="hasInput">
+        <!-- 其他資訊 -->
+        <div class="col-sm-12 input-group" id="other-info">
+          <nb-accordion class="ptc-accordion-only-header">
+            <nb-accordion-item [collapsed]="false">
+              <nb-accordion-item-header>
+                {{ translations.CASE_COMMON.OTHER_INFO  | translate }}</nb-accordion-item-header>
+              <nb-accordion-item-body>
+                <app-cco [uiActionType]="uiActionType" [sourcekey]="sourcekey" [model]="model"
+                  (hasInputChange)="hasInputChange($event)" #cco></app-cco>
+              </nb-accordion-item-body>
+            </nb-accordion-item>
+          </nb-accordion>
+
+        </div>
+        <!-- END 其他資訊 -->
+      </div>
+      <div class="row">
+        <!-- 反應內容 -->
+        <div class="col-sm-12 input-group">
+          <nb-accordion class="ptc-accordion-only-header">
+            <nb-accordion-item [collapsed]="false">
+              <nb-accordion-item-header>
+                {{ translations.CASE_COMMON.CONCAT_CONTENT  | translate }}</nb-accordion-item-header>
+              <nb-accordion-item-body>
+                <app-ccc [form]="form" [uiActionType]="uiActionType" [fileOptions]="caseFileOpts"
+                  [sourcekey]="sourcekey" [model]="model"></app-ccc>
+              </nb-accordion-item-body>
+            </nb-accordion-item>
+          </nb-accordion>
+
+        </div>
+        <!-- END 反應內容 -->
+      </div>
+
+      <!-- 歷程明細/內容 -->
+      <div class="row">
+        <app-ccm2 [uiActionType]="uiActionType" [sourcekey]="sourcekey" [model]="model" [focusId]="focusAssignmentId">
+        </app-ccm2>
+      </div>
+      <!-- END 歷程明細/內容 -->
+
+      <div class="row" id="finished-info">
+        <!-- 結案內容 -->
+        <div class="col-sm-12 input-group">
+          <nb-accordion class="ptc-accordion-only-header">
+            <nb-accordion-item [collapsed]="false">
+              <nb-accordion-item-header>
+                {{ translations.OFFICIAL_EMAIL_ADOPT.FINISH_CONTENT  | translate }}</nb-accordion-item-header>
+              <nb-accordion-item-body>
+                <app-ccfi [form]="ccfiform" [uiActionType]="uiActionType" [fileOptions]="caseFinishFileOpts"
+                  [model]="model" [focusId]="focusFinishedId" #ccfi>
+                </app-ccfi>
+              </nb-accordion-item-body>
+            </nb-accordion-item>
+          </nb-accordion>
+
+        </div>
+        <!-- END 結案內容 -->
+      </div>
+      <div class="row">
+        <!-- 結案資訊 -->
+        <div class="col-sm-12 input-group">
+          <nb-accordion class="ptc-accordion-only-header">
+            <nb-accordion-item [collapsed]="false">
+              <nb-accordion-item-header>
+                {{ translations.OFFICIAL_EMAIL_ADOPT.FINISH_INFO  | translate }}</nb-accordion-item-header>
+              <nb-accordion-item-body>
+                <app-ccfh [uiActionType]="uiActionType" [model]="model" #ccfh></app-ccfh>
+              </nb-accordion-item-body>
+            </nb-accordion-item>
+          </nb-accordion>
+
+        </div>
+        <!-- END 結案資訊 -->
+      </div>
+    </form>
+  </nb-card-body>
+
+  <nb-card-footer class="p-0">
+    <div class="case-operator d-flex flex-center" [class.affix]="affix" #caseOperator>
+
+      <button class="btn btn-md btn-ptc-case-unlock m-3"
+        *ngIf="uiActionType !== actionType.Read && model.CaseType == caseType.Finished" [authorize]="authType.Admin"
+        (click)="btnUnlockCase()">{{ translations.CASE_NOTICE.CASE_ONLOCK  | translate }}</button>
+
+      <button class="btn btn-md btn-ptc-save m-3" *ngIf="isShowEdit()"
+        (click)="btnSaveCase()">{{ translations.CASE_NOTICE.CASE_SAVE  | translate }}</button>
+
+      <button class="btn btn-md btn-kind-finished m-3" *ngIf="isShowFinish()"
+        (click)="btnFinishCase(false)">{{ translations.CASE_NOTICE.CASE_CLOSE  | translate }}</button>
+
+      <button class="btn btn-md btn-kind-finished m-3" *ngIf="isShowFinish() && hasFinishReturn"
+        (click)="btnFinishCase(true)">{{ translations.CASE_NOTICE.CASE_FINISHRETURN  | translate }}</button>
+
+      <button class="btn btn-md btn-ptc-case-remind-create m-3"
+        (click)="btnAddCaseRemind()">{{ translations.CASE_NOTICE.CASE_TRACK_ADD  | translate }}</button>
+
+      <button class="btn btn-md btn-ptc-case-remind-read m-3" (click)="btnReadCaseRemind()"
+        *ngIf="model.CaseRemindIDs && model.CaseRemindIDs.length > 0">{{ translations.CASE_NOTICE.CASE_TRACK_VIEW  | translate }}</button>
+
+    </div>
+
+  </nb-card-footer>
+
+</nb-card>

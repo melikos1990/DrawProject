@@ -1,0 +1,52 @@
+<div class="modal-header nb-card-header">
+  <span>常用語選擇</span>
+  <button class="close" aria-label="Close" (click)="closeModel()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body nb-card-body">
+
+  <!-- 查詢條件 -->
+  <div class="row">
+
+    <!-- 企業別選單 -->
+    <div class="col-sm-12 input-group">
+      <label for="NodeID" class="col-sm-4 col-form-label">{{ translations.COMMON.BU_NAME | translate }}</label>
+      <div class="col-sm-8">
+        <app-bu-select name="NodeID" [placeholder]="translations.COMMON.BU_NAME_PLACEHOLDER | translate "
+          [(ngModel)]="model.NodeID" disabled>
+        </app-bu-select>
+      </div>
+    </div>
+    <!-- END 企業別選單 -->
+
+
+    <div class="col-sm-12 d-flex justify-content-center my-4">
+      <button type="button" class="btn btn-sm btn-ptc-search"
+        (click)="btnRender()">{{ translations.COMMON.BTN_SEARCH | translate }}</button>
+    </div>
+
+  </div>
+  <!-- 查詢條件 -->
+
+  <!-- 查詢結果 -->
+  <div class="row search-result">
+    <div class="col-lg-12">
+      <nb-card>
+        <nb-card-header class="nb-card-header"> {{ translations.COMMON.SEARCH_RESULT_TITLE | translate }}</nb-card-header>
+        <nb-card-body class="nb-card-body">
+          <!-- table -->
+          <app-server-table #table [ajax]="ajax" [columns]="columns"
+            (critiria)="critiria($event)">
+          </app-server-table>
+          <!-- end table -->
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+  <!-- 查詢結果 -->
+</div>
+<div class="modal-footer flex-center">
+  <button class="btn btn-md btn-ptc-confirm"
+    (click)="addQuestionClassificationAnswer()">{{ translations.COMMON.BTN_CONFIRM | translate }}</button>
+</div>

@@ -1,0 +1,59 @@
+<!-- 查詢條件 -->
+<div class="row search-condition">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header class="nb-card-header">{{ translations.COMMON.SEARCH_CONDITION_TITLE | translate }}
+        ({{selectedItem?.ClassificationName || selectedItem?.NodeName}})</nb-card-header>
+      <nb-card-body class="nb-card-body">
+        <form autocomplete="off" (keyup.enter)="btnRender()">
+          <div class="row">
+            <!-- 關鍵字搜尋 -->
+            <div class="col-sm-4 input-group">
+              <label for="keyword" class="col-sm-4 col-form-label">{{ translations.COMMON.KEYWORD | translate }}</label>
+              <div class="col-sm-8">
+                <input class="form-control" [placeholder]=" translations.COMMON.KEYWORD_PLACEHOLDER | translate "
+                  [ngModelOptions]="{standalone: true}" [(ngModel)]="model.Keyword" id="keyword" type="text" />
+              </div>
+            </div>
+            <!-- END 關鍵字搜尋 -->
+
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <div class="offset-sm-6 col-sm-3">
+                <button type="button" class="btn btn-sm btn-ptc-search" [authorize]="authType.Read"
+                  (click)="btnRender()">{{ translations.COMMON.BTN_SEARCH | translate }}</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<!-- 查詢結果 -->
+<div class="row search-result">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header class="nb-card-header"> {{ translations.COMMON.SEARCH_RESULT_TITLE | translate }}
+        <button type="button" *ngIf="!selectedItem?.IsRoot" class="btn btn-sm btn-ptc-create float-right mx-1"
+          (click)="btnAdd($event)" [authorize]="authType.Add">{{ translations.COMMON.BTN_ADD | translate }}</button>
+      </nb-card-header>
+      <nb-card-body class="nb-card-body">
+        <app-server-table #table [ajax]="ajax" [columns]="columns" (critiria)="critiria($event)" listBodyRef
+        [templateRefs]="{Content : listBodyRef}"
+        (btnDelete)="onBtnDelete($event)" (btnEdit)="onBtnEdit($event)" (btnSearch)="onBtnSearch($event)">
+        </app-server-table>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<!-- 查詢結果 -->
+
+
+<ng-template #listBodyRef let-row="row">
+  <div class="truncate" style="text-align:left !important;" [nbPopover]="row.Content" nbPopoverTrigger="hover">
+    <span>{{ row.Content }}</span>
+  </div>
+</ng-template>
+

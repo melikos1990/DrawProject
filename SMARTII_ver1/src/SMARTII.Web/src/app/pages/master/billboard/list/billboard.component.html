@@ -1,0 +1,76 @@
+<!-- 查詢條件 -->
+<div class="row search-condition">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header class="nb-card-header">{{ translations.COMMON.SEARCH_CONDITION_TITLE | translate }}</nb-card-header>
+      <nb-card-body class="nb-card-body">
+        <form [formGroup]="form" autocomplete="off" (keyup.enter)="btnRender($event)">
+          <div class="row">
+            <!-- 生效日期 -->
+            <div class="col-sm-4 input-group">
+              <label for="FirstActivateDateTimeRange"
+                class="col-sm-4 col-form-label">{{ translations.BILLBOARD.ACTIVE_DATETIME_RANGE  | translate }}</label>
+              <div class="col-sm-8">
+                <input class="form-control"
+                  [placeholder]="translations.BILLBOARD.ACTIVE_DATETIME_RANGE_PLACEHOLDER | translate "
+                  formControlName="FirstActivateDateTimeRange" [(ngModel)]="model.FirstActivateDateTimeRange"
+                  id="FirstActivateDateTimeRange" type="text" daterangepicker />
+              </div>
+            </div>
+            <!-- END 生效日期 -->
+            <!-- 主旨/內容 -->
+            <div class="col-sm-4 input-group">
+              <label for="Content"
+                class="col-sm-4 col-form-label">{{ translations.BILLBOARD.SEARCHCONTENT | translate }}</label>
+              <div class="col-sm-8">
+                <input class="form-control" formControlName="Content" [(ngModel)]="model.Content"
+                  placeholder="{{translations.BILLBOARD.SEARCHCONTENT_PLACEHOLDER | translate}}" id="Content" type="text" />
+              </div>
+            </div>
+            <!-- END 主旨/內容  -->
+
+          </div>
+          <div class="form-group">
+            <div class="row">
+              <div class="offset-sm-6 col-sm-3">
+                <button type="button" class="btn btn-sm btn-ptc-search" [authorize]="authType.Read"
+                  (click)="btnRender($event)">{{ translations.COMMON.BTN_SEARCH | translate }}</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<!-- 查詢結果 -->
+<div class="row search-result" [attr.hidden]="isEnable">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header class="nb-card-header"> {{ translations.COMMON.SEARCH_RESULT_TITLE | translate }}
+        <button type="button" class="btn btn-sm btn-ptc-delete float-right mx-1" (click)="btnBatchDelete($event)"
+          [authorize]="authType.Admin">{{ translations.COMMON.BTN_DELETE | translate }}</button>
+        <button type="button" class="btn btn-sm btn-ptc-create float-right mx-1" (click)="btnAdd($event)"
+          [authorize]="authType.Add">{{ translations.COMMON.BTN_ADD | translate }}</button>
+      </nb-card-header>
+      <nb-card-body class="nb-card-body">
+        <app-server-table #table [ajax]="ajax" [columns]="columns" (critiria)="critiria($event)"
+          [templateRefs]="{Content:billContentRef, Title:billTitleRef}"
+          (btnDelete)="onBtnDelete($event)" (btnEdit)="onBtnEdit($event)" (btnSearch)="onBtnSearch($event)">
+        </app-server-table>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+
+<ng-template #billContentRef let-row="row">
+  <div class="truncate" style="text-align:left !important;" [nbPopover]="row.Content" nbPopoverTrigger="hover">
+    <span>{{ row.Content }}</span>
+  </div>
+</ng-template>
+<ng-template #billTitleRef let-row="row">
+  <div class="truncate" style="text-align:left !important;" [nbPopover]="row.Title" nbPopoverTrigger="hover">
+    <span>{{ row.Title }}</span>
+  </div>
+</ng-template>
+<!-- 查詢結果 -->

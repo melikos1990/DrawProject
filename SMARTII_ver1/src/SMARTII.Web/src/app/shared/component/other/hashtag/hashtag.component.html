@@ -1,0 +1,23 @@
+<div class="row">
+
+  <div class="hashtag" *ngFor="let tag of _tags">{{tag.text}} &nbsp; <i class="nb-close-circled"
+      (click)="removeTag(tag.id)"></i>
+  </div>
+
+  <div class="comboBox" *ngIf="isAddMode">
+    <div class="comboGroup">
+      <input type="text" id="hashtagInput" (focusout)="onFocusout()" (focus)="onfocus()" [(ngModel)]="tag"
+        placeholder="{{placeholder}}" (keyup.enter)="addTag($event)" autocomplete="off"/>
+
+      <ul *ngIf="isSelectMode" class="TEST">
+        <ng-container *ngIf="options && options.length > 0">
+          <li *ngFor="let option of options" (click)="onSelect(option)">{{option.text}}</li>
+        </ng-container>
+        <ng-container *ngIf="options.length == 0 ">
+          <li>{{noDataText}}</li>
+        </ng-container>
+      </ul>
+    </div>
+
+  </div>
+  <span class="hashtag-add btn-ptc-create" *ngIf="isAddMode == false" (click)="btnAddMode()">{{ translations.COMMON.BTN_ADD | translate }} + </span>

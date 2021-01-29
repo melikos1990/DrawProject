@@ -1,0 +1,280 @@
+<!-- 查詢條件 -->
+<div class="row search-condition">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header class="nb-card-header">{{ translations.COMMON.SEARCH_CONDITION_TITLE | translate }}</nb-card-header>
+      <nb-card-body class="nb-card-body">
+        <form [formGroup]="form" autocomplete="off" (keyup.enter)="btnRender($event)">
+          <div class="row mb-2">
+            <!-- 企業別選單 -->
+            <div class="col-sm-3 input-group">
+              <label for="NodeID" class="col-sm-4 col-form-label"
+                starsign>{{ translations.COMMON.BU_NAME | translate }}</label>
+              <div class="col-sm-8">
+                <app-bu-select id="NodeID" validator [(ngModel)]="model.NodeID" formControlName="NodeID"
+                  [typeStyle]="organizationType.Vendor"
+                  [placeholder]="translations.COMMON.SELECT_PLACEHOLDER | translate : {key: ''} " #buSelect>
+                </app-bu-select>
+              </div>
+            </div>
+
+            <!-- 通知時間 -->
+            <div class="col-sm-3 input-group">
+              <label for="ApplyUserID"
+                class="col-sm-4 col-form-label">{{translations.CASE_COMMON.NOTIFY_DATETIME | translate}}</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control"
+                  [placeholder]="translations.CASE_COMMON.NOTIFY_DATETIME_PLACEHOLDER | translate" daterangepicker
+                  #daterange formControlName="NoticeDateTimeRange" [(ngModel)]="model.NoticeDateTimeRange" />
+              </div>
+            </div>
+
+            <!-- 立案時間 -->
+            <div class="col-sm-3 input-group">
+              <label starsign for="ApplyUserID"
+                class="col-sm-4 col-form-label">{{ translations.CASE_COMMON.CREATE_DATETIME | translate }}</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" validator
+                  [placeholder]="translations.CASE_COMMON.CREATE_DATETIME_PLACEHOLDER | translate" daterangepicker
+                  #daterange formControlName="CreateTimeRange" [(ngModel)]="model.CreateTimeRange" />
+              </div>
+            </div>
+          </div>
+
+          <div class="row mb-2">
+            <!-- 歷程模式 -->
+            <div class="col-sm-3 input-group">
+              <label class="col-sm-4 col-form-label">{{ translations.CASE_COMMON.ASSIGNMENT_MODE | translate }}</label>
+              <div class="col-sm-8">
+                <app-enum-select [placeholder]="translations.COMMON.SELECT_PLACEHOLDER | translate : {key: ''}"
+                  [enumName]="'CaseAssignmentProcessType'" (onSelectedChange)="assignmentTypeChange($event)"
+                  formControlName="AssignmentProcessType" [(ngModel)]="model.AssignmentType">
+                </app-enum-select>
+              </div>
+            </div>
+
+            <!-- 歷程狀態 -->
+            <div class="col-sm-3 input-group">
+              <label class="col-sm-4 col-form-label">{{ translations.CASE_COMMON.ASSIGNMENT_STATE | translate }}</label>
+              <div class="col-sm-8">
+                <app-enum-select [placeholder]="translations.COMMON.SELECT_PLACEHOLDER | translate : {key: ''}"
+                  [enumName]="assignmentState" formControlName="AssignmentState" [(ngModel)]="model.Type">
+                </app-enum-select>
+              </div>
+            </div>
+
+            <!-- 反應類型 -->
+            <div class="col-sm-3 input-group" *ngIf="model.AssignmentType == assignmentProcessType.Invoice">
+              <label for="CaseSourceType"
+                class="col-sm-4 col-form-label">{{ translations.CASE_COMMON.CASE_INVOICE_TYPE | translate }}</label>
+              <div class="col-sm-8">
+
+                <app-invoice-type-select [buID]="model.NodeID"
+                  [placeholder]="translations.COMMON.SELECT_PLACEHOLDER | translate : {key: ''}"
+                  (onSelectedChange)="assignmentTypeChange($event)" formControlName="InvoiceType"
+                  [(ngModel)]="model.InvoiceType">
+                </app-invoice-type-select>
+              </div>
+            </div>
+
+            <!-- 反應單號 -->
+            <div class="col-sm-3 input-group" *ngIf="model.AssignmentType == assignmentProcessType.Invoice">
+              <label for="CaseSourceType"
+                class="col-sm-4 col-form-label">{{ translations.CASE_COMMON.INVOICE_ID | translate }}</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control"
+                  [placeholder]="translations.CASE_COMMON.INVOICE_ID_PLACEHOLDER | translate"
+                  formControlName="InvoiceID" [(ngModel)]="model.InvoiceID" />
+              </div>
+            </div>
+
+            <!-- 轉派對象 -->
+            <div class="col-sm-6 input-group" *ngIf="model.AssignmentType == assignmentProcessType.Assignment">
+              <label
+                class="col-sm-2 col-form-label">{{ translations.CALL_CENTER_ASSIGNMENT_SEARCH.ASSIGNMENT_TARGET | translate }}</label>
+              <div class="col-sm-10">
+                <div class="row">
+                  <nb-card *ngFor="let complainedUser of assignmentComplainedUsers" class="nb-node-card">
+                    <div class="col-sm-12 m-0 py-2"> {{complainedUser.Name}} <i class="nb-close-circled"
+                        (click)="btnDeleteUser(complainedUser)"></i></div>
+                  </nb-card>
+                </div>
+                <button class="float-left btn btn-ptc-confirm btn-sm" type="button"
+                  (click)="btnAddUnitModal()">{{ translations.COMMON.BTN_CHOICE | translate }}</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="row mb-2">
+            <!-- 案件編號 -->
+            <div class="col-sm-3 input-group">
+              <label for="CaseSourceType"
+                class="col-sm-4 col-form-label">{{ translations.CASE_COMMON.CASE_ID | translate }}</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control"
+                  [placeholder]="translations.CASE_COMMON.CASE_ID_PLACEHOLDER | translate" formControlName="CaseID"
+                  [(ngModel)]="model.CaseID" />
+              </div>
+            </div>
+
+            <!-- 案件內容 -->
+            <div class="col-sm-3 input-group">
+              <label class="col-sm-4 col-form-label">{{ translations.CASE_COMMON.CASE_CONTENT | translate }}</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control"
+                  [placeholder]="translations.CASE_COMMON.CASE_CONTENT_PLACEHOLDER | translate" #daterange
+                  formControlName="CaseContent" [(ngModel)]="model.CaseContent" />
+              </div>
+            </div>
+
+            <!-- 通知內容 -->
+            <div class="col-sm-3 input-group">
+              <label for="ApplyUserID"
+                class="col-sm-4 col-form-label">{{translations.CASE_COMMON.NOTIFY_CONTENT | translate}}</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control"
+                  [placeholder]="translations.CASE_COMMON.NOTIFY_CONTENT_PLACEHOLDER | translate" #daterange
+                  formControlName="NoticeContent" [(ngModel)]="model.NoticeContent" />
+              </div>
+            </div>
+
+          </div>
+
+          <!-- 連絡者 -->
+          <app-concat-input [model]="model" [form]="form"
+            (onSelectedChange)="removeConcatAndComplained('Concat', model)"></app-concat-input>
+
+          <!-- 企業組織選單 -->
+          <div class="row"
+            *ngIf="model.CaseConcatUnitType != unitType.Customer && model.CaseConcatUnitType && this.model.NodeID">
+            <div class="col-sm-9 input-group">
+              <div class="col-sm-12">
+                <app-bu-nodedef-level-select #allNodeSelector [isSelf]="false" [setbuID]="model.NodeID"
+                  [buVisiable]="false">
+                </app-bu-nodedef-level-select>
+              </div>
+            </div>
+          </div>
+          <!-- END 企業組織選單 -->
+
+
+          <div class="row">
+            <div class="col-sm-12 d-flex justify-content-center">
+              <button type="button" class="btn btn-sm btn-ptc-search" [authorize]="authType.Read"
+                (click)="btnRender($event)">{{ translations.COMMON.BTN_SEARCH | translate }}</button>
+            </div>
+          </div>
+
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+
+
+<!-- 查詢結果 -->
+<div class="row search-result" [attr.hidden]="isEnable">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header class="nb-card-header">
+        {{ translations.COMMON.SEARCH_RESULT_TITLE | translate }}
+
+        <button type="button" class="btn btn-sm btn-ptc-export float-right mx-1" [authorize]="authType.Report"
+          (click)="btnReport($event)">{{ translations.COMMON.BTN_EXPORT | translate }}</button>
+        <button type="button" class="btn btn-sm btn-ptc-advanced-search float-right mx-1"
+          (click)="showAdvanced()">{{ translations.COMMON.BTN_ADVANCED_SEARCH | translate }}</button>
+      </nb-card-header>
+      <nb-card-body class="nb-card-body">
+
+        <nb-card *ngIf="showAdvancedFlag">
+          <nb-card-header>{{ translations.COMMON.BTN_ADVANCED_SEARCH | translate }}</nb-card-header>
+          <nb-card-body>
+            <form [formGroup]="form" autocomplete="off" (keyup.enter)="btnRender($event)">
+
+
+              <!-- 被反應者 -->
+              <app-complained-input [model]="model" [form]="form"
+                (onSelectedChange)="removeConcatAndComplained('CaseComplained', model)"></app-complained-input>
+
+              <!-- 企業組織選單 -->
+              <div class="row"
+                *ngIf="this.model.CaseComplainedUnitType != unitType.Customer && this.model.CaseComplainedUnitType  && this.model.NodeID">
+                <div class="col-sm-9 input-group">
+                  <div class="col-sm-12">
+                    <app-bu-nodedef-level-select #allNodeSelectorComplained [isSelf]="false" [setbuID]="model.NodeID"
+                      [buVisiable]="false">
+                    </app-bu-nodedef-level-select>
+                  </div>
+                </div>
+              </div>
+              <!-- END 企業組織選單 -->
+
+              <!-- 問題分類 -->
+              <div class="row">
+                <label
+                  class="col-sm-12 col-form-label">{{ translations.CASE_COMMON.QUESTION_CLASSIFICATION | translate }}</label>
+                <app-dynamic-question-select #dynamicSeletor groupName="question" [buID]="model.NodeID"
+                  [contentClass]="'px-3'" [colClass]="'col-3'">
+                </app-dynamic-question-select>
+              </div>
+
+              <div class="row ">
+                <div class="col-sm-12 d-flex justify-content-center">
+                  <button type="button" class="btn btn-sm btn-ptc-search" [authorize]="authType.Read"
+                    (click)="btnRender($event)">{{ translations.COMMON.BTN_SEARCH | translate }}</button>
+                </div>
+              </div>
+
+            </form>
+          </nb-card-body>
+        </nb-card>
+
+        <app-local-table [columns]="columns" [items]="assignmentList" [loading]="tableLoading"
+          (btnEdit)="onBtnEdit($event)" (btnSearch)="onBtnSearch($event)" [isVisibleBtnDelete]="false"
+          [templateRefs]="{CaseAssignmentUser: caseAssignmentUserRef, NoticeContent: noticeContentRef, CaseContent: caseContentRef}"
+          [btnDeleteText]="translations.COMMON.BTN_DISABLED | translate">
+        </app-local-table>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<!-- 查詢結果 -->
+
+
+<!-- 組織樹選擇單位 -->
+<ng-template #allNodeTreeSelector>
+  <div class="modal-header nb-card-header">
+    <span>{{ translations.CASE_COMMON.CHOSE_UNIT | translate }}</span>
+    <button class="close" aria-label="Close" (click)="dismissOrganizationModel()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body nb-card-body">
+    <app-vendor-node-tree-selector [model]="{ IsSelf: true, Goal: this.organizationType.Vendor }"
+      (onNodeClick)="btnAddUser($event)">
+    </app-vendor-node-tree-selector>
+  </div>
+  <div class="modal-footer flex-center">
+    <!-- <button type="button" class="btn btn-md btn-warning"
+      (click)="dismissOrganizationModel()">{{ translations.COMMON.BTN_BACK | translate }}</button> -->
+  </div>
+</ng-template>
+<!-- END 組織樹選擇單位 -->
+
+
+<ng-template #caseAssignmentUserRef let-row="row">
+  <button *ngFor="let name of row.CaseAssignmentUser" outline status="success" nbButton class="m-1" size="xsmall">
+    {{ name }}</button>
+</ng-template>
+
+<ng-template #noticeContentRef let-row="row">
+  <div class="truncate" style="text-align:left !important;" [nbPopover]="row.NoticeContent" nbPopoverTrigger="hover">
+    <span>{{ row.NoticeContent }}</span>
+  </div>
+</ng-template>
+
+<ng-template #caseContentRef let-row="row">
+  <div class="truncate" style="text-align:left !important;" [nbPopover]="row.CaseContent" nbPopoverTrigger="hover">
+    <span>{{ row.CaseContent }}</span>
+  </div>
+</ng-template>

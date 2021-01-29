@@ -1,0 +1,22 @@
+<tree-root #tree [ngClass]="customerClass" [nodes]="nodes" [options]="options" (moveNode)="moveNode($event)"
+  (copyNode)="copyNode($event)" (nodeActivate)="focus($event)"></tree-root>
+
+
+<ng-template #defaultloadingTemplate let-node>
+  <div>Loading ...</div>
+</ng-template>
+
+
+<!-- 預設每 row 的html -->
+<ng-template #defaultTreeNodeTemplate let-node let-index="index">
+
+  <div class="grid-container">
+    <div class="treeNode-item">
+      <span title="{{node.data.subTitle}}">{{ node.data.name }}</span>
+
+    </div>
+
+  </div>
+
+</ng-template>
+<!-- END 預設每 row 的html -->

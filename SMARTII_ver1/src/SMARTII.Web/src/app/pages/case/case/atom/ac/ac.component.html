@@ -1,0 +1,18 @@
+<app-local-table [loading]="loading" [columns]="columns" [items]="data" [pageSize]="3" [pageSizeOptions]="[3,5,10,20]"
+  [templateRefs]="{
+    related : related,
+    Content: contentRef
+    }">
+</app-local-table>
+<ng-template #related let-row="row">
+  <button type="button"(click)="btnRelated(row)" class="btn btn-sm btn-ptc-save m-1">{{ translations.CASE_COMMON.RELATED | translate }}</button>
+  <button type="button"(click)="btnLookup(row)" class="btn btn-sm btn-ptc-save  m-1">{{ translations.COMMON.VIEW | translate }}</button>
+</ng-template>
+
+<ng-template #contentRef let-row="row">
+  <div class="truncate"  style="text-align:left !important;" >
+    <span>
+      {{ row.Content }}
+    </span>
+  </div>
+</ng-template>

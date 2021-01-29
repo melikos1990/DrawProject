@@ -1,0 +1,279 @@
+<!-- 查詢條件 -->
+<div class="row search-condition">
+  <div class="col-lg-12">
+    <nb-card class="ptc-card">
+      <nb-card-header>{{ translations.COMMON.SEARCH_CONDITION_TITLE | translate }}</nb-card-header>
+      <nb-card-body>
+        <form [formGroup]="form" autocomplete="off" (keyup.enter)="btnRender($event)">
+
+          <div class="row">
+            <!-- 企業別選單 -->
+            <div class="col-sm-3 input-group">
+              <label for="NodeID" class="col-sm-4 col-form-label"
+                starsign>{{ translations.COMMON.BU_NAME | translate }}</label>
+              <div class="col-sm-8">
+                <app-bu-select id="NodeID" validator [(ngModel)]="model.NodeID" formControlName="NodeID"
+                  [placeholder]="translations.COMMON.SELECT_PLACEHOLDER | translate : {key: ''} " #buSelect>
+                </app-bu-select>
+              </div>
+            </div>
+
+            <!-- 案件來源 -->
+            <div class="col-sm-3 input-group">
+              <label for="CaseSourceType"
+                class="col-sm-4 col-form-label">{{ translations.CASE_COMMON.CASE_SOURCE_TYPE | translate }}</label>
+              <div class="col-sm-8">
+                <app-case-source-select [buID]="model.NodeID"
+                  [placeholder]="translations.COMMON.SELECT_PLACEHOLDER | translate : {key: ''}"
+                  formControlName="CaseSourceType" [(ngModel)]="model.CaseSourceType">
+                </app-case-source-select>
+              </div>
+            </div>
+
+            <!-- 負責人 -->
+            <div class="col-sm-3 input-group">
+              <label for="ApplyUserID"
+                class="col-sm-4 col-form-label">{{ translations.CASE_APPLY.APPLY_USER_ID | translate }}</label>
+              <div class="col-sm-8">
+                <app-user-select id="ApplyUserID"
+                  [placeholder]="translations.COMMON.SELECT_PLACEHOLDER | translate : {key: ''} "
+                  [searchTerm]="{isSystemUser : true , isSelf : true}" groupName="userSelect"
+                  [(ngModel)]="model.ApplyUserID" formControlName="ApplyUserID" #applyUserSelect>
+                </app-user-select>
+              </div>
+            </div>
+
+            <!-- 立案時間 -->
+            <div class="col-sm-3 input-group">
+              <label for="ApplyUserID" starsign
+                class="col-sm-4 col-form-label">{{ translations.CASE_COMMON.CREATE_DATETIME | translate }}</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" validator
+                  [placeholder]="translations.CASE_COMMON.CREATE_DATETIME_PLACEHOLDER | translate" daterangepicker
+                  #daterange formControlName="CreateTimeRange" [(ngModel)]="model.CreateTimeRange" />
+              </div>
+            </div>
+          </div>
+
+
+
+          <div class="row mb-2">
+
+
+            <!-- 案件編號 -->
+            <div class="col-sm-3 input-group">
+              <label for="CaseSourceType"
+                class="col-sm-4 col-form-label">{{ translations.CASE_COMMON.CASE_ID | translate }}</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control"
+                  [placeholder]="translations.CASE_COMMON.CASE_ID_PLACEHOLDER | translate" formControlName="CaseID"
+                  [(ngModel)]="model.CaseID" />
+              </div>
+            </div>
+
+            <!-- 案件內容 -->
+            <div class="col-sm-3 input-group">
+              <label for="CaseSourceType"
+                class="col-sm-4 col-form-label">{{ translations.CASE_COMMON.CASE_CONTENT | translate }}</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control"
+                  [placeholder]="translations.CASE_COMMON.CASE_CONTENT_PLACEHOLDER | translate"
+                  formControlName="CaseContent" [(ngModel)]="model.CaseContent" />
+              </div>
+            </div>
+
+            <!-- 結案內容 -->
+            <div class="col-sm-3 input-group">
+              <label for="CaseSourceType"
+                class="col-sm-4 col-form-label">{{ translations.CASE_COMMON.FINISH_CONTENT | translate }}</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control"
+                  [placeholder]="translations.CASE_COMMON.FINISH_CONTENT_PLACEHOLDER | translate"
+                  formControlName="FinishContent" [(ngModel)]="model.FinishContent" />
+              </div>
+            </div>
+
+            <!-- 反應單號 -->
+            <div class="col-sm-3 input-group">
+              <label for="CaseSourceType"
+                class="col-sm-4 col-form-label">{{ translations.CASE_COMMON.INVOICE_ID | translate }}</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control"
+                  [placeholder]="translations.CASE_COMMON.INVOICE_ID_PLACEHOLDER | translate"
+                  formControlName="InvoiceID" [(ngModel)]="model.InvoiceID" />
+              </div>
+            </div>
+
+          </div>
+
+
+          <!-- 連絡者  反應者類型-->
+          <app-concat-input [model]="model" [form]="form" [NodeKey]="model.NodeID"
+            (onSelectedChange)="removeConcatAndComplained('Concat', model)"></app-concat-input>
+
+          <div class="row"
+            *ngIf="this.model.CaseConcatUnitType != unitType.Customer && this.model.CaseConcatUnitType && this.model.NodeID">
+            <!-- 企業組織選單 -->
+            <div class="col-sm-9 input-group">
+              <div class="col-sm-12">
+                <app-bu-nodedef-level-select #allNodeSelector [isSelf]="false" [setbuID]="model.NodeID"
+                  [buVisiable]="false">
+                </app-bu-nodedef-level-select>
+              </div>
+            </div>
+            <!-- END 企業組織選單 -->
+          </div>
+
+
+          <div class="row">
+            <div class="col-sm-12 d-flex justify-content-center">
+              <button type="button" class="btn btn-sm btn-ptc-search" [authorize]="authType.Read"
+                (click)="btnRender($event)">{{ translations.COMMON.BTN_SEARCH | translate }}</button>
+            </div>
+          </div>
+
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+
+
+<!-- 查詢結果 -->
+<div class="row search-result" [attr.hidden]="isEnable">
+  <div class="col-lg-12">
+    <nb-card class="ptc-card">
+      <nb-card-header class="nb-card-header">
+        {{ translations.COMMON.SEARCH_RESULT_TITLE | translate }}
+        <button type="button" class="btn btn-sm btn-ptc-export float-right mx-1" [authorize]="authType.Report"
+          (click)="btnReport()">{{ translations.COMMON.BTN_EXPORT | translate }}</button>
+        <button type="button" class="btn btn-sm btn-ptc-advanced-search float-right mx-1"
+          (click)="showAdvanced()">{{ translations.COMMON.BTN_ADVANCED_SEARCH | translate }}</button>
+      </nb-card-header>
+      <nb-card-body class="nb-card-body">
+        <!-- 進階查詢 -->
+        <nb-card *ngIf="showAdvancedFlag">
+          <nb-card-header>{{ translations.COMMON.BTN_ADVANCED_SEARCH | translate }}</nb-card-header>
+          <nb-card-body>
+            <form [formGroup]="form" autocomplete="off" (keyup.enter)="btnRender($event)">
+              <div class="row mb-2">
+
+                <!-- 案件狀態 -->
+                <div class="col-sm-3 input-group">
+                  <label for="ApplyUserID"
+                    class="col-sm-4 col-form-label">{{ translations.CASE_COMMON.CASE_TYPE | translate }}</label>
+                  <div class="col-sm-8">
+                    <app-enum-select [placeholder]="translations.COMMON.SELECT_PLACEHOLDER | translate : {key: ''} "
+                      [enumName]="'CaseType'" formControlName="CaseType" [(ngModel)]="model.CaseType">
+                    </app-enum-select>
+                  </div>
+                </div>
+
+                <!-- 案件等級 -->
+                <div class="col-sm-3 input-group">
+                  <label for="ApplyUserID"
+                    class="col-sm-4 col-form-label">{{ translations.CASE_COMMON.CASE_WARNING_ID | translate }}</label>
+                  <div class="col-sm-8">
+                    <app-case-warning-select [buID]="model.NodeID"
+                      [placeholder]="translations.COMMON.SELECT_PLACEHOLDER | translate : {key: ''} "
+                      formControlName="CaseWarningID" [(ngModel)]="model.CaseWarningID" #warningSelect>
+                    </app-case-warning-select>
+                  </div>
+                </div>
+
+                <!-- 期望期限 -->
+                <div class="col-sm-3 input-group">
+                  <label for="ApplyUserID"
+                    class="col-sm-4 col-form-label">{{ translations.CASE_COMMON.EXPECT_DATETIME | translate }}</label>
+                  <div class="col-sm-8">
+                    <input type="text" class="form-control"
+                      [placeholder]="translations.CASE_COMMON.EXPECT_DATETIME_PLACEHOLDER | translate" daterangepicker
+                      formControlName="ExpectDateTimeRange" [(ngModel)]="model.ExpectDateTimeRange" />
+                  </div>
+                </div>
+              </div>
+
+              <!-- 被反應者 -->
+              <app-complained-input [model]="model" [form]="form"
+                (onSelectedChange)="removeConcatAndComplained('CaseComplained', model)"></app-complained-input>
+
+              <div class="row"
+                *ngIf="this.model.CaseComplainedUnitType != unitType.Customer && this.model.CaseComplainedUnitType && this.model.NodeID">
+                <!-- 企業組織選單 -->
+                <div class="col-sm-9 input-group">
+                  <div class="col-sm-12">
+                    <app-bu-nodedef-level-select #allNodeSelectorComplained [isSelf]="false" [setbuID]="model.NodeID"
+                      [buVisiable]="false">
+                    </app-bu-nodedef-level-select>
+                  </div>
+                </div>
+                <!-- END 企業組織選單 -->
+              </div>
+
+
+              <!-- 案件標籤 -->
+              <div class="row">
+                <div class="col-sm-12 input-group">
+                  <label for="ApplyUserID"
+                    class="col-sm-1 col-form-label">{{ translations.CALL_CENTER_CASE_SEARCH.CASE_TAG | translate }}</label>
+                  <div class="col-sm-11 ">
+                    <app-hashtag [buID]="model.NodeID || null" #hashtag [enterDisabled]="true" [placeholder]="'請選擇'">
+                    </app-hashtag>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 問題分類 -->
+              <div class="row">
+                <label
+                  class="col-sm-12 col-form-label">{{ translations.CASE_COMMON.QUESTION_CLASSIFICATION | translate }}</label>
+                <app-dynamic-question-select #dynamicSeletor groupName="question" [buID]="model.NodeID"
+                  [contentClass]="'px-3'" [colClass]="'col-3'">
+                </app-dynamic-question-select>
+              </div>
+
+              <!-- 結案處置 -->
+              <div class="row">
+                <label
+                  class="col-sm-12 col-form-label">{{ translations.CASE_COMMON.FINISHED_REASON | translate }}</label>
+                <div class="col-sm-12">
+                  <app-dynamic-finish-reason [buID]="model.NodeID || null" [useDefault]="false" #finishReason>
+                  </app-dynamic-finish-reason>
+                </div>
+              </div>
+
+
+              <div class="row ">
+                <div class="col-sm-12 d-flex justify-content-center">
+                  <button type="button" class="btn btn-sm btn-ptc-search" [authorize]="authType.Read"
+                    (click)="btnRender($event)">{{ translations.COMMON.BTN_SEARCH | translate }}</button>
+                </div>
+              </div>
+
+            </form>
+          </nb-card-body>
+        </nb-card>
+
+        <app-local-table [columns]="columns" [items]="caseList" [loading]="tableLoading" (btnEdit)="onBtnEdit($event)"
+          (btnSearch)="onBtnSearch($event)" [isVisibleBtnDelete]="false"
+          [templateRefs]="{CaseContent: notifyContentRef, FinishContent: finishContentRef}"
+          [btnDeleteText]="translations.COMMON.BTN_DISABLED | translate">
+        </app-local-table>
+
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<!-- 查詢結果 -->
+
+<ng-template #notifyContentRef let-row="row">
+  <div class="truncate" style="text-align:left !important;" [nbPopover]="row.CaseContent" nbPopoverTrigger="hover">
+    <span>{{ row.CaseContent }}</span>
+  </div>
+</ng-template>
+
+<ng-template #finishContentRef let-row="row">
+  <div class="truncate" style="text-align:left !important;" [nbPopover]="row.FinishContent" nbPopoverTrigger="hover">
+    <span>{{ row.FinishContent }}</span>
+  </div>
+</ng-template>

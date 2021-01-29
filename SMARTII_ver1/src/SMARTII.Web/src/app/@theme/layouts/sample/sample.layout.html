@@ -1,0 +1,34 @@
+<nb-layout [center]="layout.id === 'center-column'">
+  <nb-layout-header fixed>
+    <ngx-header [position]="sidebar.id === 'start' ? 'normal': 'inverse'"></ngx-header>
+  </nb-layout-header>
+  <nb-sidebar class="menu-sidebar" tag="menu-sidebar" responsive [end]="sidebar.id === 'end'">
+    <nb-sidebar-header *ngIf="hasCallCenterOrg">
+      <a (click)="btnCreateCase($event)" class="btn create-case main-btn">
+        <i class="ion ion-log-out" style="color: white;"></i> <span style="color: white;"> {{ translations.CASE_COMMON.CREATE_CASE | translate }} </span>
+      </a>
+    </nb-sidebar-header>
+    <ng-content select="nb-menu"></ng-content>
+  </nb-sidebar>
+  <nb-layout-column class="main-content">
+    <nav class="breadcrumb-nav" aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <ng-container *ngFor="let breadcrumb of breadcrumbs; last as isLast">
+          <li class="breadcrumb-item " *ngIf="breadcrumb.label">
+            <ng-container *ngIf="isLast; then current; else parent"></ng-container>
+            <ng-template #parent><span>{{ breadcrumb.label  | translate }}</span></ng-template>
+            <ng-template #current>{{breadcrumb.label | translate}}</ng-template>
+          </li>
+        </ng-container>
+      </ol>
+    </nav>
+    <ng-content select="router-outlet"></ng-content>
+  </nb-layout-column>
+  <nb-layout-footer fixed>
+    <ngx-footer></ngx-footer>
+  </nb-layout-footer>
+  <nb-sidebar class="settings-sidebar" tag="settings-sidebar" state="collapsed" fixed [end]="sidebar.id !== 'end'">
+    <ngx-theme-settings></ngx-theme-settings>
+  </nb-sidebar>
+</nb-layout>
+<ngx-toggle-settings-button></ngx-toggle-settings-button>

@@ -1,0 +1,129 @@
+<div class="row">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header class="nb-card-header">{{ translations.ROLE.TITLE | translate }}-{{titleName}}</nb-card-header>
+      <nb-card-body class="nb-card-body">
+        <form [formGroup]="form">
+          <nb-tabset>
+            <nb-tab tabTitle="{{ translations.ROLE.ROLE_INFO | translate }}">
+
+              <div class="row ">
+                <!-- 使用者姓名 -->
+                <div class="col-sm-6 input-group">
+                  <label for="Name" starsign
+                    class="col-sm-4 col-form-label">{{ translations.ROLE.ROLE_NAME | translate }}</label>
+                  <input type="text" validator class="form-control col-sm-8" formControlName="Name" id="Name"
+                    [attr.readonly]="uiActionType == actionType.Read ? true : null"
+                    placeholder="{{ translations.ROLE.ROLE_NAME_PLACEHOLDER | translate }}" [(ngModel)]="model.Name">
+                </div>
+                <!-- END 使用者姓名 -->
+                <!--  啟用狀態 -->
+                <div class="col-sm-4 input-group">
+                  <label for="IsEnabled"
+                    class="col-sm-4 col-form-label">{{ translations.ROLE.IS_ENABLED | translate }}</label>
+                  <nb-checkbox [disabled]="(uiActionType == actionType.Read) ? true : null" validator class="col-sm-8"
+                    formControlName="IsEnabled" id="IsEnabled" [(ngModel)]="model.IsEnabled"></nb-checkbox>
+                </div>
+                <!-- END 啟用狀態 -->
+              </div>
+              <ng-container *ngIf="uiActionType == actionType.Read || uiActionType == actionType.Update">
+                <div class="row">
+                  <!-- 建立人員 -->
+                  <div class="col-sm-6 input-group">
+                    <label for="CreateUserName"
+                      class="col-sm-4 col-form-label">{{ translations.ROLE.CREATE_USERNAME_LABEL | translate }}</label>
+                    <input type="text" validator class="form-control col-sm-8" disabled formControlName="CreateUserName"
+                      placeholder="{{ translations.ROLE.CREATE_USERNAME_PLACEHOLDER | translate }}"
+                      [(ngModel)]="model.CreateUserName">
+                  </div>
+                  <!-- END 建立人員 -->
+                  <!-- 建立時間 -->
+                  <div class="col-sm-6 input-group">
+                    <label for="CreateDateTime"
+                      class="col-sm-4 col-form-label">{{ translations.ROLE.CREATE_DATETIME_LABEL | translate }}</label>
+                    <input type="text" validator class="form-control col-sm-8" disabled formControlName="CreateDateTime"
+                      placeholder="{{ translations.ROLE.CREATE_DATETIME_PLACEHOLDER | translate }}"
+                      [(ngModel)]="model.CreateDateTime">
+                  </div>
+                  <!-- END 建立時間 -->
+                </div>
+                <div class="row ">
+                  <!-- 更新人員 -->
+                  <div class="col-sm-6 input-group">
+                    <label for="UpdateUserName"
+                      class="col-sm-4 col-form-label">{{ translations.ROLE.UPDATE_USERNAME_LABEL | translate }}</label>
+                    <input type="text" validator class="form-control col-sm-8" disabled formControlName="UpdateUserName"
+                      placeholder="{{ translations.ROLE.UPDATE_USERNAME_PLACEHOLDER | translate }}"
+                      [(ngModel)]="model.UpdateUserName">
+                  </div>
+                  <!-- END 更新人員 -->
+                  <!-- 更新時間 -->
+                  <div class="col-sm-6 input-group">
+                    <label for="UpdateDateTime"
+                      class="col-sm-4 col-form-label">{{ translations.ROLE.UPDATE_DATETIME_LABEL | translate }}</label>
+                    <input type="text" validator class="form-control col-sm-8" disabled formControlName="UpdateDateTime"
+                      placeholder="{{ translations.ROLE.UPDATE_DATETIME_PLACEHOLDER | translate }}"
+                      [(ngModel)]="model.UpdateDateTime">
+                  </div>
+                  <!-- END 更新時間 -->
+                </div>
+              </ng-container>
+            </nb-tab>
+
+            <nb-tab tabTitle="{{ translations.ROLE.OTHER_SETTING | translate }}">
+              <div class="row">
+                <!-- 操作權限 -->
+                <div class="col-lg-6">
+                  <nb-card>
+                    <nb-card-header>{{ translations.ROLE.ROLE_OPERATOR | translate }}</nb-card-header>
+                    <nb-card-body>
+                      <app-authentication-tree [operator]="model"
+                        [disabled]="(uiActionType == actionType.Read) ? true : null"></app-authentication-tree>
+                    </nb-card-body>
+                  </nb-card>
+                </div>
+                <!-- END 操作權限 -->
+                <!-- 綁定人員 -->
+                <div class="col-lg-6">
+                  <nb-card>
+                    <nb-card-header>
+                      {{ translations.ROLE.USER_BINDING | translate }}
+                      <button type="button" class="btn btn-sm btn-ptc-confirm float-right mx-1"
+                        *ngIf="uiActionType == actionType.Add || uiActionType == actionType.Update"
+                        (click)="btnUserSelector($event)" [authorize]="authType.Update">
+                        {{ translations.COMMON.BTN_CHOICE | translate }}</button>
+                    </nb-card-header>
+                    <nb-card-body>
+                      <div class="row ">
+                        <app-smart-local-table (delete)="btnDeleteUser($event)" [options]="options"
+                          [data]="model.Users">
+                        </app-smart-local-table>
+                      </div>
+                    </nb-card-body>
+                  </nb-card>
+                </div>
+                <!-- END 操作權限 -->
+              </div>
+            </nb-tab>
+          </nb-tabset>
+          <!-- 設定按鈕 -->
+          <div class="mt-5">
+            <div class="row flex-center">
+              <button type="button" *ngIf="uiActionType == actionType.Update" class="btn btn-sm btn-ptc-confirm mx-5"
+                [authorize]="authType.Update"
+                (click)="btnEdit($event)">{{ translations.COMMON.BTN_CONFIRM | translate }}
+              </button>
+              <button type="button" *ngIf="uiActionType == actionType.Add" class="btn btn-sm btn-ptc-confirm mx-5"
+                [authorize]="authType.Add" (click)="btnAdd($event)">{{ translations.COMMON.BTN_CONFIRM | translate }}
+              </button>
+              <button type="button" class="btn btn-sm btn-kind-finished mx-5"
+                (click)="btnBack($event)">{{ translations.COMMON.BTN_BACK | translate }}</button>
+            </div>
+          </div>
+          <!-- END 設定按鈕 -->
+        </form>
+
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

@@ -1,0 +1,43 @@
+<nb-card>
+  <nb-card-header class="nb-card-header">
+    <div class="row">
+      <div class="col-sm-2 text-left">
+        {{translations.NOTIFICATION_GROUP_SENDER.RESUME_TITLE | translate}}
+      </div>
+      <div class="col-sm-10">
+        <div class="row ">
+          <label for="NodeID"
+            class="col-sm-2 col-form-label text-right">{{ translations.NOTIFICATION_GROUP_SENDER.RESUME_SEARCH_BU_NAME | translate }}</label>
+          <div class="col-sm-2">
+            <app-bu-select [placeholder]="translations.COMMON.BU_NAME_PLACEHOLDER | translate "
+              [(ngModel)]="searchTerm.NodeID">
+            </app-bu-select>
+          </div>
+          <label for="CreateDate"
+            class="col-sm-2 col-form-label text-right">{{ translations.NOTIFICATION_GROUP_SENDER.RESUME_SEARCH_CREATE_DATETIME | translate }}</label>
+          <input type="text" class="col-sm-4 form-control" [(ngModel)]="searchTerm.CreateTimeRange" daterangepicker />
+          <div class="col-sm-2">
+            <button type="button" class="btn btn-sm btn-ptc-search" [authorize]="authType.Read"
+              (click)="btnRender()">{{ translations.COMMON.BTN_SEARCH | translate }}</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body *ngIf="isEnable" class="nb-card-body">
+    <app-server-table #table [ajax]="ajax" [columns]="columns" (critiria)="critiria($event)"
+      [templateRefs]="{Targets : targetsRef , FilePath : filePathRef}">
+    </app-server-table>
+  </nb-card-body>
+</nb-card>
+
+<ng-template #targetsRef let-row="row">
+  <button *ngFor="let target of row.Targets" outline status="success" nbButton class="m-1" size="xsmall">
+    {{ target }}</button>
+</ng-template>
+
+<ng-template #filePathRef let-row="row">
+
+  <a class="btn btn-sm btn-ptc-confirm" *ngIf="row.FilePath" href="{{row.FilePath?.toHostApiUrl()}}"
+    download>{{translations.COMMON.BTN_DOWNLOAD | translate}}</a>
+</ng-template>

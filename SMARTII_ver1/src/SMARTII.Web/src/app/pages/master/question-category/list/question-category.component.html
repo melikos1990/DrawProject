@@ -1,0 +1,105 @@
+<!-- 查詢條件 -->
+<div class="row search-condition">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header class="nb-card-header">{{ translations.COMMON.SEARCH_CONDITION_TITLE | translate }}</nb-card-header>
+      <nb-card-body class="nb-card-body">
+        <form [formGroup]="form" autocomplete="off" (keyup.enter)="btnRender($event)">
+          <div class="row full-name-inputs">
+            <div class="col-sm-12 nopadding">
+              <div class="col-sm-4 input-group">
+                <label starsign for="BuID"
+                  class="col-sm-4 col-form-label">{{ translations.QUESTIONCATEGORY.BU_TITLE | translate }}</label>
+                <div class="col-sm-8">
+                  <app-bu-select validator formControlName="BuID" [(ngModel)]="model.BuID" name="BuID"
+                    (onSelectedChange)="onSelectedChange($event)"
+                    [placeholder]="translations.NODE_DEFINITION.BU_PLACEHOLDER | translate "></app-bu-select>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-12" *ngIf=" dynamicSelect?._maxLevel.length > 0">
+              <h6 class="font-weight-bold">{{ translations.QUESTIONCATEGORY.QUESTIONCLASSIFICATION | translate }}</h6>
+            </div>
+            <app-dynamic-question-select  *ngIf="model.BuID !== null" [buID]="model.BuID" [contentClass]="'px-3'" #dynamicSelect>
+            </app-dynamic-question-select>
+
+          </div>
+
+          <div class="row full-name-inputs" *ngIf="model.BuID !== null">
+            <div class="col-sm-4 input-group">
+              <label for="IsEnable"
+                class="col-sm-4 col-form-label">{{ translations.QUESTIONCATEGORY.ENABLE_TITLE | translate }}</label>
+              <div class="col-sm-8">
+                <app-open-select [placeholder]="translations.QUESTIONCATEGORY.ENABLE_PLACEHOLDER | translate"
+                  [(ngModel)]="model.IsEnable" name="IsEnable" formControlName="IsEnable" [items]="items">
+                </app-open-select>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="form-group">
+            <div class="row">
+              <div class="offset-sm-6 col-sm-3">
+                <button type="button" class="btn btn-sm btn-ptc-search" [authorize]="authType.Read"
+                  (click)="btnRender($event)">{{ translations.COMMON.BTN_SEARCH | translate }}</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<!-- 查詢條件 -->
+
+<!-- 查詢結果 -->
+<div class="row search-result" [attr.hidden]="isEnable">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header class="nb-card-header"> {{ translations.COMMON.SEARCH_RESULT_TITLE | translate }}
+        <button type="button" class="btn btn-sm btn-ptc-export float-right mx-1" (click)="btnReport()"
+          [authorize]="authType.Report">{{ translations.COMMON.BTN_EXPORT | translate }}</button>
+        <button type="button" class="btn btn-sm btn-ptc-delete float-right mx-1" (click)="btnBatchDisable($event)"
+          *ngIf="isAdmin">{{ translations.COMMON.BTN_DISABLED | translate }}</button>
+        <button type="button" class="btn btn-sm btn-ptc-create float-right mx-1" (click)="btnAdd($event)"
+          [authorize]="authType.Add">{{ translations.COMMON.BTN_ADD | translate }}</button>
+        <button type="button" class="btn btn-sm btn-ptc-modify float-right mx-1" (click)="btnOrderby()"
+          [authorize]="authType.Add">{{ translations.QUESTIONCATEGORY.ORDER_TITLE | translate }}</button>
+      </nb-card-header>
+      <nb-card-body class="nb-card-body">
+        <app-server-table #table [ajax]="ajax" [columns]="columns" (critiria)="critiria($event)"
+          (btnDelete)="onBtnDelete($event)" (btnEdit)="onBtnEdit($event)" (btnSearch)="onBtnSearch($event)"
+          [btnDeleteText]="translations.COMMON.BTN_DISABLED | translate"
+          [templateRefs]="{Names: questionNames, AnswerNames: answerNames}">
+        </app-server-table>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<!-- 查詢結果 -->
+
+<!-- Server Table 客製化欄位 -->
+
+<!-- 問題分類 -->
+<ng-template #questionNames let-row="row">
+  <div class="d-flex">
+    <nb-card class="questionItem" *ngFor="let name of row.Names">
+      <nb-card-body>
+        <p class="text-overflow">{{ name }}</p>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</ng-template>
+
+<!-- 常用語 -->
+<ng-template #answerNames let-row="row">
+  <nb-card class="questionItem" *ngFor="let name of row.AnswerNames">
+    <nb-card-body>
+      <p class="text-overflow">{{ name }}</p>
+    </nb-card-body>
+  </nb-card>
+</ng-template>
+
+<!-- Server Table 客製化欄位 -->

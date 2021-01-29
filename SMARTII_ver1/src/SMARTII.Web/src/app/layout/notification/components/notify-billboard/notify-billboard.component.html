@@ -1,0 +1,18 @@
+<div class="row notify-content" (click)="direct()">
+    <div class="col-sm-1 align-items-center d-flex justify-content-center">
+        <i class="far fa-comment-dots"></i>
+    </div>
+    <div class="col-sm-9 d-flex flex-column justify-content-center">
+      <p class="m-0">{{ model.Extend.Title }}</p>
+      <p>{{ model.Content }}</p>
+    </div>
+
+    <div class="col-sm-2 mb-1 d-flex align-items-end flex-column bd-highlight" >
+        <div class="p-2 bd-highlight" [ngClass]="{'warning': model.Extend.BillboardWarningType == billboardWarningType.Warning}">
+            等級: {{ model.Extend.BillboardWarningType | enum: "BillboardWarningType"}}
+        </div>
+        <div class="p-2 bd-highlight">
+            {{ model.Extend.ActiveStartDateTime | date: "yyyy-MM-dd hh:mm" }}
+        </div>
+    </div>
+  </div>

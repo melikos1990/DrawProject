@@ -1,0 +1,17 @@
+<app-local-table #unitTable [columns]="unitColumns" [items]="unitData" [pageSize]="5" [pageSizeOptions]="[5,20,30]"
+  [templateRefs]="{del : delUnit , type : type , UnitType : unitType}" (rowSelect)="onRowSelect($event)">
+</app-local-table>
+
+<ng-template #delUnit let-row="row">
+  <button class="btn btn-ptc-delete m-3" type="button" *ngIf="uiActionType != actionType.Read"
+    (click)="btnRemoveUnitUser(row)">{{ translations.COMMON.BTN_DELETE | translate }}</button>
+</ng-template>
+<ng-template #type let-row="row">
+  <app-enum-select [disabled]="(uiActionType == actionType.Read) ? true : null" [(ngModel)]="row.CaseComplainedUserType"
+    [placeholder]="translations.COMMON.SELECT_PLACEHOLDER | translate : {key: ''}" [ngModelOptions]="{standalone: true}"
+    [enumName]="'CaseComplainedUserType'">
+  </app-enum-select>
+</ng-template>
+<ng-template #unitType let-row="row">
+  {{row.UnitType | enum : 'UnitType'}}
+</ng-template>

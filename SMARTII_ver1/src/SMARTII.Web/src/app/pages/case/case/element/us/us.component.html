@@ -1,0 +1,228 @@
+<form [formGroup]="form">
+  <!-- 類型 -->
+  <div class="row">
+    <div class="col-sm-8 input-group">
+      <label for="UnitType" class="col-sm-4 col-form-label" starsign>{{ translations.CASE_COMMON.TABLE.UNIT_TYPE | translate }}</label>
+      <div class="col-sm-8">
+        <nb-radio-group name="sunittype-radio-group" [(ngModel)]="user.UnitType" [ngModelOptions]="{standalone: true}"
+          [disabled]="(uiActionType == actionType.Read) ? true : null" (ngModelChange)="onUnitTypeChange($event)">
+          <!-- 消費者 -->
+          <nb-radio [value]="unitType.Customer">{{ translations.CASE_RELATE.CONSUMER | translate }} </nb-radio>
+          <!-- 門市 -->
+          <nb-radio [value]="unitType.Store">{{ translations.CASE_RELATE.STORE | translate }} </nb-radio>
+          <!-- 組織 -->
+          <nb-radio [value]="unitType.Organization">{{ translations.CASE_COMMON.TABLE.ORGANIZATION | translate }} </nb-radio>
+        </nb-radio-group>
+
+      </div>
+    </div>
+  </div>
+  <!-- END 類型 -->
+
+  <!-- 消費者 -->
+  <ng-container *ngIf="user.UnitType == unitType.Customer">
+
+    <div class="row">
+      <div class="col-sm-6 input-group">
+        <!-- 姓名 -->
+        <label class="col-sm-4 col-form-label" starsign>{{ translations.CASE_COMMON.TABLE.CUSTOMER_NAME | translate }}</label>
+        <div class="col-sm-8">
+          <div class="row">
+            <input validator type="text" class="form-control" [placeholder]="translations.COMMON.INPUT_PLACEHOLDER | translate : {key: ''}" formControlName="UserName"
+              [attr.readonly]="uiActionType == actionType.Read ? true : null" [(ngModel)]="user.UserName">
+          </div>
+        </div>
+
+      </div>
+      <div class="col-sm-6 input-group">
+        <div class="col-sm-12">
+          <nb-radio-group name="gender-radio-group" [disabled]="(uiActionType == actionType.Read) ? true : null"
+            [ngModelOptions]="{standalone: true}" [(ngModel)]="user.Gender">
+            <!-- 先生 -->
+            <nb-radio [value]="genderType.Male">{{ translations.CASE_COMMON.ENUM.MALE | translate }} </nb-radio>
+            <!-- 小姐 -->
+            <nb-radio [value]="genderType.Female">{{ translations.CASE_COMMON.ENUM.FEMALE | translate }} </nb-radio>
+            <!-- 其他 -->
+            <nb-radio [value]="genderType.Other">{{ translations.CASE_COMMON.ENUM.OTHER | translate }}</nb-radio>
+          </nb-radio-group>
+        </div>
+
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6 input-group">
+        <!-- 來電電話 -->
+        <label class="col-sm-4 col-form-label">{{ translations.CASE_COMMON.INCOMING_CALL | translate }}</label>
+        <div class="col-sm-8">
+          <div class="row">
+            <input validator type="text" class="form-control" [placeholder]="translations.COMMON.INPUT_PLACEHOLDER | translate : {key: ''}" formControlName="Mobile"
+              [attr.readonly]="uiActionType == actionType.Read ? true : null" [(ngModel)]="user.Mobile">
+          </div>
+        </div>
+
+      </div>
+      <div class="col-sm-6 input-group">
+        <!-- EMAIL -->
+        <label class="col-sm-4 col-form-label">{{ translations.CASE_COMMON.TABLE.EMAIL | translate }}</label>
+        <div class="col-sm-8">
+          <div class="row">
+            <input validator type="text" class="form-control" [placeholder]="translations.COMMON.INPUT_PLACEHOLDER | translate : {key: ''}" formControlName="Email"
+              [attr.readonly]="uiActionType == actionType.Read ? true : null" [(ngModel)]="user.Email">
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </ng-container>
+  <!-- END  消費者 -->
+
+  <!-- 門市 -->
+  <ng-container *ngIf="user.UnitType == unitType.Store">
+    <div class="row">
+      <div class="col-sm-6 input-group">
+        <!-- 門市 -->
+        <label class="col-sm-4 col-form-label" starsign>{{ translations.CASE_RELATE.STORE | translate }}</label>
+        <div class="col-sm-8">
+          <div class="row">
+            <app-store-select [selectedItems]="refillStoreItem" (itemChange)="onStoreChange($event)"
+              [disabled]="(uiActionType == actionType.Read) ? true : null" [placeholder]="translations.COMMON.SELECT_PLACEHOLDER | translate : {key: ''}"
+              [searchTerm]="storeSearchTerm">
+            </app-store-select>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 input-group">
+        <!-- 組織 -->
+        <label class="col-sm-4 col-form-label" starsign>{{ translations.CASE_COMMON.TABLE.ORGANIZATION | translate }}</label>
+        <div class="col-sm-8">
+          {{user.ParentPathName}}
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6 input-group">
+        <!-- 姓名 -->
+        <label class="col-sm-4 col-form-label">{{ translations.CASE_COMMON.TABLE.CUSTOMER_NAME | translate }}</label>
+        <div class="col-sm-8">
+          <div class="row">
+            <input validator type="text" class="form-control" [placeholder]="translations.COMMON.INPUT_PLACEHOLDER | translate : {key: ''}"
+              [attr.readonly]="uiActionType == actionType.Read ? true : null" formControlName="UserName"
+              [(ngModel)]="user.UserName">
+          </div>
+        </div>
+
+      </div>
+      <div class="col-sm-6 input-group">
+        <div class="col-sm-12">
+          <nb-radio-group name="gender-radio-group" [(ngModel)]="user.Gender" [ngModelOptions]="{standalone: true}"
+            [disabled]="(uiActionType == actionType.Read) ? true : null">
+            <!-- 先生 -->
+            <nb-radio [value]="genderType.Male">{{ translations.CASE_COMMON.ENUM.MALE | translate }} </nb-radio>
+            <!-- 小姐 -->
+            <nb-radio [value]="genderType.Female">{{ translations.CASE_COMMON.ENUM.FEMALE | translate }} </nb-radio>
+            <!-- 其他 -->
+            <nb-radio [value]="genderType.Other">{{ translations.CASE_COMMON.ENUM.OTHER | translate }}</nb-radio>
+          </nb-radio-group>
+        </div>
+
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6 input-group">
+        <!-- 電話 -->
+        <label class="col-sm-4 col-form-label">{{ translations.CASE_COMMON.TABLE.TELEPHONE | translate : {number : ''} }}</label>
+        <div class="col-sm-8">
+          <div class="row">
+            <input validator type="text" class="form-control" [placeholder]="translations.COMMON.INPUT_PLACEHOLDER | translate : {key: ''}" formControlName="Telephone"
+              [attr.readonly]="uiActionType == actionType.Read ? true : null" [(ngModel)]="user.Telephone">
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <!-- END  門市 -->
+
+  <!-- 單位 -->
+  <ng-container *ngIf="user.UnitType == unitType.Organization">
+    <div class="row">
+      <div class="col-sm-4 input-group">
+        <!-- 單位名稱 -->
+        <label class="col-sm-4 col-form-label" starsign>{{ translations.CASE_COMMON.TABLE.ORGANIZAITON_NAME | translate }}</label>
+        <div class="col-sm-8">
+          {{user.NodeName}}
+        </div>
+      </div>
+      <div class="col-sm-4 input-group">
+        <!-- 組織 -->
+        <label class="col-sm-4 col-form-label" starsign>{{ translations.CASE_RELATE.UNIT | translate }}</label>
+        <div class="col-sm-8">
+          {{user.ParentPathName}}
+        </div>
+      </div>
+      <div *ngIf="uiActionType !== actionType.Read" class="col-sm-4">
+        <!-- 選擇單位 -->
+        <button type="button" class="btn btn-md btn-ptc-select-unit m-1" (click)="onOrganizationModal($event)">{{ translations.CASE_COMMON.CHOSE_UNIT | translate }}</button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6 input-group">
+        <!-- 姓名 -->
+        <label class="col-sm-4 col-form-label">{{ translations.CASE_COMMON.TABLE.CUSTOMER_NAME | translate }}</label>
+        <div class="col-sm-8">
+          <div class="row">
+            <input validator type="text" class="form-control" [placeholder]="translations.COMMON.INPUT_PLACEHOLDER | translate : {key: ''}" formControlName="UserName"
+              [attr.readonly]="uiActionType == actionType.Read ? true : null" [(ngModel)]="user.UserName">
+          </div>
+        </div>
+
+      </div>
+      <div class="col-sm-6 input-group">
+        <div class="col-sm-12">
+          <nb-radio-group name="gender-radio-group" [(ngModel)]="user.Gender" [ngModelOptions]="{standalone: true}"
+            [disabled]="(uiActionType == actionType.Read) ? true : null">
+            <!-- 先生 -->
+            <nb-radio [value]="genderType.Male">{{ translations.CASE_COMMON.ENUM.MALE | translate }} </nb-radio>
+            <!-- 小姐 -->
+            <nb-radio [value]="genderType.Female">{{ translations.CASE_COMMON.ENUM.FEMALE | translate }} </nb-radio>
+            <!-- 其他 -->
+            <nb-radio [value]="genderType.Other">{{ translations.CASE_COMMON.ENUM.OTHER | translate }}</nb-radio>
+          </nb-radio-group>
+        </div>
+
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-6 input-group">
+        <!-- 電話 -->
+        <label class="col-sm-4 col-form-label">{{ translations.CASE_COMMON.TABLE.TELEPHONE | translate : {number : ''} }}</label>
+        <div class="col-sm-8">
+          <div class="row">
+            <input validator type="text" [attr.readonly]="uiActionType == actionType.Read ? true : null"
+              formControlName="Telephone" class="form-control" [placeholder]="translations.COMMON.INPUT_PLACEHOLDER | translate : {key: ''}" [(ngModel)]="user.Telephone">
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <!-- END 單位 -->
+</form>
+
+
+<ng-template #allNodeTreeSelector>
+  <div class="modal-header nb-card-header">
+    <!-- 選擇單位 -->
+    <span> {{ translations.CASE_COMMON.CHOSE_UNIT | translate }} </span>
+    <button class="close" aria-label="Close" (click)="modalService.dismissAll()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body nb-card-body">
+    <app-all-node-tree-selector-for-cc [model]="treemodel" (onNodeClick)="onSelectOrganizationNode($event)"
+      (onSelectedChange)="onSelecteChange($event)">
+    </app-all-node-tree-selector-for-cc>
+  </div>
+  <div class="modal-footer flex-center">
+    <!-- 返回 -->
+    <!-- <button class="btn btn-md btn-warning" (click)="modalService.dismissAll()">{{ translations.COMMON.BTN_BACK | translate }}</button> -->
+  </div>
+</ng-template>

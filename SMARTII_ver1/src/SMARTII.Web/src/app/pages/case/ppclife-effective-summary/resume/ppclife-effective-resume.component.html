@@ -1,0 +1,44 @@
+<nb-card>
+  <nb-card-header class="nb-card-header">
+    <div class="row">
+      <div class="col-sm-2 text-left">
+        {{translations.NOTIFICATION_GROUP_SENDER.RESUME_TITLE | translate}}
+      </div>
+      <div class="col-sm-8">
+        <div class="input-group">
+          <label for="CreateDate"
+            class="col-sm-2 col-form-label">{{ translations.NOTIFICATION_GROUP_SENDER.RESUME_SEARCH_CREATE_DATETIME | translate }}
+          </label>
+          <input type="text" class="col-sm-6 form-control" name="CreateTimeRange"
+            [(ngModel)]="searchTerm.CreateTimeRange" daterangepicker />
+          <div class="col-sm-2 input-group">
+            <div class="row flex-left">
+              <button type="button" class="btn btn-sm btn-ptc-search mx-5"
+                (click)="btnRender()">{{ translations.COMMON.BTN_SEARCH | translate }}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nb-card-header>
+  <nb-card-body class="nb-card-body">
+    <div class="row search-result">
+      <div class="col-lg-12">
+        <app-server-table #table [ajax]="ajax" [columns]="columns" (critiria)="critiria($event)"
+          [templateRefs]="{Targets : targetsRef , FilePath : filePathRef}"></app-server-table>
+      </div>
+    </div>
+  </nb-card-body>
+</nb-card>
+
+<ng-template #targetsRef let-row="row">
+  <button *ngFor="let target of row.Targets" outline status="success" nbButton class="m-1" size="xsmall">
+    {{ target }}</button>
+</ng-template>
+
+<ng-template #filePathRef let-row="row">
+
+  <a class="btn btn-sm btn-ptc-confirm" *ngIf="row.EMLFilePath" href="{{row.FilePath?.toHostApiUrl()}}"
+    download>{{translations.COMMON.BTN_DOWNLOAD | translate}}</a>
+</ng-template>

@@ -1,0 +1,30 @@
+<div id="customer-alert" [hidden]="!option">
+  <div id="alert-frame" class="{{option?.detail?.frameClass}}">
+    <div class="p-1">
+      <div class="swal2-icon swal2-error" style="display: flex;" *ngIf="option?.detail?.type == type.error">
+        <span class="swal2-x-mark">
+          <span class="swal2-x-mark-line-left"></span>
+          <span class="swal2-x-mark-line-right"></span>
+        </span>
+      </div>
+      <div class="swal2-icon swal2-question" style="display: flex;" *ngIf="option?.detail?.type == type.question"></div>
+      <div class="swal2-icon swal2-warning" style="display: flex;" *ngIf="option?.detail?.type == type.warning"></div>
+      <div class="swal2-icon swal2-info" style="display: flex;" *ngIf="option?.detail?.type == type.info"></div>
+      <div class="swal2-icon swal2-success" style="display: flex;" *ngIf="option?.detail?.type == type.success"></div>
+      <h2 id="title" class="text-center p-1"> {{option?.detail?.title}} </h2>
+      <div id="alert-content" class="{{option?.detail?.contentClass}}">
+
+        <ng-template *ngTemplateOutlet="option?.templateRef; context: {$implicit: option?.data}">
+        </ng-template>
+      </div>
+      <div id="footer">
+        <div class="row d-flex justify-content-center mt-5">
+          <button type="button" class="btn btn-sm btn-ptc-confirm mx-5" *ngIf="option?.detail?.confirm"
+            (click)="btnConfirm($event)">{{ translations.COMMON.BTN_CONFIRM | translate }} </button>
+          <button type="button" class="btn btn-sm btn-kind-finished mx-5" *ngIf="option?.detail?.cancel"
+            (click)="btnBack($event)">{{ translations.COMMON.BTN_BACK | translate }} </button>
+        </div>
+      </div>
+    </div>
+
+  </div>

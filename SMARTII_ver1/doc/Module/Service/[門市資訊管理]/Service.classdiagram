@@ -1,0 +1,464 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner" dslVersion="1.0.0.0" Id="99bb5125-720e-4bad-801b-d1f37aed7001" name="Service" linkedPackageId="3d5bc600-4fec-42e6-9dfc-ba38016fde49" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
+  <packagedElements>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="c843fe58-b92d-4691-bcd1-38e52003b79e" name="StoreController" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="32a6b9c7-6d4e-48d2-8bec-f4b0472561f2" />
+        <ownedOperationsInternal>
+          <operation Id="feb061a5-e895-4c13-8de2-4b101b6bf11a" name="Update" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="5b23b585-0125-4446-98f6-ce68846c9eb8" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="f9d8af6e-bdf9-4a96-bb86-2bb5def252b0" name="model" direction="In">
+                  <elementDefinition Id="5df5a2e8-4f09-4cc8-94e4-05100adbfed1" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="f737a7cc-8e39-460a-ad88-e4a0d3dc66e9" LastKnownName="model : StoreDetailViewModel" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="71a341aa-8a19-4058-a6da-dd51d000f691" direction="Return">
+                  <elementDefinition Id="2e8bf316-b9f1-4459-911e-69261365563c" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="11939b0c-bfb5-4380-bc71-7a183390b65a" LastKnownName="Task&lt;IHttpResult&gt;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="9e47bafa-b434-426a-8537-e94df6e764b9" name="GetList" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="80a73c20-9b85-46ab-9dd6-ef7809271f7e" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="53fdc9b5-7909-49f5-b835-d967ac7aabf6" name="PagingRequest&lt;StoreSearchViewModel&gt;" direction="In">
+                  <elementDefinition Id="427109b5-c480-4cd3-bc11-cf200d10ed85" />
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="5d73ce11-4e96-4e3b-b9da-6b51ca4f2a72" direction="Return">
+                  <elementDefinition Id="84afcba8-1a41-4188-81d1-ce8efbe376fe" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="304b66ee-cc64-474d-a049-bb716e4e9c7e" LastKnownName="Task&lt;PagingResponse&gt;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="b9d57a7a-14dc-441a-ae42-5e16a2896fd5" name="Get" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="21f8a975-8473-4428-95a1-6155be2ac11e" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="72b48234-2613-4206-8245-2ff892547630" name="nodeID" direction="In">
+                  <elementDefinition Id="2d50e714-92c8-4dc8-822b-6870a3bbc04d" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="617f45da-a42b-4af7-88c3-f18fc7349355" LastKnownName="Integer" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <Interface Id="31f0e344-f80b-4315-902d-7aad575752c8" name="IStoreFactory" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="797c2b5b-2bc5-4225-9d07-866a323f324e" />
+        <ownedOperations>
+          <operation Id="da691289-c4b0-4e87-b546-72f1f2096aea" name="GetLsit&lt;T, R&gt;" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="c11c6fbe-21d0-49a2-b497-a718dc2afa93" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="c0a97c81-1998-4440-b67b-22254c8a2f83" name="con" direction="In">
+                  <elementDefinition Id="9f34713d-030b-4b63-8b9e-f42c447b3cb1" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="0a855505-2541-4eff-95e1-33f48b95290f" LastKnownName="MSSQLCondition" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="1195d969-8d0e-43c4-9956-e9e22cdae359" name="Particular" direction="In">
+                  <lowerValueInternal>
+                    <literalString Id="84870d83-e22e-4347-a383-79809828b934" name="Lower" value="0">
+                      <elementDefinition Id="b235b560-ce72-4f9f-b815-0f027729cf0e" />
+                    </literalString>
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString Id="2d2c5e49-2921-4bcd-a241-66dd1c80f0a1" name="Upper" value="1">
+                      <elementDefinition Id="f449b688-4270-4db0-a40c-69b409e23120" />
+                    </literalString>
+                  </upperValueInternal>
+                  <elementDefinition Id="53308edd-696d-490b-9b9c-2301e9572340" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="3699c9ca-ac76-4a7d-9aba-029d77b0087b" LastKnownName="T" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="1cb15de2-4700-4d38-9147-aa9a4b013511" direction="Return">
+                  <elementDefinition Id="f69b894b-f974-453a-887e-54b8bdeabb2d" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="64f683fb-296f-4a02-93ba-2058b311d8fe" LastKnownName="List&lt;R&gt;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="4774c144-ad9a-40ac-937b-a6bd3d49e129" name="Update&lt;T&gt;" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="6adcdbb3-625c-4cf5-9b09-e2dd25f6b41a" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="ad7c3ba2-0cc4-41f9-8fe5-123a61ec89ae" name="model" direction="In">
+                  <elementDefinition Id="8e6ee969-4603-424b-8d44-7d64c2b4f0d0" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="c5173f9c-998f-405e-b7ad-93533c96257d" LastKnownName="Store" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="0bc8ce67-0911-4bcf-a9ee-fc7a8cfd3011" name="AnyValue&lt;T, R&gt;" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="87ea96b1-64a2-4132-8571-e824d3fa4f24" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="94c3a30b-7a3d-4af7-8f8b-3d697055540c" name="particular" direction="In">
+                  <elementDefinition Id="80e4a40c-5ad8-4409-b10e-d9b60cea905b" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="3699c9ca-ac76-4a7d-9aba-029d77b0087b" LastKnownName="T" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="09a58c22-14e7-4274-87a0-11a623a60073" name="collection" direction="In">
+                  <elementDefinition Id="78a8bd83-14b5-41ff-b2fe-c5ec67c0077b" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="ee488358-8807-4757-bdb6-10bf8a943d15" LastKnownName="IEnumerable&lt;R&gt;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperations>
+      </Interface>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="417695c1-1c30-4c61-b250-dd7e90ea9d29" name="ASO_StoreFactory" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="8678decd-47a6-41b0-a7ad-d4ca47ea7bec" />
+        <suppliersInternal>
+          <interfaceRealization Id="6205add6-2068-4500-bf2f-a14c6ea8e051">
+            <interfaceMoniker Id="31f0e344-f80b-4315-902d-7aad575752c8" LastKnownName="IStoreFactory" />
+            <elementDefinition Id="0934adf5-81cb-4f3d-bb51-9ee5fdb2b7fa" />
+          </interfaceRealization>
+        </suppliersInternal>
+        <ownedOperationsInternal>
+          <operation Id="ef6d4a88-eb2a-4a4c-b421-db726bb99a99" name="GetLsit&lt;T, R&gt;" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="050138eb-9055-4562-b5ed-f195e31fffa3" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="4d90fc75-40b2-4e1e-bb5a-fd14155697a2" name="model" direction="In">
+                  <elementDefinition Id="069d6700-c712-4334-b713-9fb2b4b85b60" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="0a855505-2541-4eff-95e1-33f48b95290f" LastKnownName="MSSQLCondition" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="d6c1b65b-d870-40bf-b20c-2f3a6c5eb2d4" name="Parameter1" direction="In">
+                  <lowerValueInternal>
+                    <literalString Id="f654151a-9e1a-4704-9e49-842d804241f0" name="Lower" value="0">
+                      <elementDefinition Id="d1fb8f5e-d88a-4115-97f3-308b45125bf8" />
+                    </literalString>
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString Id="98bcf182-a0d2-4fd8-a4b5-5684a6cad42b" name="Upper" value="1">
+                      <elementDefinition Id="058e88da-a5cd-4ac0-85b1-ec415391135a" />
+                    </literalString>
+                  </upperValueInternal>
+                  <elementDefinition Id="eeeba550-8a18-4ac2-8a29-8a7a8b6647b3" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="3699c9ca-ac76-4a7d-9aba-029d77b0087b" LastKnownName="T" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="3149a6e9-2081-45d7-b1b0-5d3adbe275eb" direction="Return">
+                  <elementDefinition Id="9a393c24-8233-4c74-8241-131febcfdc9d" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="64f683fb-296f-4a02-93ba-2058b311d8fe" LastKnownName="List&lt;R&gt;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="97a315b5-4f57-4c56-a95c-08d55a5ab08b" name="Update&lt;T&gt;" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="7534fd8c-aaec-4727-b358-30460a2ec81f" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="13d61623-a2e5-40cf-b0bb-4c46638de1ce" name="model" direction="In">
+                  <elementDefinition Id="70a5ee10-b20e-4d87-9852-ec1587577c89" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="c5173f9c-998f-405e-b7ad-93533c96257d" LastKnownName="Store" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="ade2a55f-09e0-463a-874c-a6040dcd903b" name="AnyValue&lt;T, R&gt;" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="d3e9400d-c0ed-48e7-8066-fc67a1f2e959" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="68de9173-39f4-4c30-a780-89b16ff15a71" name="mdoel" direction="In">
+                  <elementDefinition Id="d849bf11-34e2-4b0e-8f78-1726cab09faf" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="3699c9ca-ac76-4a7d-9aba-029d77b0087b" LastKnownName="T" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="bf07dd72-3c78-44c5-a3c9-5cdab5728dff" name="collection" direction="In">
+                  <elementDefinition Id="6b0417d3-02fd-46f6-9b15-8ae68378338c" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="ee488358-8807-4757-bdb6-10bf8a943d15" LastKnownName="IEnumerable&lt;R&gt;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="044a3fca-c0b3-47e7-96f0-c62da2ce6cca" name="21Century_StoreFactory" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="5f0b7963-09a2-40dd-9cb6-6ded1a063dc4" />
+        <suppliersInternal>
+          <interfaceRealization Id="bd966083-097f-41da-be5f-5e3d23edb7d3">
+            <interfaceMoniker Id="31f0e344-f80b-4315-902d-7aad575752c8" LastKnownName="IStoreFactory" />
+            <elementDefinition Id="6b74cb85-cfc1-48e7-9b39-a4a94dfa1745" />
+          </interfaceRealization>
+        </suppliersInternal>
+        <ownedOperationsInternal>
+          <operation Id="6201e0ed-7424-4fd4-9c55-4aacc37e813e" name="GetLsit&lt;T, R&gt;" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="694aced0-1001-4083-b153-5c930cb55efa" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="4bddfac1-42c2-4744-8eaf-a5ca0b8651df" name="model" direction="In">
+                  <elementDefinition Id="d545e4cd-1ef8-40c8-9367-64c0316da753" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="0a855505-2541-4eff-95e1-33f48b95290f" LastKnownName="MSSQLCondition" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="d0a7d4db-ad9f-4f0f-8d37-3588bc82506d" name="Parameter1" direction="In">
+                  <lowerValueInternal>
+                    <literalString Id="a636b335-4b60-4702-8242-77fa4c6761e1" name="Lower" value="0">
+                      <elementDefinition Id="46c6a28e-c328-47d3-afd1-9e4cb18633c8" />
+                    </literalString>
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString Id="e1ec75b6-2048-4afe-be18-84109214d476" name="Upper" value="1">
+                      <elementDefinition Id="a14aecd0-0f41-4bfa-93b6-aab76ed0ebf4" />
+                    </literalString>
+                  </upperValueInternal>
+                  <elementDefinition Id="c576a428-b066-426f-90b4-8d224cadc1ac" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="3699c9ca-ac76-4a7d-9aba-029d77b0087b" LastKnownName="T" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="ae58bc82-b2cc-4a7f-9a3b-20454b0c4e9e" direction="Return">
+                  <elementDefinition Id="1591e77a-b9fa-48cf-af5b-b3529591b019" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="64f683fb-296f-4a02-93ba-2058b311d8fe" LastKnownName="List&lt;R&gt;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="4fa3202b-ab2f-445a-9089-e92a8865ab04" name="Update&lt;T&gt;" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="623ad2e9-6c94-454e-9516-948f62265845" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="0801574b-b016-4387-bec0-d612099f10bd" name="model" direction="In">
+                  <elementDefinition Id="957b0f09-fd26-43aa-be79-3ad78d622064" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="c5173f9c-998f-405e-b7ad-93533c96257d" LastKnownName="Store" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="a9762197-3ef1-49fc-a0b1-c008f62b8583" name="AnyValue&lt;T, R&gt;" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="f79b151d-9112-4cac-aa7c-f3fc745555e0" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="91afc9e6-33da-4cd2-9baf-f5878163a65b" name="mdoel" direction="In">
+                  <elementDefinition Id="4454fdcb-9d00-416f-b012-4e97ab3ee652" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="3699c9ca-ac76-4a7d-9aba-029d77b0087b" LastKnownName="T" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="2541dd62-087e-40a0-a813-0a506e2dd207" name="collection" direction="In">
+                  <elementDefinition Id="2508eebf-4106-4651-a62f-00cf669f2cee" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="ee488358-8807-4757-bdb6-10bf8a943d15" LastKnownName="IEnumerable&lt;R&gt;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="ae6d6407-23ca-4d2d-b922-28380d57aa62" name="PPCLIFE_StoreFactory" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="89e47eb7-9486-4c57-b05c-0eaf1566ef46" />
+        <suppliersInternal>
+          <interfaceRealization Id="f40bc08f-46f0-4ce7-bb11-11243e0af0fa">
+            <interfaceMoniker Id="31f0e344-f80b-4315-902d-7aad575752c8" LastKnownName="IStoreFactory" />
+            <elementDefinition Id="be153ec2-3194-460d-8bcd-f45236646dc6" />
+          </interfaceRealization>
+        </suppliersInternal>
+        <ownedOperationsInternal>
+          <operation Id="7e51fa21-0d2c-41ca-bce2-9ad0416d20fc" name="GetLsit&lt;T, R&gt;" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="a3c3eb48-628b-44f3-96c1-822d91c4f488" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="35357a8d-b301-41cb-8966-726f37a8bd3a" name="model" direction="In">
+                  <elementDefinition Id="1bf9892b-f8a9-4483-ab18-cb095b43ce97" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="0a855505-2541-4eff-95e1-33f48b95290f" LastKnownName="MSSQLCondition" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="38010c61-38e9-46ba-b813-e66fad112129" name="Parameter1" direction="In">
+                  <lowerValueInternal>
+                    <literalString Id="b96e8416-1c60-4c6a-a291-1ca52ad60c2f" name="Lower" value="0">
+                      <elementDefinition Id="43a3f65f-00ec-4793-820e-0d86ade8bcfe" />
+                    </literalString>
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString Id="01afe770-6758-40d3-8141-bbfe5b32f5ac" name="Upper" value="1">
+                      <elementDefinition Id="08e77bf3-d03c-4615-b336-f87ed107d6e4" />
+                    </literalString>
+                  </upperValueInternal>
+                  <elementDefinition Id="678fcc6a-29dd-4e78-a60c-a5b6093e9f9c" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="3699c9ca-ac76-4a7d-9aba-029d77b0087b" LastKnownName="T" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="32a70e6d-5352-46d5-a926-6cb5f09017a1" direction="Return">
+                  <elementDefinition Id="37d8de98-0b37-4321-9305-2c89d64f238a" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="64f683fb-296f-4a02-93ba-2058b311d8fe" LastKnownName="List&lt;R&gt;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="9ed6fece-772e-44c5-bda8-97bb4410ad07" name="Update&lt;T&gt;" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="a8ecabc9-0d92-4f0c-99ac-951bf6f6f4c7" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="e63c2057-ef4a-48eb-9abe-4c563bf734c5" name="model" direction="In">
+                  <elementDefinition Id="c4d48851-f909-4b11-b90f-946ee73a3910" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="c5173f9c-998f-405e-b7ad-93533c96257d" LastKnownName="Store" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="9fe06048-3607-4116-8bf9-c86be59851e1" name="AnyValue&lt;T, R&gt;" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="967517eb-3b27-49a1-8d10-1da3a5dcb0bd" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="8b7b9bc6-39d7-43a4-a45e-c8a812a29f82" name="mdoel" direction="In">
+                  <elementDefinition Id="efe39adb-7f18-4f66-bda6-9076c1a1371b" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="3699c9ca-ac76-4a7d-9aba-029d77b0087b" LastKnownName="T" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="5ced82a2-ca75-4aae-8845-b778ca99f341" name="collection" direction="In">
+                  <elementDefinition Id="036d9c63-c080-4187-892c-a6a6addf547e" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="ee488358-8807-4757-bdb6-10bf8a943d15" LastKnownName="IEnumerable&lt;R&gt;" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <packageHasNamedElement>
+      <referencedType Id="c5173f9c-998f-405e-b7ad-93533c96257d" name="Store" isAbstract="false" isLeaf="false" cachedFullName="Module::Store">
+        <elementDefinition Id="5018ffb6-82f0-409b-9a33-65641a3b6cdd" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="f737a7cc-8e39-460a-ad88-e4a0d3dc66e9" name="model : StoreDetailViewModel" isAbstract="false" isLeaf="false" cachedFullName="model : StoreDetailViewModel">
+        <elementDefinition Id="784fc845-242a-49dd-ba41-80ef9b20e45b" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="304b66ee-cc64-474d-a049-bb716e4e9c7e" name="Task&lt;PagingResponse&gt;" isAbstract="false" isLeaf="false" cachedFullName="Task&lt;PagingResponse&gt;">
+        <elementDefinition Id="c74e533e-8952-44b1-99d9-e7cc49cb1445" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="11939b0c-bfb5-4380-bc71-7a183390b65a" name="Task&lt;IHttpResult&gt;" isAbstract="false" isLeaf="false" cachedFullName="Task&lt;IHttpResult&gt;">
+        <elementDefinition Id="b5efe0bd-c18c-451c-9f21-1aa9f2532f3d" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="0a855505-2541-4eff-95e1-33f48b95290f" name="MSSQLCondition" isAbstract="false" isLeaf="false" cachedFullName="MSSQLCondition">
+        <elementDefinition Id="7023c7b7-c319-4e1a-8f7d-59abb2f2a2f4" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="3699c9ca-ac76-4a7d-9aba-029d77b0087b" name="T" isAbstract="false" isLeaf="false" cachedFullName="T">
+        <elementDefinition Id="285f37c3-dc35-4e3a-bdff-7147f4bcffc3" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="64f683fb-296f-4a02-93ba-2058b311d8fe" name="List&lt;R&gt;" isAbstract="false" isLeaf="false" cachedFullName="List&lt;R&gt;">
+        <elementDefinition Id="f229cc9c-dd7c-4e99-a4ad-e9400fc61c7d" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="ee488358-8807-4757-bdb6-10bf8a943d15" name="IEnumerable&lt;R&gt;" isAbstract="false" isLeaf="false" cachedFullName="IEnumerable&lt;R&gt;">
+        <elementDefinition Id="362edae4-d89f-470f-b9ee-8bfeaa19358d" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="617f45da-a42b-4af7-88c3-f18fc7349355" name="Integer" isAbstract="false" isLeaf="false" cachedFullName="Integer">
+        <elementDefinition Id="220a3521-e091-4221-bae9-3ef9018e845c" />
+      </referencedType>
+    </packageHasNamedElement>
+  </packagedElements>
+  <package Id="3d5bc600-4fec-42e6-9dfc-ba38016fde49" name="Module">
+    <elementDefinition Id="e05459b0-ab30-45e9-8e52-c83bd85f6da1" />
+    <profileInstances>
+      <packageHasProfileInstances Id="12e039d9-1425-4a91-bf8f-9761040a4bc2">
+        <profileInstance Id="2c95b328-58c8-4bba-b207-b0af6cf12000" name="StandardProfileL2">
+          <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+        </profileInstance>
+        <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+      </packageHasProfileInstances>
+      <packageHasProfileInstances Id="3ef74994-1bb0-4947-83f9-bea493436c5c">
+        <profileInstance Id="eb7247f0-21b3-4f17-900a-57239973d6f5" name="StandardProfileL3">
+          <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+        </profileInstance>
+        <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+      </packageHasProfileInstances>
+    </profileInstances>
+  </package>
+</logicalClassDesignerModel>

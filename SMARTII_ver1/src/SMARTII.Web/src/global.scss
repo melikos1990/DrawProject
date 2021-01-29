@@ -1,0 +1,157 @@
+@import "./colors";
+
+@mixin ptc-global() {
+  @include select-style();
+  @include card-style();
+  @include button-style();
+}
+
+@mixin select-style() {
+  nb-select button {
+    background-color: map-get($select, bg) !important;
+  }
+
+  nb-card.select {
+    border: map-get($select, border) !important;
+
+    nb-card-body nb-option.selected {
+      background-color: map-get($select, opt-bg) !important;
+    }
+
+    nb-card-body {
+      background-color: $c-fff;
+    }
+  }
+}
+
+@mixin card-style() {
+  nb-card.ptc-card {
+    & > nb-card-header {
+      background-color: map-get($card, header-bg);
+      color: map-get($card, header-color);
+    }
+    & > nb-card-body {
+      background-color: map-get($card, body-bg);
+
+      label {
+        color: map-get($card, body-label-color);
+      }
+    }
+    nb-checkbox {
+      label > span.customised-control-indicator {
+        border-color: #757474 ;
+      }
+    }
+    
+  }
+
+  nb-card.ptc-no-box-shadow {
+    box-shadow: none !important;
+  }
+
+  nb-accordion.ptc-accordion {
+    height: min-content;
+    nb-accordion-item {
+      & > nb-accordion-item-header {
+        background-color: map-get($card, header-bg);
+        color: map-get($card, header-color);
+      }
+
+      & > nb-accordion-item-body {
+        background-color: map-get($card, body-bg);
+      }
+    }
+  }
+
+  nb-accordion.ptc-accordion-only-header {
+    height: min-content;
+    nb-accordion-item {
+      & > nb-accordion-item-header {
+        background-color: map-get($card, header-bg);
+        color: map-get($card, header-color);
+      }
+    }
+  }
+}
+
+@mixin button-style() {
+  .btn-ptc-search,
+  .btn-ptc-advanced-search {
+    @include hoverHandler($c-3e469b, $c-97a2d2);
+  }
+
+  .btn-ptc-export {
+    @include hoverHandler($c-52ad7b, $c-1ca446);
+  }
+
+  .btn-ptc-create {
+    @include hoverHandler($c-a39369, $c-dcba70);
+  }
+
+  .btn-ptc-delete {
+    @include hoverHandler($c-951e23, $c-ff647a);
+  }
+
+  .btn-ptc-admin-assign,
+  .btn-ptc-auto-assign,
+  .btn-ptc-batch-reply,
+  .btn-ptc-batch-adopt {
+    @include hoverHandler($c-3e469b, $c-5483c3);
+  }
+
+  .btn-ptc-case-finish,
+  .btn-ptc-to-case-create,
+  .btn-ptc-to-case-finish,
+  .btn-ptc-assignment-finish {
+    @include hoverHandler($c-238dfa, $c-66acdf);
+  }
+
+  .login-btn,
+  .languageSelect {
+    @include hoverHandler($c-4a98d3, $c-0f6ca5);
+  }
+
+  .create-case {
+    @include hoverHandler($c-8ba1b6, $c-496786);
+  }
+
+  ::ng-deep .btn btn-primary btn-file{
+    background-color: #727ca7;
+  }
+
+  .btn-ptc-confirm,
+  .btn-ptc-case-creata,
+  .btn-ptc-send,
+  .btn-ptc-add-user,
+  .btn-ptc-default-selected,
+  .btn-ptc-template-selected,
+  .btn-ptc-default-template,
+  .btn-ptc-save,
+  .btn-ptc-case-unlock,
+  .btn-ptc-case-remind-create,
+  .btn-ptc-case-remind-read,
+  .btn-question-classification-answer,
+  .btn-ptc-store-info,
+  .btn-ptc-select-unit {
+    @include hoverHandler($c-5b83aa, $c-66acdf);
+  }
+
+  .btn-ptc-modify {
+    @include hoverHandler($c-17326e, $c-5483c3);
+  }
+
+  .btn-cancel_case {
+    @include hoverHandler($c-397FC3, $c-66ACDF);
+  }
+
+  .btn-kind-finished {
+    @include hoverHandler($c-1c62aa, $c-66acdf);
+  }
+}
+
+@mixin hoverHandler($bg, $hoverBg) {
+  background-color: $bg;
+  &:hover {
+    background-color: $hoverBg;
+  }
+}

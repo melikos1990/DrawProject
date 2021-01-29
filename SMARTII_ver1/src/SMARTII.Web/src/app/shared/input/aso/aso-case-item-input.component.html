@@ -1,0 +1,45 @@
+<div class="row">
+  <button type="button" class="btn btn-sm btn-ptc-create mx-5"
+    (click)="addItemModal()">{{ translateService.instant('COMMON.BTN_ADD')  }}
+  </button>
+</div>
+<app-local-table [columns]="column" [items]="items" [pageSize]="5" [templateRefs]="{
+  ProductModel : productModel,
+    ProductName : productName,
+    PurchaseDay : purchaseDay,
+    Operator : operator
+  }" [pageSizeOptions]="[3,5,10,20]">
+</app-local-table>
+
+<ng-template #operator let-row="row">
+  <div class="flex">
+    <button type="button" class="btn btn-sm btn-ptc-delete mx-3" [disabled]="input.disabled"
+      (click)="deleteItem(row)">{{ translateService.instant('COMMON.BTN_DELETE')  }}</button>
+  </div>
+</ng-template>
+
+<ng-template #productModel let-row="row">
+  <div class="flex mx-3">
+    <input type="text" [ngModelOptions]="{standalone: true}" class="form-control"
+      placeholder="{{ translateService.instant('COMMON.INPUT_PLACEHOLDER',{key : translateService.instant('CASE_COMMON.TABLE.PRODUCT_MODEL') }) }}"
+      [disabled]="input.disabled" [(ngModel)]="row.ProductModel">
+  </div>
+</ng-template>
+
+<ng-template #productName let-row="row">
+  <form [formGroup]="form">
+    <div class="flex mx-3">
+      <input type="text" [ngModelOptions]="{standalone: true}" class="form-control"
+        placeholder="{{ translateService.instant('COMMON.INPUT_PLACEHOLDER',{key : translateService.instant('CASE_COMMON.TABLE.NODE_NAME') }) }}"
+        [disabled]="input.disabled" [(ngModel)]="row.ProductName">
+    </div>
+  </form>
+</ng-template>
+
+<ng-template #purchaseDay let-row="row">
+  <div class="flex mx-3">
+    <input type="text" [ngModelOptions]="{standalone: true}" class="form-control"
+      placeholder="{{ translateService.instant('COMMON.INPUT_PLACEHOLDER',{key : translateService.instant('CASE_COMMON.TABLE.PURCHASE_DATE') }) }}"
+      [attr.disabled]="input.disabled" [attr.readonly]="input.disabled" [(ngModel)]="row.PurchaseDay" datetimepicker>
+  </div>
+</ng-template>

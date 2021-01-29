@@ -1,0 +1,15 @@
+<nb-card>
+  <nb-card-header>{{translations.CALLCENTER_NODE.JOB_LIST | translate}} ({{model.DefindName}})
+    <button type="button" *ngIf="uiActionType == actionType.Update" class="btn btn-sm btn-ptc-confirm mx-5"
+      [authorize]="authType.Update" (click)="btnJobSelector($event)">{{ translations.COMMON.BTN_CHOICE | translate }}
+    </button>
+    <button type="button" class="btn btn-sm btn-ptc-modify mx-2"
+      (click)="btnUserPreview($event)">{{ translations.COMMON.USER_LIST | translate }}
+    </button>
+  </nb-card-header>
+  <nb-card-body>
+    <app-smart-local-table (rowSelect)="jobRowSelect($event)" (delete)="btnDeleteJob($event)" [options]="options"
+      [data]="model.Jobs">
+    </app-smart-local-table>
+  </nb-card-body>
+</nb-card>

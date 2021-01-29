@@ -1,0 +1,17 @@
+<!-- 輸入項目 -->
+<app-ucmi [sourcekey]="sourcekey" #ucmi *ngIf="visibleInput && uiActionType != actionType.Read" [organizationSearchTerm]="organizationSearchTerm"
+  [(uiActionType)]="uiActionType" [(user)]="onSetUser">
+</app-ucmi>
+<!-- END 輸入項目 -->
+
+<div class="row flex-center" *ngIf="visibleTable && visibleInput">
+  <button *ngIf="uiActionType == actionType.Add" type="button" class="btn btn-md btn-ptc-create m-1"
+    (click)="btnAddUser()">{{ translations.COMMON.BTN_ADD | translate }}</button>
+  <button *ngIf="uiActionType == actionType.Update" type="button" class="btn btn-md btn-ptc-modify m-1"
+    (click)="btnUpdateUser()">{{ translations.COMMON.BTN_EDIT | translate }}</button>
+</div>
+
+<!-- 顯示項目 -->
+<app-umct #ucmt [uiActionType]="uiActionType" *ngIf="visibleTable" [(users)]="complainedUsers"
+  (rowSelect)="onRowSelect($event)"></app-umct>
+<!-- END 顯示項目 -->

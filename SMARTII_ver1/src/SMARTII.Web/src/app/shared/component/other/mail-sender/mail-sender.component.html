@@ -1,0 +1,175 @@
+<nb-card>
+  <div class="modal-header">
+    <button class="close" aria-label="Close" (click)="btnBack()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <nb-card-body>
+    <form [formGroup]="form">
+
+      <div class="row">
+        <div class="col-sm-12 input-group">
+          <label starsign for="sender"
+            class="col-sm-2 col-form-label">{{translations.EMAIL_NOTIFICATION.SENDER| translate }}</label>
+          <div class="comboGroup col-sm-6">
+            <input id="sender" validator type="text" (focusout)="onFocusout()" (focus)="onfocus()"
+              formControlName="SenderEmail" class="form-control col-sm-12" name="sender"
+              [(ngModel)]="model.Sender.Email" />
+            <ul [hidden]="!isSelectMode">
+              <ng-container *ngIf="senderList && senderList.length > 0">
+                <li *ngFor="let option of senderList" (click)="onSelectedSender(option)">{{option.Email}}</li>
+              </ng-container>
+              <ng-container *ngIf="senderList.length == 0 ">
+                <li>{{noDataText}}</li>
+              </ng-container>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12 input-group">
+          <label for="receiver"
+            class="col-sm-2 col-form-label">{{translations.EMAIL_NOTIFICATION.RECEIVER| translate }}</label>
+          <div class="form-control col-sm-6">
+            <div class="row">
+              <div class="col-sm-3" *ngFor="let receiver of model.Receiver; let idx = index">
+                <nb-card>
+                  <nb-card-body>
+                    <i class="nb-close" (click)="onCancelUser(emailReceiveType.Recipient , receiver, idx)"></i>
+                    <div class="text-center info">
+                      <h3>{{receiver.UserName}}</h3>
+                      {{receiver.Email}}
+                    </div>
+                  </nb-card-body>
+                </nb-card>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <button type="button" class="btn btn-sm btn-ptc-add-user mx-5"
+              (click)="btnSelectorModal(emailReceiveType.Recipient)">{{translations.COMMON.BTN_CHOICE_USER| translate }}</button>
+            <button type="button" class="btn btn-sm btn-ptc-create mx-5"
+              (click)="btnCreatorModal(emailReceiveType.Recipient)">{{translations.COMMON.BTN_ADD| translate }}</button>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12 input-group">
+          <label for="cc" class="col-sm-2 col-form-label">{{translations.EMAIL_NOTIFICATION.CC| translate }}</label>
+          <div class="form-control col-sm-6">
+            <div class="row">
+              <div class="col-sm-3" *ngFor="let cc of model.Cc ; let idx = index">
+                <nb-card>
+                  <nb-card-body>
+                    <i class="nb-close" (click)="onCancelUser(emailReceiveType.CC , cc, idx)"></i>
+                    <div class="text-center info">
+                      <h3>{{cc.UserName}}</h3>
+                      {{cc.Email}}
+                    </div>
+                  </nb-card-body>
+                </nb-card>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <button type="button" class="btn btn-sm btn-ptc-add-user mx-5"
+              (click)="btnSelectorModal(emailReceiveType.CC)">{{translations.COMMON.BTN_CHOICE_USER| translate }}</button>
+            <button type="button" class="btn btn-sm btn-ptc-create mx-5"
+              (click)="btnCreatorModal(emailReceiveType.CC)">{{translations.COMMON.BTN_ADD| translate }}</button>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12 input-group">
+          <label for="bcc" class="col-sm-2 col-form-label">{{translations.EMAIL_NOTIFICATION.BCC| translate }}</label>
+          <div class="form-control col-sm-6">
+            <div class="row">
+              <div class="col-sm-3" *ngFor="let bcc of model.Bcc ; let idx = index">
+                <nb-card>
+                  <nb-card-body>
+                    <i class="nb-close" (click)="onCancelUser(emailReceiveType.BCC , bcc, idx)"></i>
+                    <div class="text-center info">
+                      <h3>{{bcc.UserName}}</h3>
+                      {{bcc.Email}}
+                    </div>
+                  </nb-card-body>
+                </nb-card>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <button type="button" class="btn btn-sm btn-ptc-add-user mx-5"
+              (click)="btnSelectorModal(emailReceiveType.BCC)">{{translations.COMMON.BTN_CHOICE_USER| translate }}</button>
+            <button type="button" class="btn btn-sm btn-ptc-create mx-5"
+              (click)="btnCreatorModal(emailReceiveType.BCC)">{{translations.COMMON.BTN_ADD| translate }}</button>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12 input-group">
+          <label starsign for="title"
+            class="col-sm-2 col-form-label">{{translations.EMAIL_NOTIFICATION.TITLE| translate }}</label>
+          <input id="title" validator formControlName="Title" name="title" type="text" class="form-control col-sm-6"
+            [(ngModel)]="model.Title" />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12 input-group">
+          <label for="file" class="col-sm-2 col-form-label">{{translations.EMAIL_NOTIFICATION.FILE| translate }}</label>
+          <input [options]="options" [ngModelOptions]="{standalone: true}" name="file" class="col-sm-8 file" type="file"
+            fileInput multiple [(ngModel)]="model.Attachments" />
+
+        </div>
+      </div>
+      <div *ngIf="isAddCaseAttachment" class="row" >
+        <div class="col-sm-12 input-group">
+          <nb-checkbox [(ngModel)]="model.IsAddCaseAttachment" [ngModelOptions]="{standalone: true}">
+            {{ translations.EMAIL_NOTIFICATION.ISADDCASEFILE | translate }}</nb-checkbox>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12 input-group">
+          <label starsign for="content"
+            class="col-sm-2 col-form-label">{{translations.EMAIL_NOTIFICATION.CONTENT| translate }}</label>
+          <textarea id="content" name="content" validator formControlName="Content" class="form-control col-sm-6"
+            rows="5" [(ngModel)]="model.Content" (click)="clickInput($event.target)"
+            (change)="clickInput($event.target)"></textarea>
+          <div class="col-sm-4">
+            <button type="button" (click)="openCaseTemplateModal()"
+              class="btn btn-sm btn-ptc-default-template">{{translations.CASE_COMMON.TEMPLATE_SELECT| translate }}</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </nb-card-body>
+
+  <nb-card-footer>
+    <div class="row flex-center">
+      <button type="button" class="btn btn-sm btn-ptc-send mx-5"
+        (click)="btnSend()">{{ translations.COMMON.BTN_SEND | translate }} </button>
+      <!-- <button type="button" class="btn btn-sm btn-warning mx-5"
+        (click)="btnBack()">{{ translations.COMMON.BTN_BACK | translate }} </button> -->
+    </div>
+  </nb-card-footer>
+</nb-card>
+
+
+<ng-template #selector>
+  <div class="modal-header nb-card-header">
+    <span>{{ translations.COMMON.USER_LIST | translate }} </span>
+    <button class="close" aria-label="Close" (click)="btnClosepop()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body nb-card-body">
+    <app-all-node-tree-user-selector-for-cc #refenerce [isUserEnabled]="true" [model]="treemodel"
+    (onSelectedChange)="onSelecteChange($event)">
+    </app-all-node-tree-user-selector-for-cc>
+  </div>
+  <div class="modal-footer flex-center">
+    <button class="btn btn-md btn-ptc-confirm"
+      (click)="onSelected(refenerce)">{{ translations.COMMON.BTN_CONFIRM | translate }}</button>
+    <!-- <button type="button" class="btn btn-md btn-warning"
+      (click)="btnClosepop()">{{ translations.COMMON.BTN_BACK | translate }}</button> -->
+  </div>
+</ng-template>

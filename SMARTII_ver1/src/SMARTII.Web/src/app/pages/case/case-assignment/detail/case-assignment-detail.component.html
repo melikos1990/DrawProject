@@ -1,0 +1,324 @@
+<div class="row">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-body>
+        <form [formGroup]="form">
+          <!-- ROW 1-->
+          <div class="row">
+
+            <!-- 企業別 -->
+            <div class="col-sm-3 input-group">
+              <label for="NodeID" class="col-sm-4 col-form-label">{{ translations.COMMON.BU_NAME | translate }}</label>
+              <div class="col-sm-8">
+                <app-bu-select [isSelf]="false" type="text" [ngModelOptions]="{standalone: true}"
+                  [(ngModel)]="model.NodeID" [placeholder]="'請選擇'" disabled>
+                </app-bu-select>
+              </div>
+            </div>
+            <!-- 案件編號 -->
+            <div class="col-sm-3 input-group">
+              <label class="col-sm-4 col-form-label">{{ translations.CASE_COMMON.CASE_ID | translate }}</label>
+              <div class="col-sm-8 col-form-label">
+                {{model.Case.CaseID}}
+              </div>
+            </div>
+
+            <!-- 轉派區塊 -->
+            <ng-container *ngIf="model.CaseAssignmentProcessType == caseAssignmentProcessType.Assignment">
+              <!-- 序號 -->
+              <div class="col-sm-3 input-group">
+                <label
+                  class="col-sm-4 col-form-label">{{ translations.CASE_COMMON.CASE_ASSIGNMENT_ID | translate }}</label>
+                <div class="col-sm-8 col-form-label">
+                  {{model['AssignmentID']}}
+                </div>
+              </div>
+              <!-- 狀態 -->
+              <div class="col-sm-3 input-group">
+                <label class="col-sm-4 col-form-label">{{ translations.CASE_COMMON.TYPE | translate }}</label>
+                <div class="col-sm-8 col-form-label">
+                  {{model['CaseAssignmentTypeName']}}
+                </div>
+              </div>
+              <!-- 歷程模式 -->
+              <div class="col-sm-3 input-group">
+                <label
+                  class="col-sm-4 col-form-label">{{ translations.CASE_COMMON.ASSIGNMENT_MODE | translate }}</label>
+                <div class="col-sm-8 col-form-label">
+                  {{model['CaseAssignmentWorkTypeName']}}
+                </div>
+              </div>
+            </ng-container>
+            <!-- END 轉派區塊 -->
+            <!-- 反應單 -->
+            <ng-container *ngIf="model.CaseAssignmentProcessType == caseAssignmentProcessType.Invoice">
+              <!-- 反應單 -->
+              <div class="col-sm-3 input-group">
+                <!-- 反應單單號 -->
+                <label class="col-sm-4 col-form-label">{{ translations.CASE_COMMON.INVOICE_ID | translate }}</label>
+                <div class="col-sm-8 col-form-label">
+                  {{model['InvoiceID']}}
+                </div>
+              </div>
+              <!-- 狀態 -->
+              <div class="col-sm-3 input-group">
+                <label class="col-sm-4 col-form-label">{{ translations.CASE_COMMON.TYPE | translate }}</label>
+                <div class="col-sm-8 col-form-label">
+                  {{model['CaseAssignmentComplaintInvoiceTypeName']}}
+                </div>
+              </div>
+            </ng-container>
+            <!-- END 轉派區塊 -->
+            <!-- END 一般通知區塊 -->
+            <!-- 反應單 -->
+            <ng-container *ngIf="model.CaseAssignmentProcessType == caseAssignmentProcessType.Notice">
+              <!-- 反應單 -->
+              <div class="col-sm-3 input-group">
+                <!-- 狀態 -->
+                <label class="col-sm-4 col-form-label">{{ translations.CASE_COMMON.TYPE | translate }}</label>
+                <div class="col-sm-8 col-form-label">
+                  {{model['CaseAssignmentComplaintNoticeTypeName']}}
+                </div>
+              </div>
+            </ng-container>
+            <!-- END 一般通知區塊 -->
+            <!-- 通知時間 -->
+            <div class="col-sm-3 input-group">
+              <label class="col-sm-4 col-form-label">{{ translations.CASE_COMMON.NOTIFY_DATETIME | translate }}</label>
+              <div class="col-sm-8 col-form-label">
+                {{model.NotificationDateTime | datetime}}
+              </div>
+            </div>
+          </div>
+          <!-- END ROW 1-->
+
+          <!-- ROW2 -->
+          <div class="row">
+            <!-- 反應者資訊 -->
+            <div class="col-sm-6 input-group">
+              <nb-accordion>
+                <nb-accordion-item [collapsed]="false">
+                  <nb-accordion-item-header class="case-item-header accordionHeaderBlue">
+                    {{ translations.CASE_COMMON.CONCATUSER_INFO | translate }}
+                  </nb-accordion-item-header>
+                  <nb-accordion-item-body>
+                    <app-uco [isShowDelete]="false" [visibleInput]="false" [(concatUsers)]="model.Case.CaseConcatUsers">
+                    </app-uco>
+                  </nb-accordion-item-body>
+                </nb-accordion-item>
+              </nb-accordion>
+
+            </div>
+            <!-- END 反應者資訊 -->
+            <!-- 被反應者資訊 -->
+            <div class="col-sm-6 input-group">
+              <nb-accordion>
+                <nb-accordion-item [collapsed]="false">
+                  <nb-accordion-item-header class="accordionHeaderBlue">
+                    {{ translations.CASE_COMMON.COMPLAINEDUSER_INFO | translate }} </nb-accordion-item-header>
+                  <nb-accordion-item-body>
+                    <app-local-table [columns]="complaintedColumn" [items]="model.Case.CaseComplainedUsers"
+                      [pageSize]="3" [pageSizeOptions]="[3,5,10,20]">
+                    </app-local-table>
+                  </nb-accordion-item-body>
+                </nb-accordion-item>
+              </nb-accordion>
+
+            </div>
+            <!-- END 被反應者資訊 -->
+          </div>
+          <!-- END ROW2 -->
+
+          <!-- ROW3 -->
+          <div class="row">
+            <div class="col-sm-12 input-group">
+              <nb-accordion>
+                <nb-accordion-item [collapsed]="false">
+                  <!-- 派工資訊 -->
+                  <nb-accordion-item-header class="case-item-header accordionHeaderBlue">
+                    {{ translations.CASE_COMMON.ASSIGNMENT_INFO | translate }}
+                  </nb-accordion-item-header>
+                  <nb-accordion-item-body>
+                    <div class="row">
+                      <div class="col-12 input-group">
+                        <!-- 問題分類 -->
+                        <label class="col-sm-2 col-form-label"
+                          for="QuestionClassificationGroups">{{ translations.CASE_COMMON.QUESTION_CLASSIFICATION | translate }}</label>
+                        <div class="col-sm-10">
+                          <app-dynamic-question-select [groupName]="guid.create().toString()" [buID]="model.NodeID"
+                            [disabled]="(uiActionType == actionType.Read || uiActionType == actionType.Update) "
+                            [colClass]="'col-3'" [selectedItems]="model.Case.QuestionClassificationGroups">
+                          </app-dynamic-question-select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-6 input-group">
+                        <!-- 案件內容 -->
+                        <label class="col-sm-2 col-form-label"
+                          for="Content">{{ translations.CASE_COMMON.CASE_CONTENT | translate }}</label>
+                        <div class="col-sm-10">
+                          <textarea rows="15" type="text" validator class="form-control" formControlName="CaseContent"
+                            [(ngModel)]="model.Case.Content" disabled></textarea>
+                        </div>
+                      </div>
+                      <div class="col-6 input-group">
+                        <!-- 通知內容 -->
+                        <label class="col-sm-2 col-form-label"
+                          for="Content">{{ translations.CASE_COMMON.NOTIFY_CONTENT | translate }}</label>
+                        <div class="col-sm-10">
+                          <textarea rows="15" type="text" validator class="form-control"
+                            formControlName="AssignmentContent" [(ngModel)]="model.Content" disabled></textarea>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-12 input-group">
+                        <!-- 附件 -->
+                        <label class="col-sm-2 col-form-label"
+                          for="Files">{{ translations.EMAIL_NOTIFICATION.FILE | translate }}</label>
+                        <div class="col-sm-10">
+                          <input [options]="caseFileOpts" [ngModelOptions]="{standalone: true}" name="Files" type="file"
+                            fileInput multiple [(ngModel)]="model.Files" disabled />
+                        </div>
+                      </div>
+                    </div>
+
+                  </nb-accordion-item-body>
+                </nb-accordion-item>
+              </nb-accordion>
+            </div>
+          </div>
+          <!-- END ROW3 -->
+
+          <!-- ROW4 -->
+          <div class="row" *ngIf="model.CaseAssignmentProcessType == caseAssignmentProcessType.Assignment">
+            <div class="col-sm-12 input-group">
+              <nb-accordion>
+                <nb-accordion-item [collapsed]="false">
+                  <!-- 處理內容 -->
+                  <nb-accordion-item-header class="case-item-header accordionHeaderBlue">
+                    {{ translations.CASE_COMMON.PROCESS_CONTENT | translate }}
+                  </nb-accordion-item-header>
+                  <nb-accordion-item-body>
+                    <div class="row" *ngIf="model['RejectType'] !== rejectType.None">
+                      <div class="col-12 input-group">
+                        <!-- 駁回處置 -->
+                        <label class="col-sm-2 col-form-label"
+                          for="RejectType">{{ translations.CASE_RELATE.REJECT_DISPOSE | translate }}</label>
+                        <div class="col-sm-6">
+                          <app-enum-select class="col-sm-10" [(ngModel)]="model['RejectType']"
+                            [placeholder]="translations.COMMON.SELECT_PLACEHOLDER | translate : {key: ''}"
+                            [ngModelOptions]="{standalone: true}" [enumName]="'RejectType'" disabled>
+                          </app-enum-select>
+                        </div>
+                      </div>
+                      <div class="col-12 input-group">
+                        <!-- 駁回原因 -->
+                        <label class="col-sm-2 col-form-label"
+                          for="RejectReason">{{ translations.CASE_RELATE.REJECT_REASON | translate }}</label>
+                        <div class="col-sm-6">
+                          <textarea rows="5" type="text" class="form-control" [ngModelOptions]="{standalone: true}"
+                            [(ngModel)]="model['RejectReason']" disabled></textarea>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-12 input-group">
+                        <!-- 處置單位 -->
+                        <label class="col-sm-2 col-form-label"
+                          for="ReplyContent">{{ translations.CASE_COMMON.DISPOSE_UNIT | translate }}</label>
+                        <div class="col-sm-6">
+                          <app-open-select [(ngModel)]="model.EditorNodeJobID" [items]="jobPositions"
+                            [disabled]="uiActionType == actionType.Read ? true : false"
+                            (onSelectedChange)="onJobChange($event)"
+                            [placeholder]="translations.COMMON.INPUT_PLACEHOLDER | translate : {key: ''}"
+                            [ngModelOptions]="{standalone: true}">
+                          </app-open-select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row" *ngIf="isShowReplys">
+                      <div class="col-12 input-group">
+                        <!-- 回覆內容 -->
+                        <label class="col-sm-2 col-form-label"
+                          for="ReplyContent">{{ translations.CASE_COMMON.REPLY_CONTENT | translate }}</label>
+                        <div class="col-sm-10">
+                          <textarea validator rows="10" type="text" class="form-control" formControlName="ReplyContent"
+                            [(ngModel)]="model.ReplyContent"
+                            [placeholder]="translations.COMMON.INPUT_PLACEHOLDER | translate : {key: translations.CASE_COMMON.REPLY_CONTENT | translate}"></textarea>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-12 input-group">
+                        <!-- 回覆明細 -->
+                        <label class="col-sm-2 col-form-label"
+                          for="Content">{{ translations.CASE_COMMON.REPLY_DETAIL | translate }}</label>
+                        <div class="col-sm-10">
+                          <app-local-table [templateRefs]="{Content : contentRef}" [columns]="resumeColumn"
+                            [items]="resumes" [pageSize]="3" [pageSizeOptions]="[3,5,10,20]">
+                          </app-local-table>
+                        </div>
+                      </div>
+
+                    </div>
+                    <div class="row">
+                      <div class="col-12 input-group">
+                        <!-- 銷案內容 -->
+                        <label class="col-sm-2 col-form-label"
+                          for="FinishContent">{{ translations.CASE_COMMON.CLOSE_CONTENT | translate }}</label>
+                        <div class="col-sm-10">
+                          <textarea validator rows="4" type="text" class="form-control" formControlName="FinishContent"
+                            [attr.readonly]="isShowFinishs ? null : (isShowRefills ? null : true)"
+                            [(ngModel)]="model['FinishContent']"
+                            [placeholder]="translations.COMMON.INPUT_PLACEHOLDER | translate : {key: translations.CASE_COMMON.CLOSE_CONTENT | translate}"></textarea>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-12 input-group">
+                        <!-- 銷案附件 -->
+                        <label class="col-sm-2 col-form-label"
+                          for="FinishFiles">{{ translations.CASE_COMMON.CLOSE_FILE | translate }}</label>
+                        <div class="col-sm-10">
+                          <input [options]="caseAssignFileOpts" [ngModelOptions]="{standalone: true}" name="FinishFiles"
+                            type="file" fileInput multiple [(ngModel)]="model['FinishFiles']"
+                            [attr.readonly]="uiActionType == actionType.Read ? true : null" />
+                        </div>
+                      </div>
+                    </div>
+                  </nb-accordion-item-body>
+                </nb-accordion-item>
+              </nb-accordion>
+            </div>
+          </div>
+          <!-- END ROW4 -->
+
+        </form>
+
+        <!-- ROW5-->
+        <div class="row flex-center">
+          <!-- 銷案 -->
+          <button type="button" class="btn btn-sm btn-cancel_case mx-3" *ngIf="isShowFinishs"
+            (click)="btnProcessed()">{{ translations.COMMON.BTN_CLOSE | translate }}</button>
+          <!-- 資料重填 -->
+          <button *ngIf="isShowRefills" type="button" class="btn btn-sm btn-success mx-3"
+            (click)="btnSaveRefill()">{{ translations.COMMON.BTN_REFILL | translate }}</button>
+          <!-- 確定 -->
+          <button *ngIf="isShowReplys" type="button" class="btn btn-sm btn-ptc-confirm mx-3"
+            (click)="btnSaveAssignment()">{{ translations.COMMON.BTN_CONFIRM | translate }}</button>
+          <!-- 返回 -->
+          <button type="button" class="btn btn-sm btn-kind-finished mx-3"
+            (click)="btnBack()">{{ translations.COMMON.BTN_BACK | translate }}</button>
+        </div>
+        <!-- END ROW5-->
+
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+
+<ng-template #contentRef let-row="row">
+  <pre class="contentRef">{{row.Content}}</pre>
+</ng-template>

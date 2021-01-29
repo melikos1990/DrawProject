@@ -1,0 +1,175 @@
+<!-- 類型 -->
+<div class="row">
+  <div class="col-sm-6 input-group">
+    <label for="UnitType" class="col-sm-4 col-form-label" starsign>{{ translations.CASE_ASSIGN_GROUP.CASE_ASSIGN_GROUP_TYPE | translate }}</label>
+    <div class="col-sm-8">
+      <nb-radio-group name="munittype-radio-group" [(ngModel)]="user.UnitType"
+        (ngModelChange)="onUnitTypeChange($event)">
+        <nb-radio [value]="unitType.Store">{{ translations.CASE_RELATE.STORE | translate }} </nb-radio>
+        <nb-radio [value]="unitType.Organization">{{ translations.CASE_COMMON.TABLE.ORGANIZATION | translate }} </nb-radio>
+      </nb-radio-group>
+
+    </div>
+
+  </div>
+  <div class="col-sm-6 input-group">
+    <label for="CaseComplainedUserType" class="col-sm-4 col-form-label" starsign>{{ translations.CASE_COMMON.TABLE.TYPE | translate }}</label>
+    <div class="col-sm-8">
+      <nb-radio-group name="mcomplaintedtype-radio-group" [(ngModel)]="user.CaseComplainedUserType">
+        <nb-radio [value]="caseComplainedUserType.Responsibility">{{ translations.CASE_RELATE.AUTHORITY_RESPONSIBILITY | translate }} </nb-radio>
+        <nb-radio [value]="caseComplainedUserType.Notice">{{ translations.CASE_RELATE.INFORM | translate }} </nb-radio>
+      </nb-radio-group>
+    </div>
+  </div>
+</div>
+<!-- END 類型 -->
+
+
+<!-- 門市 -->
+<ng-container *ngIf="user.UnitType == unitType.Store">
+  <div class="row">
+    <div class="col-sm-4 input-group">
+      <label class="col-sm-4 col-form-label" starsign>{{ translations.CASE_RELATE.STORE | translate }}</label>
+      <div class="col-sm-8">
+        <div class="row">
+          <app-store-select #storeSelector [selectedItems]="storeSelectItems" (itemChange)="onStoreChange($event)"
+            [placeholder]="translations.COMMON.SELECT_PLACEHOLDER | translate : {key: ''}" [searchTerm]="storeSearchTerm">
+          </app-store-select>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4 input-group">
+      <label class="col-sm-4 col-form-label" starsign>{{ translations.CASE_COMMON.TABLE.ORGANIZATION | translate }}</label>
+      <div class="col-sm-8 col-form-label">
+        {{user.ParentPathName}}
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <button type="button" class="btn btn-sm btn-ptc-store-info" (click)="btnPreviewStore($event)">{{ translations.CASE_RELATE.STORE_INFO | translate }}</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6 input-group">
+      <label class="col-sm-4 col-form-label">{{ translations.CASE_APPLY.APPLY_USER_ID | translate }}</label>
+      <div class="col-sm-8 col-form-label">
+        {{user.OwnerUserName}}
+      </div>
+    </div>
+    <div class="col-sm-6 input-group">
+      <label class="col-sm-4 col-form-label">{{ translations.CASE_RELATE.TELEPHONE | translate }}</label>
+      <div class="col-sm-8 col-form-label">
+        {{user.OwnerUserPhone}}
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6 input-group">
+      <label class="col-sm-4 col-form-label">{{ translations.CASE_RELATE.DISTRICT_MANAGER | translate }}</label>
+      <div class="col-sm-8 col-form-label">
+        {{user.SupervisorUserName}}
+      </div>
+
+    </div>
+    <div class="col-sm-6 input-group">
+      <label class="col-sm-4 col-form-label">{{ translations.CASE_RELATE.TELEPHONE | translate }}</label>
+      <div class="col-sm-8 col-form-label">
+        {{user.SupervisorUserPhone}}
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6 input-group">
+      <label class="col-sm-4 col-form-label">{{ translations.CASE_RELATE.STORE_MAIL | translate }}</label>
+      <div class="col-sm-8 col-form-label">
+        {{user.Email}}
+      </div>
+
+    </div>
+    <div class="col-sm-6 input-group">
+      <label class="col-sm-4 col-form-label">{{ translations.CASE_RELATE.STORE_TELEPHONE | translate }}</label>
+      <div class="col-sm-8 col-form-label">
+        {{user.Telephone}}
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6 input-group">
+      <label class="col-sm-4 col-form-label">{{ translations.STORE.ADDRESS | translate }}</label>
+      <div class="col-sm-8 col-form-label">
+        {{user.Address}}
+      </div>
+
+    </div>
+    <div class="col-sm-6 input-group">
+      <label class="col-sm-4 col-form-label">{{ translations.CASE_RELATE.STORE_TYPE | translate }}</label>
+      <div class="col-sm-8 col-form-label">
+        {{ StoreTypeName }}
+      </div>
+    </div>
+  </div>
+</ng-container>
+<!-- END  門市 -->
+
+<!-- 單位 -->
+<ng-container *ngIf="user.UnitType == unitType.Organization">
+  <div class="row">
+    <div class="col-sm-4 input-group">
+      <label class="col-sm-4 col-form-label" starsign>{{ translations.CALL_CENTER_CASE_SEARCH.ORGANIZAITON_NAME | translate }}</label>
+      <div class="col-sm-8 col-form-label">
+        {{user.NodeName}}
+      </div>
+    </div>
+    <div class="col-sm-4 input-group">
+      <label class="col-sm-4 col-form-label" starsign>{{ translations.CASE_RELATE.UNIT | translate }}</label>
+      <div class="col-sm-8 col-form-label">
+        {{user.ParentPathName}}
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <button type="button" class="btn btn-sm btn-ptc-select-unit m-1" (click)="btnOrganizationModal($event)">{{ translations.CASE_COMMON.CHOSE_UNIT | translate }}</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6 input-group">
+      <label class="col-sm-4 col-form-label">{{ translations.CASE_APPLY.APPLY_USER_ID | translate }}</label>
+      <div class="col-sm-8 col-form-label">
+        {{user.OwnerUserName}}
+      </div>
+
+    </div>
+    <div class="col-sm-6 input-group">
+      <label class="col-sm-4 col-form-label">{{ translations.CASE_APPLY.APPLY_USER_PHONE | translate }}</label>
+      <div class="col-sm-8 col-form-label">
+        {{user.OwnerUserPhone}}
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6 input-group">
+      <label class="col-sm-4 col-form-label">Email</label>
+      <div class="col-sm-8 col-form-label">
+        {{user.OwnerUserEmail}}
+      </div>
+    </div>
+  </div>
+</ng-container>
+<!-- END 單位 -->
+
+<!-- 組織樹選擇單位 -->
+<ng-template #allNodeTreeSelector>
+  <div class="modal-header nb-card-header">
+    <span> {{ translations.CASE_COMMON.CHOSE_UNIT | translate }} </span>
+    <button class="close" aria-label="Close" (click)="dismissOrganizationModel()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body nb-card-body">
+    <app-all-node-tree-selector-for-cc [model]="treemodel" (onNodeClick)="onSelectOrganizationNode($event)"
+      (onSelectedChange)="onSelecteChange($event)">
+    </app-all-node-tree-selector-for-cc>
+  </div>
+  <div class="modal-footer flex-center">
+    <!-- <button type="button" class="btn btn-md btn-warning" (click)="dismissOrganizationModel()">{{ translations.COMMON.BTN_BACK | translate }}</button> -->
+  </div>
+</ng-template>
+<!-- END 組織樹選擇單位 -->

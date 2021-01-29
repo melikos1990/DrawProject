@@ -1,0 +1,56 @@
+<!-- 查詢條件 -->
+<div class="row search-condition">
+    <div class="col-lg-12">
+        <nb-card>
+            <nb-card-header class="nb-card-header">{{ translations.COMMON.SEARCH_CONDITION_TITLE | translate }}</nb-card-header>
+            <nb-card-body class="nb-card-body">
+                <form [formGroup]="form">
+                    <div class="row">
+                        <div class="col-sm-4 input-group">
+                            <label for="FeatureTag"
+                                class="col-sm-4 col-form-label">{{ translations.COMMON.BU_NAME | translate }}</label>
+                            <div class="col-sm-8">
+                                <app-bu-select validator formControlName="NodeID" [(ngModel)]="model.NodeID" name="NodeID"
+                                    [changeSelectItems]="changeItems.bind(this)"
+                                    (onSelectedChange) = "onselectChange($event)"
+                                    [placeholder]="translations.NODE_DEFINITION.BU_PLACEHOLDER | translate">
+                                </app-bu-select>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 input-group">
+                            <label for="FeatureTag"
+                                class="col-sm-4 col-form-label">{{ translations.DOWNLOAD.REPORT_TYPE | translate }}</label>
+                            <div class="col-sm-8">
+                                <app-open-select validator formControlName="ReportType" name="ReportType"
+                                    [(ngModel)]="model.ReportType"
+                                    [placeholder]="translations.DOWNLOAD.REPORT_TYPE | translate"
+                                    [items]="model.ReportItems">
+                                </app-open-select>
+                            </div>
+                        </div>
+                        <div class="col-sm-4 input-group">
+                            <label for="DateTimeRange"
+                                class="col-sm-4 col-form-label">{{ translations.DOWNLOAD.DATETIME_RANGE | translate }}</label>
+                            <div class="col-sm-8">
+                                <input class="form-control"
+                                    [placeholder]="translations.DOWNLOAD.DATETIME_RANGE_PLACEHOLDER | translate "
+                                    [ngModelOptions]="{standalone: true}" [(ngModel)]="model.DateTimeRange"
+                                    id="DateTimeRange" type="text" daterangepicker />
+                            </div>
+                        </div>
+                    </div>
+                    &nbsp;
+                    <!--查詢-->
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="offset-sm-6 col-sm-3">
+                                <button type="button" class="btn btn-sm btn-ptc-confirm"
+                                    (click)="btnDownload()">{{ translations.COMMON.BTN_DOWNLOAD | translate }}</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </nb-card-body>
+        </nb-card>
+    </div>
+</div>

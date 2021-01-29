@@ -1,0 +1,64 @@
+<div class="header-container" [class.left]="position === 'normal'" [class.right]="position === 'inverse'">
+  <div class="logo-containter">
+    <a (click)="toggleSidebar()" href="#" class="navigation"><i class="nb-menu"></i></a>
+    <div class="logo" (click)="goToHome()">{{ translations.APPLICATION.NAME | translate }}</div>
+  </div>
+  <!-- <ngx-theme-switcher></ngx-theme-switcher> -->
+</div>
+
+<div class="header-container">
+
+
+  <!-- 官網來信 -->
+  <div class="mx-1 notify-content" (click)="officialEmail()" *ngIf="hasCallCenterOrg">
+    <nb-badge [text]="notificationCalcCount.OfficialEmailCount" status="success" position="top left"></nb-badge>
+    <i class="far fa-envelope"></i>
+  </div>
+  <!-- 官網來信 -->
+
+  <!-- 代辦事項 -->
+  <div class="mx-1 notify-content" (click)="caseRemind()" *ngIf="hasCallCenterOrg">
+    <nb-badge [text]="notificationCalcCount.CaseRemindCount" status="success" position="top left"></nb-badge>
+    <i class="fas fa-calendar-alt"></i>
+  </div>
+  <!-- 代辦事項 -->
+
+  <!-- 系統通知 -->
+  <div class="mx-1 notify-content" (click)="systemNotify()" *ngIf="hasCallCenterOrg">
+    <nb-badge [text]="notificationCalcCount.SystemNotificationCount" status="success" position="top left"></nb-badge>
+    <i class="far fa-bell"></i>
+  </div>
+  <!-- 系統通知 -->
+
+
+  <nb-actions size="medium" [class.right]="position === 'normal'" [class.left]="position === 'inverse'">
+    <nb-action *nbIsGranted="['view', 'user']">
+      <nb-user [nbContextMenu]="userMenu" [name]="userName" [picture]="user?.ImagePath"></nb-user>
+    </nb-action>
+    <nb-action class="control-item" icon="nb-person" (click)="jobPositionClick()"></nb-action>
+    <nb-action>
+      <nb-select class="header-select" [(ngModel)]="role" (selectedChange)="roleChange($event)" placeholder="請選擇操作權限">
+        <nb-option value="">無</nb-option>
+        <nb-option *ngFor="let role of userRoles" value="{{role.ID}}">{{role.Name}}</nb-option>
+      </nb-select>
+    </nb-action>
+    <nb-action *ngIf="homeSelectEnable">
+      <nb-select class="header-select" [(ngModel)]="homeSelect" (selectedChange)="homeChange($event)" placeholder="請選擇首頁">
+        <nb-option *ngFor="let home of homeList" value="{{home.id}}">{{home.text}}</nb-option>
+      </nb-select>
+    </nb-action>
+  </nb-actions>
+
+</div>
+
+
+<ng-template #jobPosition>
+  <nb-card size="medium">
+    <nb-card-header>{{ translations.LAYOUT.JOB_POSITION | translate }}</nb-card-header>
+    <nb-list>
+      <nb-list-item *ngFor="let job of jonPositionMenu">
+        {{ job.title }}
+      </nb-list-item>
+    </nb-list>
+  </nb-card>
+</ng-template>

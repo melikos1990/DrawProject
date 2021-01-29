@@ -1,0 +1,97 @@
+<!-- 查詢條件 -->
+<div class="row search-condition">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header class="nb-card-header">{{ translations.COMMON.SEARCH_CONDITION_TITLE | translate }}</nb-card-header>
+      <nb-card-body class="nb-card-body">
+        <form [formGroup]="form" autocomplete="off" (keyup.enter)="btnRender($event)">
+          <div class="row">
+            <div class="col-sm-4 input-group">
+              <label starsign for="NodeID"
+                class="col-sm-4 col-form-label">{{ translations.CASE_APPLY.NODE_ID | translate }}</label>
+              <div class="col-sm-8">
+                <app-bu-select id="NodeID" [placeholder]="translations.CASE_APPLY.NODE_ID_PLACEHOLDER | translate "
+                  [(ngModel)]="model.NodeID" validator formControlName="NodeID" #buSelect>
+                </app-bu-select>
+              </div>
+            </div>
+            <div class="col-sm-4 input-group">
+              <label for="CaseID"
+                class="col-sm-4 col-form-label">{{ translations.CASE_APPLY.CASE_ID | translate }}</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="CaseID" formControlName="CaseID"
+                  placeholder="{{ translations.CASE_APPLY.CASE_ID_PLACEHOLDER | translate }}"
+                  [(ngModel)]="model.CaseID">
+              </div>
+            </div>
+            <div class="col-sm-4 input-group">
+              <label for="CaseType"
+                class="col-sm-4 col-form-label">{{ translations.CASE_APPLY.CASE_TYPE | translate }}</label>
+              <div class="col-sm-8">
+                <app-enum-select id="CaseType" formControlName="CaseType" [(ngModel)]="model.CaseType"
+                  [placeholder]="translations.CASE_APPLY.CASE_TYPE_PLACEHOLDER | translate" [enumName]="'CaseType'">
+                </app-enum-select>
+              </div>
+            </div>
+            <div class="col-sm-4 input-group">
+              <label for="CaseWarningID"
+                class="col-sm-4 col-form-label">{{ translations.CASE_APPLY.CASE_WARNING_ID | translate }}</label>
+              <div class="col-sm-8">
+                <app-case-warning-select [buID]="buSelect?.value || null" id="CaseWarningID"
+                  [enabled]="true"
+                  formControlName="CaseWarningID"
+                  [placeholder]="translations.CASE_APPLY.CASE_WARNING_ID_PLACEHOLDER | translate"
+                  [(ngModel)]="model.CaseWarningID"></app-case-warning-select>
+              </div>
+            </div>
+            <div class="col-sm-4 input-group">
+              <label for="ApplyUserID"
+                class="col-sm-4 col-form-label">{{ translations.CASE_APPLY.APPLY_USER_ID | translate }}</label>
+              <div class="col-sm-8">
+                <app-user-select id="ApplyUserID" (itemChange)="onItemChange($event)"
+                  [disabled]="disabled" [placeholder]="translations.CASE_APPLY.APPLY_USER_ID_PLACEHOLDER | translate"
+                  [searchTerm]="{isEnable : true , isSystemUser : true , isSelf : true}"
+                  [(ngModel)]="model.ApplyUserID" formControlName="ApplyUserID">
+                </app-user-select>
+              </div>
+            </div>
+            <div class="col-sm-4 input-group">
+              <label for="CreateDateTimeRange"
+                class="col-sm-4 col-form-label">{{ translations.CASE_APPLY.CREATE_DATETIME_RANGE | translate }}</label>
+              <div class="col-sm-8">
+                <input class="form-control"
+                  [placeholder]="translations.CASE_APPLY.CREATE_DATETIME_RANGE_PLACEHOLDER | translate "
+                  formControlName="CreateDateTimeRange" [(ngModel)]="model.CreateDateTimeRange" id="CreateDateTimeRange"
+                  type="text" daterangepicker />
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div class="offset-sm-6 col-sm-3">
+              <button type="button" class="btn btn-sm btn-ptc-search" [authorize]="authType.Read"
+                (click)="btnRender($event)">{{ translations.COMMON.BTN_SEARCH | translate }}</button>
+            </div>
+          </div>
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+
+<!-- 查詢結果 -->
+<div class="row search-result" [attr.hidden]="isEnable">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header class="nb-card-header"> {{ translations.COMMON.SEARCH_RESULT_TITLE | translate }}
+        <button type="button" class="btn btn-sm btn-danger float-right mx-1" (click)="btnAssign($event)"
+          [authorize]="authType.Update">{{ translations.COMMON.BTN_ASSIGN | translate }}</button>
+      </nb-card-header>
+      <nb-card-body class="nb-card-body">
+        <app-server-table #table [ajax]="ajax" [columns]="columns" (btnEdit)="onBtnEdit($event)"
+          [isVisibleBtnDelete]="false" (btnSearch)="onBtnSearch($event)" (critiria)="critiria($event)">
+        </app-server-table>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<!-- 查詢結果 -->

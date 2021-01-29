@@ -1,0 +1,23 @@
+INSERT INTO [USER] VALUES (
+	'616a08ff-055b-4983-b574-5f33df5ab85e',
+	'ptcsd4',
+	'ptc12876266',
+	null,
+	'ptcºÞ²z¤H',
+	0,
+	'motx2152000@gmail.com',
+	'0926366680',
+	'0227932710',
+	null,
+	0,
+	getdate(),
+	null,
+	0,
+	1,
+	getdate(),
+	'ptc',
+	getdate(),
+	'ptc',
+	getdate(),
+	null
+)

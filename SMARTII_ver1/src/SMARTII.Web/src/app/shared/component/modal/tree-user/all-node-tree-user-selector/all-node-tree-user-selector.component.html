@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header>{{ translations.COMMON.TREE_SELECT_USER | translate }}</nb-card-header>
+      <nb-card-body>
+        <div class="row mb-3 selectHeight">
+          <div class="col-lg-4">
+
+            <app-enum-select
+              [disabled]="disabled"
+              [placeholder]="translations.COMMON.SELECT_PLACEHOLDER | translate: { key: '組織型態' } "
+              [(ngModel)]="type"
+              [enumName]="'OrganizationType'">
+            </app-enum-select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <app-callcenter-node-tree-user-selector
+            #callCenterRef
+            [model]="model"
+            [isUserEnabled]="isUserEnabled"
+            [hidden]="+type != organizationType.CallCenter">
+            </app-callcenter-node-tree-user-selector>
+            <app-vendor-node-tree-user-selector
+            #vendorRef
+            [model]="model"
+            [isUserEnabled]="isUserEnabled"
+            [hidden]="+type != organizationType.Vendor">
+            </app-vendor-node-tree-user-selector>
+            <app-headerquarter-node-tree-user-selector
+            #headerquartersRef
+            [model]="model"
+            [isUserEnabled]="isUserEnabled"
+            [hidden]="+type != organizationType.HeaderQuarter">
+          </app-headerquarter-node-tree-user-selector>
+          </div>
+        </div>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

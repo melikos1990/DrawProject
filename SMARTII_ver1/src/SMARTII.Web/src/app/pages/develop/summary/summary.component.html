@@ -1,0 +1,288 @@
+<div class="row">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header>
+        共用元件測試區
+      </nb-card-header>
+
+      <app-local-table [columns]="columns" [items]="data" [templateRefs]="{column1 : feature}" >
+      </app-local-table>
+      <ng-template #feature let-row="row">
+        <button type="button" class="btn btn-sm btn-warning mx-5" (click)="execute(row.type)">執行</button>
+      </ng-template>
+    </nb-card>
+  </div>
+</div>
+
+
+<ng-template #buNodeRelationSelector>
+  <div class="modal-header">
+    <span> 動態組織選單(BU) </span>
+  </div>
+  <div class="modal-body">
+    <app-bu-nodedef-level-select #iref1></app-bu-nodedef-level-select>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-md btn-primary" (click)="test1(iref1)">測試 , 請看console</button>
+  </div>
+</ng-template>
+<ng-template #headerQuarterNodeTreeUserSelector>
+  <div class="modal-header">
+    <span> 從組織選人(總部) </span>
+  </div>
+  <div class="modal-body">
+    <app-headerquarter-node-tree-user-selector #iref2></app-headerquarter-node-tree-user-selector>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-md btn-primary" (click)="test2(iref2)">測試 , 請看console</button>
+  </div>
+</ng-template>
+<ng-template #callCenterNodeTreeUserSelector>
+  <div class="modal-header">
+    <span> 從組織選人(CC) </span>
+  </div>
+  <div class="modal-body">
+    <app-callcenter-node-tree-user-selector #iref3></app-callcenter-node-tree-user-selector>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-md btn-primary" (click)="test3(iref3)">測試 , 請看console</button>
+  </div>
+</ng-template>
+<ng-template #vendorNodeTreeUserSelector>
+  <div class="modal-header">
+    <span> 從組織選人(廠商) </span>
+  </div>
+  <div class="modal-body">
+    <app-vendor-node-tree-user-selector #iref4></app-vendor-node-tree-user-selector>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-md btn-primary" (click)="test4(iref4)">測試 , 請看console</button>
+  </div>
+</ng-template>
+
+<ng-template #pdfViewer>
+  <div class="modal-header">
+    <span> 瀏覽pdf </span>
+  </div>
+  <div class="modal-body">
+    <app-pdf-preview [source]="pdfSrc"></app-pdf-preview>
+  </div>
+</ng-template>
+
+
+<ng-template #excelViewer>
+  <div class="modal-header">
+    <span> 瀏覽excel </span>
+  </div>
+  <div class="modal-body">
+    <div id="my-container" class="ng-scope pdfobject-container">
+      <app-pdf-preview [source]="excelSrc"></app-pdf-preview>
+    </div>
+  </div>
+</ng-template>
+
+
+<ng-template #allNodeTreeUserSelector>
+  <div class="modal-header">
+    <span> 從組織選人(全部) </span>
+  </div>
+  <div class="modal-body">
+    <div id="my-container" class="ng-scope pdfobject-container">
+      <app-all-node-tree-user-selector #iref5 [model]="selectorUserModel">
+      </app-all-node-tree-user-selector>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-md btn-primary" (click)="test5(iref5)">測試 , 請看console</button>
+  </div>
+</ng-template>
+
+<ng-template>
+  <div class="modal-header">
+    <span> 給組織節點顯示人員(總部) </span>
+  </div>
+  <div class="modal-body">
+    <button type="button" class="btn btn-sm btn-ptc-search mx-5"
+      (click)="onHeaderQuarterNodeUserModal($event)">{{ translations.COMMON.BTN_SEARCH | translate }} </button>
+  </div>
+</ng-template>
+<ng-template>
+  <div class="modal-header">
+    <span> 給組織節點顯示人員(CC) </span>
+  </div>
+  <div class="modal-body">
+    <button type="button" class="btn btn-sm btn-ptc-search mx-5"
+      (click)="onCallCenterNodeUserModal($event)">{{ translations.COMMON.BTN_SEARCH | translate }} </button>
+  </div>
+</ng-template>
+<ng-template>
+  <div class="modal-header">
+    <span> 給組織節點顯示人員(廠商) </span>
+  </div>
+  <div class="modal-body">
+    <button type="button" class="btn btn-sm btn-ptc-search mx-5"
+      (click)="onVendorNodeUserModal($event)">{{ translations.COMMON.BTN_SEARCH | translate }} </button>
+  </div>
+</ng-template>
+
+<ng-template>
+  <div class="modal-header">
+    <span> 組織節點顯示職稱(全部) </span>
+  </div>
+  <div class="modal-body">
+    <button type="button" class="btn btn-sm btn-ptc-search mx-5"
+      (click)="onNodeDefinitionJobModal($event)">{{ translations.COMMON.BTN_SEARCH | translate }} </button>
+  </div>
+</ng-template>
+
+
+<ng-template #kmTreeModal>
+  <div class="modal-header">
+    <span> KM分類樹 </span>
+  </div>
+  <div class="modal-body">
+    <app-km-tree [kMNode]="kmNode" (clickNode)="kmNodeClick($event)"></app-km-tree>
+  </div>
+</ng-template>
+
+<ng-template>
+  <div class="modal-header">
+    <span> 選擇負責人職稱清單 </span>
+  </div>
+  <div class="modal-body">
+    <button type="button" class="btn btn-sm btn-ptc-search mx-5"
+      (click)="onStoreOwnerSelector($event)">{{ translations.COMMON.BTN_SEARCH | translate }} </button>
+  </div>
+</ng-template>
+
+<ng-template #hashTagModal>
+  <div class="modal-header">
+    <span> 標籤 </span>
+  </div>
+  <div class="modal-body">
+    <app-hashtag [options]="tagData" [tags]="defaultTag" [isEnabled]="true" #iref6></app-hashtag>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-md btn-primary" (click)="test6(iref6)">測試 , 請看console</button>
+  </div>
+</ng-template>
+
+
+<ng-template #ccball>
+  <div class="modal-header">
+    <span> 案件球(以CC為例) css 待定</span>
+  </div>
+  <div class="modal-body">
+    <app-counter-ball-group [url]="'Summary/CallCenterSummary/GetProviderBUs'" [templateRef]="ccballitem">
+    </app-counter-ball-group>
+    <ng-template let-data="data" #ccballitem>
+      <!-- {{data.TargetName}} -->
+      <app-counter-ball [url]="'Summary/CallCenterSummary/GetOwnCount'" [params]="{buID : data.TargetID}">
+      </app-counter-ball>
+    </ng-template>
+
+  </div>
+</ng-template>
+
+<ng-template #selectByBU>
+  <div class="modal-header">
+    <span> 依BU 連動案件時效 及 案件標籤 </span>
+    <p>data: {{ modelSelectByBU | json }}</p>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-sm-3">
+        <app-bu-select class="col-sm-3" [placeholder]="translations.COMMON.SELECT_BU_PLACEHOLDER | translate"
+          [(ngModel)]="modelSelectByBU.buID" #buSelect>
+        </app-bu-select>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-4">
+        <app-case-warning-select [buID]="buSelect?.value || null"
+          [enabled]="true"
+          [placeholder]="translations.CASE_WARNING.CASE_WARNING_PLACEHOLDER | translate"
+          [(ngModel)]="modelSelectByBU.caseWarning"></app-case-warning-select>
+      </div>
+      <div class="col-sm-4">
+        <app-system-parameter-select [buID]="buSelect?.value || null" parameterType="CASE_SOURCE"
+          [placeholder]="translations.CASE_WARNING.CASE_WARNING_PLACEHOLDER | translate"
+          [(ngModel)]="modelSelectByBU.systemParameter"></app-system-parameter-select>
+      </div>
+      <div class="col-sm-12">
+        <app-hashtag [buID]="buSelect?.value || null" [(ngModel)]="modelSelectByBU.hashTags" [defaultHashTags]="test" [isEnabled]="true"
+          #hashtag></app-hashtag>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-md btn-primary" (click)="test16(hashtag)">測試 , 請看console</button>
+  </div>
+</ng-template>
+
+<ng-template #finishReason>
+  <div class="modal-header">
+    <span> 結案處置原因(BU) </span>
+  </div>
+  <div class="modal-body">
+    <app-bu-select class="col-sm-3" [placeholder]="translations.COMMON.SELECT_BU_PLACEHOLDER | translate" #buSelect>
+    </app-bu-select><br>
+
+    <app-dynamic-finish-reason [buID]="buSelect?.value || null"></app-dynamic-finish-reason>
+  </div>
+</ng-template>
+
+<ng-template>
+  <div class="modal-header">
+    <span> 派工群組 </span>
+  </div>
+  <div class="modal-body">
+    <button type="button" class="btn btn-sm btn-success mx-5"
+      (click)="onCaseAssignGroupUserModal($event)">{{ translations.COMMON.BTN_SEARCH | translate }} </button>
+  </div>
+</ng-template>
+
+
+
+<ng-template #mailsender>
+  <div class="modal-header">
+    <span> 共通寄信畫面 </span>
+  </div>
+  <div class="modal-body">
+    <app-mail-sender (onSend)="onSend($event)" (onBack)="onBack()"></app-mail-sender>
+  </div>
+</ng-template>
+
+
+<ng-template #dualList>
+  <div class="modal-header">
+    <span> 左右清單 </span>
+  </div>
+  <div class="modal-body">
+    <app-dual-list [url]="daulListInputs.url" [(ngModel)]="daulListInputs.destIDs" [height]="daulListInputs.height">
+    </app-dual-list>
+  </div>
+</ng-template>
+
+
+<ng-template #testUnauthorized>
+  <button (click)="GetUnauthorized()">Get_Unauthorized</button>
+  <button (click)="PostUnauthorized()">Post_Unauthorized</button>
+  <button (click)="GetNotImplemented()">Get_NotImplemented</button>
+  <button (click)="PostNotImplemented()">Post_NotImplemented</button>
+</ng-template>
+
+<ng-template #dndList>
+  <div class="modal-header">
+    <span> 拖曳清單 </span>
+  </div>
+  <div class="modal-body">
+    <app-draggable-list [ajaxOpt]="dndAjaxOpt" [sortCompare]="sortCompare"></app-draggable-list>
+  </div>
+</ng-template>
+
+<button (click)="testNotification()">testNotification</button>
+<!-- <button (click)="summ()">summ</button> -->
+
+<input id="Picture" [(ngModel)]="fileInputBlob" [options]="fileinputOpt" multiple
+                    class="col-sm-8 file" type="file" fileInput />

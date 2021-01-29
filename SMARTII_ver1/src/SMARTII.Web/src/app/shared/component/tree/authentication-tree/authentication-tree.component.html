@@ -1,0 +1,55 @@
+<div class="row">
+  <div class="col-sm-12 input-group">
+    <div class="row col-sm-12">
+      <label for="keyword" class="col-sm-2 col-form-label">{{ translations.USER.FUNCTIONNAME | translate }}</label>
+      <input id="keyword" class="col-sm-10 form-control" name="keyword" type="text"
+        placeholder="{{translations.COMMON.KEYWORD_PLACEHOLDER | translate}}" #keywordRef />
+    </div>
+  </div>
+</div>
+
+<app-ptc-tree [searchVal]="keywordRef.value" [nodes]="nodes">
+  <ng-template #treeNode let-node="node" let-index>
+    <div class="grid-container">
+      <div class="treeNode-item"
+        [ngClass]="displayDeny && findAuth(operator , node.data.id) === authType.None ?  'ever-has' : ''">
+        <ng-container *ngIf="isComponent(node.data.id); then feature else group">
+        </ng-container>
+        <ng-template #group>
+          <!-- 渲染標題 -->
+          <span title="{{node.data.name | translate}}">{{node.data.name | translate}}</span>
+          <!-- END 渲染標題-->
+        </ng-template>
+
+        <ng-template #feature>
+          <!-- 渲染標題 -->
+          <span title="{{node.data.name | translate}}">
+            <nb-checkbox (change)="checkAll($event ,node.data.id)" [disabled]="this.disabled"
+              [value]="findAuth(operator , node.data.id) > authType.None " stop-propagation>
+              {{node.data.name | translate}}
+            </nb-checkbox>
+          </span>
+          <!-- END 渲染標題-->
+          <!-- 渲染內文 -->
+          <div class="check-group" stop-propagation>
+            <ng-container *ngFor="let type of authType.toArray(authType.All)">
+              <nb-checkbox id="authType" (change)="checkItem($event ,node.data.id ,authType[type])"
+                [disabled]="this.disabled" [value]="hasAuth(operator, node.data.id + 'Component' ,authType[type])"
+                stop-propagation>
+                {{ ('COMMON.ENUM.AUTH_TYPE.' + type.toString().toUpperCase()) |  translate}}</nb-checkbox>
+            </ng-container>
+
+            <button *ngIf="(displayDeny && findAuth(operator , node.data.id) !== null) && !disabled"
+              (click)="remove(node.data.id)" type="button" class="btn btn-sm btn-danger clear-history">
+              {{ translations.COMMON.BTN_AUTH_TREE | translate }}
+              <i class="nb-trash"></i>
+            </button>
+
+          </div>
+          <!-- END 渲染內文-->
+        </ng-template>
+
+      </div>
+    </div>
+  </ng-template>
+</app-ptc-tree>

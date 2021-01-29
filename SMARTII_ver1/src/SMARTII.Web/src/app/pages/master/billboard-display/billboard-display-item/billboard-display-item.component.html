@@ -1,0 +1,35 @@
+<nb-card>
+  <nb-card-body>
+    <form>
+      <div class="row col-sm-12">
+        <div class="col-sm-12 input-group">
+          <div *ngIf="imgpatch !== ''">
+            <div class="circle-cropper" [ngStyle]="{'background-image': 'url(' + imgpatch + ')'}"></div>
+            <span class="font-set">&nbsp;{{ model.CreateUserName }}</span>
+          </div>
+          <nb-user class="nbuser" *ngIf="imgpatch == ''" [name]="name" [picture]="''" size="large"></nb-user>
+        </div>
+        <div class="col-sm-12 input-group">
+          <input type="text" class="col-sm-4 form-control" [(ngModel)]="model.Title" disabled
+            [ngModelOptions]="{standalone: true}" />
+        </div>
+        <div class="col-sm-12 input-group">
+          <textarea rows="5" type="text" class="col-sm-12 form-control" [(ngModel)]="model.Content" disabled
+            [ngModelOptions]="{standalone: true}">
+          </textarea>
+        </div>
+        <div class="col-sm-12 input-group">
+          <span [ngClass]="model.BillboardWarningType == billboardWarningType.Warning ? 'warning':'general'">
+            {{translations.BILLBOARD.BILLBOARD_WARNING_TYPE | translate}} : {{model.BillboardWarningTypeName}}</span>
+          &nbsp;
+          <span>{{translations.BILLBOARD.ACTIVE_START_DATE | translate}} : {{model.ActiveStartDateTime}}</span>
+
+        </div>
+        <div class="col-sm-12 input-group" *ngIf="model.FilePaths?.length > 0">
+          <input type="file" [options]="options" class="col-sm-8 file" multiple fileInput disabled />
+        </div>
+      </div>
+    </form>
+  </nb-card-body>
+
+</nb-card>

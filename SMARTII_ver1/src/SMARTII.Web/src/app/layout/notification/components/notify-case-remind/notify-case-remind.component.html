@@ -1,0 +1,24 @@
+<div class="row notify-content" (click)="direct()">
+    <div class="col-sm-1 align-items-center d-flex justify-content-center">
+        <i class="far fa-calendar-alt"></i>
+    </div>
+    <div class="col-sm-9 d-flex flex-column justify-content-center">
+      <div class="d-flex flex-row">
+          <p class="m-0 mr-4">{{ model.BuName }}案件追蹤</p>
+          <span [ngClass]="{'warning': model.Level == caseRemindType.Warning}">等級: {{ model.LevelName }}</span>
+      </div>
+      <p class="ellipsis" [nbPopover]="model.Content" nbPopoverTrigger="hover"><span>{{ model.Content }}</span></p>
+    </div>
+
+    <div class="col-sm-2 mb-1 d-flex align-items-end flex-column bd-highlight" >
+        <div class="p-2 bd-highlight" >
+          <span *ngIf="model.AssignmentID; else caseID">轉派編號: {{ model?.CaseID }}-{{ model.AssignmentID }}</span>
+          <ng-template #caseID>
+            <span>案件編號: {{ model?.CaseID }}</span>
+          </ng-template>
+        </div>
+        <div class="p-2 bd-highlight">
+            {{ model.ActiveStartDateTime }}
+        </div>
+    </div>
+  </div>

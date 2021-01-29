@@ -1,0 +1,131 @@
+<form [formGroup]="form">
+  <div class="row">
+    <!-- 職稱清單 -->
+    <div class="col-lg-6">
+      <nb-card>
+        <nb-card-header class="nb-card-header"> {{ translations.NODE_DEFINITION.JOB_LIST | translate }}
+          <button type="button" *ngIf="uiActionType !== actionType.Read" class="btn btn-sm btn-ptc-create float-right mx-1"
+            (click)="btnLoadAdd($event)"
+            [authorize]="authType.Add">{{ translations.COMMON.BTN_ADD | translate }}</button>
+        </nb-card-header>
+        <nb-card-body>
+          <app-smart-local-table (rowSelect)="rowSelect($event)" (delete)="btnDelete($event)" [options]="options"
+            [data]="model.Jobs">
+          </app-smart-local-table>
+        </nb-card-body>
+      </nb-card>
+    </div>
+    <!-- END 職稱清單 -->
+    <!-- 職稱明細 -->
+    <div class="col-lg-6" *ngIf="(uiActionType !== null && uiActionType !== undefined)">
+      <nb-card>
+        <nb-card-header> {{ translations.NODE_DEFINITION.JOB_DETAIL | translate }}
+          ({{ titleTypeString }})
+        </nb-card-header>
+        <nb-card-body>
+          <!-- ROW 1 -->
+          <div class="row ">
+            <!-- 職稱定義名稱 -->
+            <div class="col-sm-6 input-group">
+              <label starsign for="Name" class="col-sm-4 col-form-label">{{ translations.JOB.NAME | translate }}</label>
+              <input type="text" validator class="form-control col-sm-8" formControlName="Name"
+                [attr.readonly]="uiActionType == actionType.Read ? true : null"
+                placeholder="{{ translations.JOB.NAME_PLACEHOLDER | translate }}" [(ngModel)]="jobModel.Name">
+            </div>
+            <!-- END 職稱定義名稱 -->
+            <!-- 啟用狀態 -->
+            <div class="col-sm-6 input-group">
+              <label for="IsEnabled"
+                class="col-sm-4 col-form-label">{{ translations.JOB.IS_ENABLED | translate }}</label>
+              <nb-checkbox validator class="col-sm-8" formControlName="IsEnabled" id="IsEnabled"
+                [disabled]="uiActionType == actionType.Read ? true : false" [(ngModel)]="jobModel.IsEnabled">
+              </nb-checkbox>
+            </div>
+            <!-- END 啟用狀態 -->
+          </div>
+          <!-- END ROW 1 -->
+          <!-- ROW 2 -->
+          <div class="row ">
+            <!-- 層級 -->
+            <div class="col-sm-6 input-group">
+              <label starsign for="Level"
+                class="col-sm-4 col-form-label">{{ translations.JOB.LEVEL | translate }}</label>
+              <input type="number" validator class="form-control col-sm-8" class="form-control" formControlName="Level"
+                id="Level" placeholder="{{ translations.JOB.LEVEL_PLACEHOLDER | translate }}"
+                [attr.readonly]="uiActionType == actionType.Read ? true : null" [(ngModel)]="jobModel.Level">
+            </div>
+            <!-- END 層級 -->
+            <!-- 職稱識別值 -->
+            <div class="col-sm-6 input-group">
+              <label for="Key"
+                class="col-sm-4 col-form-label">{{ translations.NODE_DEFINITION.JOB_KEY | translate }}</label>
+              <app-open-select validator class="col-sm-8" formControlName="Key"
+                [disabled]="uiActionType == actionType.Read ? true : false" name="Key" [(ngModel)]="jobModel.Key"
+                [placeholder]="translations.NODE_DEFINITION.JOB_KEY_PLACEHOLDER | translate" [items]="items">
+              </app-open-select>
+            </div>
+            <!-- END 職稱識別值 -->
+          </div>
+          <!-- END ROW 2 -->
+          <!-- 更新 / 建立時間 -->
+          <ng-container *ngIf="uiActionType == actionType.Read || uiActionType == actionType.Update">
+            <div class="row ">
+              <!-- 建立人員 -->
+              <div class="col-sm-6 input-group">
+                <label for="CreateUserName"
+                  class="col-sm-4 col-form-label">{{ translations.JOB.CREATE_USERNAME_LABEL | translate }}</label>
+                <input type="text" validator class="form-control col-sm-8" disabled formControlName="CreateUserName"
+                  id="CreateUserName" placeholder="{{ translations.JOB.CREATE_USERNAME_PLACEHOLDER | translate }}"
+                  [(ngModel)]="jobModel.CreateUserName">
+              </div>
+              <!-- END 建立人員 -->
+              <!-- 建立時間 -->
+              <div class="col-sm-6 input-group">
+                <label for="CreateDateTime"
+                  class="col-sm-4 col-form-label">{{ translations.JOB.CREATE_DATETIME_LABEL | translate }}</label>
+                <input type="text" validator class="form-control col-sm-8" disabled formControlName="CreateDateTime"
+                  id="CreateDateTime" placeholder="{{ translations.JOB.CREATE_DATETIME_PLACEHOLDER | translate }}"
+                  [(ngModel)]="jobModel.CreateDateTime">
+              </div>
+              <!-- END 建立時間 -->
+            </div>
+            <div class="row">
+              <!-- 更新人員 -->
+              <div class="col-sm-6 input-group">
+                <label for="UpdateUserName"
+                  class="col-sm-4 col-form-label">{{ translations.JOB.UPDATE_USERNAME_LABEL | translate }}</label>
+                <input type="text" validator class="form-control col-sm-8" disabled formControlName="UpdateUserName"
+                  id="UpdateUserName" placeholder="{{ translations.JOB.UPDATE_USERNAME_PLACEHOLDER | translate }}"
+                  [(ngModel)]="jobModel.UpdateUserName">
+              </div>
+              <!-- END 更新人員 -->
+              <!-- 更新時間 -->
+              <div class="col-sm-6 input-group">
+                <label for="UpdateDateTime"
+                  class="col-sm-4 col-form-label">{{ translations.JOB.UPDATE_DATETIME_LABEL | translate }}</label>
+                <input type="text" validator class="form-control col-sm-8" disabled formControlName="UpdateDateTime"
+                  id="UpdateDateTime" placeholder="{{ translations.JOB.UPDATE_DATETIME_PLACEHOLDER | translate }}"
+                  [(ngModel)]="jobModel.UpdateDateTime">
+              </div>
+              <!-- END 更新時間 -->
+            </div>
+          </ng-container>
+          <!-- END 更新 / 建立時間 -->
+          <!-- 設定按鈕 -->
+          <div class="mt-5">
+            <div class="row flex-center">
+              <button type="button" *ngIf="uiActionType == actionType.Update" class="btn btn-sm btn-success mx-5"
+                [authorize]="authType.Update" (click)="btnEdit($event)">{{ translations.COMMON.BTN_EDIT | translate }}
+              </button>
+              <button type="button" *ngIf="uiActionType == actionType.Add" class="btn btn-sm btn-ptc-create mx-5"
+                [authorize]="authType.Add" (click)="btnAdd($event)">{{ translations.COMMON.BTN_ADD | translate }}
+              </button>
+            </div>
+          </div>
+          <!-- END 設定按鈕 -->
+        </nb-card-body>
+      </nb-card>
+    </div>
+    <!-- END 職稱明細 -->
+  </div>
+</form>

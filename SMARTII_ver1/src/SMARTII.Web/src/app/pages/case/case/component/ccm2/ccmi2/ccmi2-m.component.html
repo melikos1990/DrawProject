@@ -1,0 +1,33 @@
+<div class="col-12">
+  <div class="row">
+    <div class="col-12 input-group">
+      <div class="col-sm-4">
+        <nb-checkbox [(ngModel)]="sameOfComplaintedUser" (ngModelChange)="btnSameOfComplaintedUser($event)">{{ translations.CASE_COMMON.TRANSFER_SAME_COMPLAINED | translate }}
+        </nb-checkbox>
+      </div>
+      <div class="col-sm-8">
+        <button class="btn btn-md btn-ptc-create m-3" (click)="btnAddUnitModal()">{{ translations.CASE_COMMON.ADD_TRANSFER | translate }}</button>
+      </div>
+    </div>
+    <div class="col-12 input-group">
+      <label starsign class="col-sm-2 col-form-label">{{ translations.COMMON.AUTHORITY_RESPONSIBILITY | translate }}</label>
+      <div class="col-sm-10" style="display: flex;">
+        <nb-card *ngFor="let complainedUser of responsibilityUsers" class="nb-node-card">
+          <div class="row m-0"> {{complainedUser.NodeName || complainedUser.UserName}} <i class="nb-close-circled"
+              (click)="btnDeleteUser(complainedUser)"></i></div>
+        </nb-card>
+      </div>
+
+    </div>
+    <div class="col-12 input-group">
+      <label class="col-sm-2 col-form-label">{{ translations.COMMON.INFORM | translate }}</label>
+      <div class="col-sm-10" style="display: flex;">
+        <nb-card *ngFor="let noticeUser of NoticeUsers" class="nb-node-card">
+          <div class="row m-0"> {{noticeUser.NodeName || noticeUser.UserName}} <i class="nb-close-circled"
+              (click)="btnDeleteUser(noticeUser)"></i></div>
+        </nb-card>
+      </div>
+    </div>
+  </div>
+
+</div>

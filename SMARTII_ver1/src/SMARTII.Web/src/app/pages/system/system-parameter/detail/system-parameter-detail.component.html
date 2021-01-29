@@ -1,0 +1,129 @@
+<div class="row">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header class="nb-card-header">{{ translations.SYSTEM_PARAMETER.TITLE | translate }}-{{ titleTypeString }}</nb-card-header>
+      <nb-card-body class="nb-card-body">
+        <form [formGroup]="form">
+          <div class="row">
+            <div class="col-sm-6 input-group">
+              <label starsign for="ID"
+                class="col-sm-4 col-form-label">{{ translations.SYSTEM_PARAMETER.ID | translate }}</label>
+              <input type="text" validator class="form-control col-sm-8" formControlName="ID"
+                [attr.readonly]="(uiActionType == actionType.Update || uiActionType == actionType.Read) ? true : null"
+                placeholder="{{ translations.SYSTEM_PARAMETER.ID_PLACEHOLDER | translate }}" [(ngModel)]="model.ID">
+            </div>
+            <div class="col-sm-6 input-group">
+              <label starsign for="Key"
+                class="col-sm-4 col-form-label">{{ translations.SYSTEM_PARAMETER.KEY | translate }}</label>
+              <input type="text" validator class="form-control col-sm-8" formControlName="Key"
+                [attr.readonly]="(uiActionType == actionType.Update || uiActionType == actionType.Read) ? true : null"
+                placeholder="{{ translations.SYSTEM_PARAMETER.KEY_PLACEHOLDER | translate }}" [(ngModel)]="model.Key">
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6 input-group">
+              <label for="Value"
+                class="col-sm-4 col-form-label">{{ translations.SYSTEM_PARAMETER.VALUE | translate }}</label>
+              <input type="text" validator class="form-control col-sm-8" formControlName="Value"
+                [attr.readonly]="uiActionType == actionType.Read ? true : null"
+                placeholder="{{ translations.SYSTEM_PARAMETER.VALUE_PLACEHOLDER | translate }}"
+                [(ngModel)]="model.Value">
+            </div>
+            <div class="col-sm-6 input-group">
+              <label starsign for="Text"
+                class="col-sm-4 col-form-label">{{ translations.SYSTEM_PARAMETER.TEXT | translate }}</label>
+              <input type="text" validator class="form-control col-sm-8" formControlName="Text"
+                [attr.readonly]="uiActionType == actionType.Read ? true : null"
+                placeholder="{{ translations.SYSTEM_PARAMETER.TEXT_PLACEHOLDER | translate }}" [(ngModel)]="model.Text">
+            </div>
+          </div>
+
+          <div class="row">
+            <!-- 預先設定 -->
+            <div class="col-sm-6 input-group">
+              <label for="IsCheck"
+                class="col-sm-4 col-form-label">{{ translations.SYSTEM_PARAMETER.CHECK | translate }}</label>
+              <nb-checkbox class="col-sm-8" validator formControlName="IsCheck" id="IsCheck"
+                [disabled]="uiActionType == actionType.Read ? true : null" [(ngModel)]="isCheck"
+                (change)="onCheckChange($event.target.checked)">
+              </nb-checkbox>
+            </div>
+            <!-- END 預先設定 -->
+          </div>
+
+          <div class="row" *ngIf="isCheck">
+            <!-- 下次值 -->
+            <div class="col-sm-6 input-group">
+              <label starsign for="NextValue"
+                class="col-sm-4 col-form-label">{{ translations.SYSTEM_PARAMETER.NEXT_VALUE | translate }}</label>
+              <input type="text" validator class="form-control col-sm-8" formControlName="NextValue"
+                [attr.readonly]="uiActionType == actionType.Read ? true : null"
+                placeholder="{{ translations.SYSTEM_PARAMETER.NEXT_VALUE_PLACEHOLDER | translate }}"
+                [(ngModel)]="model.NextValue">
+            </div>
+            <!-- END 下次值 -->
+            <!-- 生效日期 -->
+            <div class="col-sm-6 input-group">
+              <label starsign for="ActiveDateTime"
+                class="col-sm-4 col-form-label">{{ translations.SYSTEM_PARAMETER.ACTIVE_DATETIME | translate }}</label>
+              <input type="ActiveDateTime" validator class="form-control col-sm-8" formControlName="ActiveDateTime"
+                [attr.disabled]="uiActionType == actionType.Read ? true : null"
+                placeholder="{{ translations.SYSTEM_PARAMETER.ACTIVE_DATETIME_PLACEHOLDER | translate }}"
+                [(ngModel)]="model.ActiveDateTime" datetimepicker>
+            </div>
+            <!-- END 生效日期 -->
+          </div>
+
+          <ng-container *ngIf="uiActionType == actionType.Read || uiActionType == actionType.Update">
+            <div class="row">
+              <div class="col-sm-6 input-group">
+                <label for="CreateUserName"
+                  class="col-sm-4 col-form-label">{{ translations.SYSTEM_PARAMETER.CREATE_USERNAME_LABEL | translate }}</label>
+
+                <input type="text" validator class="form-control col-sm-8" disabled formControlName="CreateUserName"
+                  placeholder="{{ translations.SYSTEM_PARAMETER.CREATE_USERNAME_PLACEHOLDER | translate }}"
+                  [(ngModel)]="model.CreateUserName">
+
+              </div>
+              <div class="col-sm-6 input-group">
+                <label for="CreateDateTime"
+                  class="col-sm-4 col-form-label">{{ translations.SYSTEM_PARAMETER.CREATE_DATETIME_LABEL | translate }}</label>
+                <input type="text" validator class="form-control col-sm-8" disabled formControlName="CreateDateTime"
+                  placeholder="{{ translations.SYSTEM_PARAMETER.CREATE_DATETIME_PLACEHOLDER | translate }}"
+                  [(ngModel)]="model.CreateDateTime">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6 input-group">
+                <label for="UpdateUserName"
+                  class="col-sm-4 col-form-label">{{ translations.SYSTEM_PARAMETER.UPDATE_USERNAME_LABEL | translate }}</label>
+                <input type="text" validator class="form-control col-sm-8" disabled formControlName="UpdateUserName"
+                  placeholder="{{ translations.SYSTEM_PARAMETER.UPDATE_USERNAME_PLACEHOLDER | translate }}"
+                  [(ngModel)]="model.UpdateUserName">
+              </div>
+              <div class="col-sm-6 input-group">
+                <label for="UpdateDateTime"
+                  class="col-sm-4 col-form-label">{{ translations.SYSTEM_PARAMETER.UPDATE_DATETIME_LABEL | translate }}</label>
+                <input type="text" validator class="form-control col-sm-8" disabled formControlName="UpdateDateTime"
+                  placeholder="{{ translations.SYSTEM_PARAMETER.UPDATE_DATETIME_PLACEHOLDER | translate }}"
+                  [(ngModel)]="model.UpdateDateTime">
+              </div>
+            </div>
+          </ng-container>
+          <div class="form-group row flex-center">
+            <button type="button" *ngIf="uiActionType == actionType.Update" class="btn btn-sm btn-ptc-confirm mx-5"
+              [authorize]="authType.Update" (click)="btnEdit($event)">{{ translations.COMMON.BTN_CONFIRM | translate }}
+            </button>
+            <button type="button" *ngIf="uiActionType == actionType.Add" class="btn btn-sm btn-ptc-confirm mx-5"
+              [authorize]="authType.Add" (click)="btnAdd($event)">{{ translations.COMMON.BTN_CONFIRM | translate }}
+            </button>
+            <button type="button" class="btn btn-sm btn-kind-finished mx-5"
+              (click)="btnBack($event)">{{ translations.COMMON.BTN_BACK | translate }}</button>
+          </div>
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+
+
+</div>

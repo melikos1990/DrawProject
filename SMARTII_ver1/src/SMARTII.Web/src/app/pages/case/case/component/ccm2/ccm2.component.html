@@ -1,0 +1,102 @@
+<!-- 歷程資訊 -->
+<div class="col-sm-12 input-group" *ngIf="uiActionType !== actionType.Read">
+  <nb-accordion class="ptc-accordion-only-header">
+    <nb-accordion-item [collapsed]="false">
+      <nb-accordion-item-header class="accordionHeaderBlue">{{ translations.CASE_COMMON.TRANSFER_INFO | translate }}
+      </nb-accordion-item-header>
+      <nb-accordion-item-body>
+        <app-ccmi2 #ccmi2 [model]="assignment" [case]="model" [sourcekey]="sourcekey" [focusId]="focusId" [form]="form">
+        </app-ccmi2>
+        <div class="row flex-center">
+          <button class="btn btn-md btn-ptc-save m-3"
+            *ngIf="assignment?.CaseAssignmentProcessType == +caseAssignmentProcessType.Assignment"
+            (click)="btnSaveAssignment()">{{ translations.CASE_NOTICE.CASE_SAVE | translate }}</button>
+          <button class="btn btn-md btn-ptc-confirm m-3"
+            *ngIf="assignment?.CaseAssignmentProcessType == +caseAssignmentProcessType.Invoice"
+            (click)="btnPreviewInvoiceModal()">{{ translations.CASE_COMMON.INVOICE_VIEW | translate }}</button>
+          <button class="btn btn-md btn-ptc-save m-3"
+            *ngIf="assignment?.CaseAssignmentProcessType == +caseAssignmentProcessType.Notice"
+            (click)="btnSenderModal()">{{ translations.CASE_NOTICE.CASE_SAVE | translate }}</button>
+          <button class="btn btn-md btn-ptc-save m-3"
+            *ngIf="assignment?.CaseAssignmentProcessType == +caseAssignmentProcessType.Communication"
+            (click)="btnSaveCommunicate()">{{ translations.CASE_NOTICE.CASE_SAVE | translate }}</button>
+        </div>
+      </nb-accordion-item-body>
+    </nb-accordion-item>
+  </nb-accordion>
+
+</div>
+<!-- END 歷程資訊 -->
+<br>
+<!-- 歷程明細 -->
+<div class="col-sm-12 input-group">
+  <nb-accordion class="ptc-accordion-only-header">
+    <nb-accordion-item [collapsed]="false">
+      <nb-accordion-item-header class="accordionHeaderBlue">{{ translations.CASE_COMMON.TRANSFER_DETAIL | translate }}
+      </nb-accordion-item-header>
+      <nb-accordion-item-body>
+        <div style="cursor: pointer;" class="text-right" (click)="btnRefresh()"><i
+            class="nb-search"></i>{{ translations.SYSTEM_LOG.REFRESH | translate }}</div>
+        <app-ccml2 [uiActionType]="uiActionType" [case]="model" #ccml2></app-ccml2>
+      </nb-accordion-item-body>
+    </nb-accordion-item>
+  </nb-accordion>
+
+</div>
+<!-- END 歷程明細 -->
+<br>
+
+
+<!-- 寄信  -->
+<ng-template #mailsender>
+  <div class="modal-header nb-card-header">
+    <span> {{translations.EMAIL_NOTIFICATION.SENDER_TITLE| translate }} </span>
+    <button class="close" aria-label="Close" (click)="btnOnBack($event)">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body nb-card-body">
+    <app-mail-sender [senderList]="senderList" [buID]="model.NodeID" [caseID]="model.CaseID" [inviceID]="this.newInvoiceID"
+      [assignmentID]="assignmentID" [model]="sender" [isAddCaseAttachment]="true" (onSend)="btnSend($event)" (onBack)="btnOnBack($event)">
+    </app-mail-sender>
+  </div>
+</ng-template>
+
+<!-- 瀏覽反應單 -->
+<ng-template #excelViewer>
+  <div class="modal-header nb-card-header">
+    <span> {{translations.CASE_COMMON.INVOICE_VIEW| translate }} ({{model.CaseID}}) </span>
+    <button class="close" aria-label="Close" (click)="modalService.dismissAll(); reportSrc = null">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body nb-card-body">
+    <div class="row col-12">
+      <div class="col-6 input-group">
+        <label class="col-sm-3 col-form-label">{{translations.CASE_COMMON.CASE_INVOICELIST_TYPE| translate }}</label>
+        <div class="col-sm-6">
+          <app-open-select [(ngModel)]="assignment['InvoiceType']"
+            [items]="businessParameter?.CaseComplaintInvoiceTypes || []"
+            [placeholder]="translations.COMMON.INPUT_PLACEHOLDER | translate : {key: ''}" disabled>
+          </app-open-select>
+        </div>
+      </div>
+      <div class="col-6 input-group">
+        <label class="col-sm-3 col-form-label">{{translations.CASE_COMMON.NEED_MANAGER_REPLY| translate }}</label>
+        <div class="col-sm-6">
+          <nb-checkbox [(ngModel)]="assignment['IsRecall']"></nb-checkbox>
+        </div>
+      </div>
+    </div>
+    <app-pdf-preview [source]="reportSrc"></app-pdf-preview>
+    <div class="modal-footer">
+      <div class="row col-12 flex-center">
+        <button class="btn btn-md btn-ptc-confirm m-3"
+          (click)="btnOpenInvoice()">{{translations.COMMON.BTN_CONFIRM| translate }}</button>
+        <!-- <button class="btn btn-md btn-warning m-3"
+          (click)="modalService.dismissAll(); reportSrc = null">{{translations.COMMON.BTN_BACK| translate }}</button> -->
+
+      </div>
+    </div>
+  </div>
+</ng-template>

@@ -1,0 +1,1019 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SequenceDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/dsltools/LogicalClassDesigner" dslVersion="1.0.0.0" Id="9829fc7b-21d9-4048-a0b1-a2289ea44c46" name="[CallCenter首頁]案件數計算" linkedPackageId="088ce270-a0bc-4c00-ab93-4c14df19130c" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner">
+  <packagedElements>
+    <packageHasNamedElement>
+      <interaction Id="e0c57e96-cc71-47d0-a12a-dce1c0e54cf8" name="[CallCenter首頁]案件數計算" collapseFragmentsFlag="false" isActiveClass="false" isAbstract="false" isLeaf="false" isReentrant="false">
+        <ownedCommentsInternal>
+          <comment Id="4ac80a43-eb41-42cc-8aa5-7c1dc94ec39c">
+            <elementDefinition Id="064ea041-b9fb-4302-b174-67cf3f52402a" />
+            <body>var domianModel = new CallCenterHomeCountDomainModel();</body>
+            <annotatedElements>
+              <behaviorExecutionSpecificationMoniker Id="c30b9c75-a63b-4b1c-9575-7377ac72abd4" LastKnownName="BehaviorExecutionSpecification4" />
+            </annotatedElements>
+          </comment>
+          <comment Id="63b3b54d-87d8-4768-b1dc-ea2bd925d062">
+            <elementDefinition Id="99b12fb6-4630-4905-973d-203210acbad4" />
+            <body>var con = new MSSQLCondition&lt;CASE&gt;(x =&gt; x. BU_ID == item and CASE_TYPE != 2(結案)</body>
+            <annotatedElements>
+              <behaviorExecutionSpecificationMoniker Id="91725d7c-a5d1-4b7b-a07c-29a1331dc882" LastKnownName="BehaviorExecutionSpecification5" />
+            </annotatedElements>
+          </comment>
+          <comment Id="814dd71f-772a-4415-84b2-b4e935073e4f">
+            <elementDefinition Id="083cc559-64ac-42f2-bfe0-bb388e377138" />
+            <body>con.And(x=&gt;x.APPLY_USER_ID == UserID)</body>
+            <annotatedElements>
+              <behaviorExecutionSpecificationMoniker Id="39d37f2f-04b3-447c-a423-f2217a6641ad" LastKnownName="BehaviorExecutionSpecification8" />
+            </annotatedElements>
+          </comment>
+          <comment Id="491a964c-3f02-4684-b1e2-53a7b46fd579">
+            <elementDefinition Id="dda46a1b-cc5d-4936-bb10-df4789b683fc" />
+            <body>//domainModel add
+domianModel.BuID = item ;
+domianModel.Total = totalCount ;
+domianModel.OnwerTotal = ownerCount ;
+</body>
+            <annotatedElements>
+              <behaviorExecutionSpecificationMoniker Id="aa06be57-5162-4533-a39b-c6529b684b1b" LastKnownName="BehaviorExecutionSpecification10" />
+            </annotatedElements>
+          </comment>
+          <comment Id="daef2d7a-d1e3-45f6-9271-84aeba070747">
+            <elementDefinition Id="5f166583-48c3-4b87-8729-d21e8ff6ab3f" />
+            <body>var totalCount = .Count(con);</body>
+            <annotatedElements>
+              <behaviorExecutionSpecificationMoniker Id="877e859e-c98b-4c1a-874f-d38ea3c0014f" LastKnownName="BehaviorExecutionSpecification6" />
+            </annotatedElements>
+          </comment>
+          <comment Id="fd72ed7e-152b-4668-b8b6-c84d2a6c0d5f">
+            <elementDefinition Id="58d87892-8762-4fd3-b134-6388499feef8" />
+            <body>var ownerCount = .Count(con);</body>
+            <annotatedElements>
+              <behaviorExecutionSpecificationMoniker Id="6a3887b7-6744-49d2-88d1-0bdfc78f01f6" LastKnownName="BehaviorExecutionSpecification9" />
+            </annotatedElements>
+          </comment>
+          <comment Id="9fc111db-e10d-490e-86dc-93d9f88aacee">
+            <elementDefinition Id="20ce4425-01a9-4191-87fa-26eedcd6d495" />
+            <body>return domianModel</body>
+            <annotatedElements>
+              <behaviorExecutionSpecificationMoniker Id="1aed3b49-03c8-448f-a028-27f12dc45c02" LastKnownName="BehaviorExecutionSpecification7" />
+            </annotatedElements>
+          </comment>
+          <comment Id="ffa33b3a-4bae-44e0-9113-322d4a5fcfaa">
+            <elementDefinition Id="9776c4d8-c793-4cc7-8231-f24c22fe8b44" />
+            <body>var user = ContextUtility.GetUserIdentity().Instance;              
+var userBuIds = users.JobPositions.Where(x =&gt; x.OrganizationType == OrganizationType.CallCenter).OfType&lt;CallCenterJobPosition&gt;().Select(x =&gt; x.IdentificationID).Distinct().ToArray();</body>
+          </comment>
+        </ownedCommentsInternal>
+        <elementDefinition Id="4fab11ce-442f-4aa6-89fa-82d0ba3103a0" />
+        <fragments>
+          <messageOccurrenceSpecification Id="f8c53c54-55ad-4431-b95e-fca1df715fa7" name="MessageOccurrenceSpecification31">
+            <elementDefinition Id="7f49fe62-1c8f-46b0-88ac-395e698e73f6" />
+            <covered>
+              <lifelineMoniker Id="0d235ea3-940e-4a2a-a985-47294636164e" LastKnownName="CallCenterHomeController" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <behaviorExecutionSpecification Id="1dd3f469-a93f-4fe1-a24e-3947dd94d7c7" name="BehaviorExecutionSpecification12">
+            <elementDefinition Id="c70c633c-eff8-4931-9102-1b0989bdb8b1" />
+            <coveredLifelines>
+              <lifelineMoniker Id="0d235ea3-940e-4a2a-a985-47294636164e" LastKnownName="CallCenterHomeController" />
+            </coveredLifelines>
+            <finish>
+              <executionOccurrenceSpecificationMoniker Id="1b2131c3-d33f-4fe1-b843-c790b09e2a63" LastKnownName="ExecutionOccurrenceSpecification24" />
+            </finish>
+            <start>
+              <executionOccurrenceSpecificationMoniker Id="b269abca-08d0-4dc7-9086-f84dcab1c766" LastKnownName="ExecutionOccurrenceSpecification23" />
+            </start>
+            <nestedOccurrences>
+              <messageOccurrenceSpecificationMoniker Id="09cb1623-0049-45aa-90da-7f5a3080a586" LastKnownName="MessageOccurrenceSpecification32" />
+              <messageOccurrenceSpecificationMoniker Id="3c4232da-b8ad-48ab-96fc-a40980f36b08" LastKnownName="MessageOccurrenceSpecification37" />
+              <executionOccurrenceSpecificationMoniker Id="5ecb4dd3-8b6f-4beb-9054-77a6aca93114" LastKnownName="ExecutionOccurrenceSpecification27" />
+              <executionOccurrenceSpecificationMoniker Id="027815f1-177e-4915-8570-26f3f40bd248" LastKnownName="ExecutionOccurrenceSpecification28" />
+            </nestedOccurrences>
+          </behaviorExecutionSpecification>
+          <executionOccurrenceSpecification Id="b269abca-08d0-4dc7-9086-f84dcab1c766" name="ExecutionOccurrenceSpecification23">
+            <elementDefinition Id="2c149248-0d69-4a78-923d-550de8880df9" />
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="09c489b3-30cd-439d-ac4b-b61cba2c894c" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="0d235ea3-940e-4a2a-a985-47294636164e" LastKnownName="CallCenterHomeController" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="09cb1623-0049-45aa-90da-7f5a3080a586" name="MessageOccurrenceSpecification32">
+            <elementDefinition Id="fb698c0e-061b-41f3-9e40-d700ff79f719" />
+            <covered>
+              <lifelineMoniker Id="0d235ea3-940e-4a2a-a985-47294636164e" LastKnownName="CallCenterHomeController" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="3c4232da-b8ad-48ab-96fc-a40980f36b08" name="MessageOccurrenceSpecification37">
+            <elementDefinition Id="7a81f871-7808-457c-bc81-da71d67f150c" />
+            <covered>
+              <lifelineMoniker Id="0d235ea3-940e-4a2a-a985-47294636164e" LastKnownName="CallCenterHomeController" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <behaviorExecutionSpecification Id="dc41f8e6-6083-46eb-9bcd-182a80ba8b0b" name="BehaviorExecutionSpecification14">
+            <elementDefinition Id="0ce752b8-6d69-4d3d-a1c1-bea427250852" />
+            <coveredLifelines>
+              <lifelineMoniker Id="0d235ea3-940e-4a2a-a985-47294636164e" LastKnownName="CallCenterHomeController" />
+            </coveredLifelines>
+            <finish>
+              <executionOccurrenceSpecificationMoniker Id="027815f1-177e-4915-8570-26f3f40bd248" LastKnownName="ExecutionOccurrenceSpecification28" />
+            </finish>
+            <start>
+              <executionOccurrenceSpecificationMoniker Id="5ecb4dd3-8b6f-4beb-9054-77a6aca93114" LastKnownName="ExecutionOccurrenceSpecification27" />
+            </start>
+            <nestedOccurrences>
+              <messageOccurrenceSpecificationMoniker Id="dc525e55-ccbc-49e5-8ee8-1ac7f2b76df2" LastKnownName="MessageOccurrenceSpecification38" />
+            </nestedOccurrences>
+          </behaviorExecutionSpecification>
+          <executionOccurrenceSpecification Id="5ecb4dd3-8b6f-4beb-9054-77a6aca93114" name="ExecutionOccurrenceSpecification27">
+            <elementDefinition Id="41d4ccae-0dcc-41a4-a70c-73688b02bc91" />
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="72384bab-0a44-4ceb-a4b0-aee50107d1dc" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="0d235ea3-940e-4a2a-a985-47294636164e" LastKnownName="CallCenterHomeController" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="dc525e55-ccbc-49e5-8ee8-1ac7f2b76df2" name="MessageOccurrenceSpecification38">
+            <elementDefinition Id="5a9b33d8-8a01-4636-b613-232e2583cbeb" />
+            <covered>
+              <lifelineMoniker Id="0d235ea3-940e-4a2a-a985-47294636164e" LastKnownName="CallCenterHomeController" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <executionOccurrenceSpecification Id="027815f1-177e-4915-8570-26f3f40bd248" name="ExecutionOccurrenceSpecification28">
+            <elementDefinition Id="f595b9a9-e84e-4196-a92f-aaeb2f3035d6" />
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="4861ccdc-58d9-4501-8618-d3e7438e28e4" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="0d235ea3-940e-4a2a-a985-47294636164e" LastKnownName="CallCenterHomeController" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <executionOccurrenceSpecification Id="1b2131c3-d33f-4fe1-b843-c790b09e2a63" name="ExecutionOccurrenceSpecification24">
+            <elementDefinition Id="ee7867ce-09c1-4c27-9bf6-7567a90812ad" />
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="391bbd4f-071b-44d8-9d0b-7237efe60c6a" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="0d235ea3-940e-4a2a-a985-47294636164e" LastKnownName="CallCenterHomeController" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="1fb36840-9dbd-476f-b5d7-33cd80050646" name="MessageOccurrenceSpecification1">
+            <elementDefinition Id="a3467ff1-923f-4f92-bda5-eccc21a75293" />
+            <covered>
+              <lifelineMoniker Id="0d235ea3-940e-4a2a-a985-47294636164e" LastKnownName="CallCenterHomeController" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <behaviorExecutionSpecification Id="845341b4-2b57-4f55-94d7-4307c0cc8a8c" name="BehaviorExecutionSpecification1">
+            <elementDefinition Id="367d1e2f-f27a-4dbd-bbd1-716781a13392" />
+            <coveredLifelines>
+              <lifelineMoniker Id="0d235ea3-940e-4a2a-a985-47294636164e" LastKnownName="CallCenterHomeController" />
+            </coveredLifelines>
+            <finish>
+              <executionOccurrenceSpecificationMoniker Id="89923336-ba5b-4ab3-a121-4c97b4a7d35a" LastKnownName="ExecutionOccurrenceSpecification2" />
+            </finish>
+            <start>
+              <executionOccurrenceSpecificationMoniker Id="e08e1d80-467d-4a10-a8bf-687a2f9821ee" LastKnownName="ExecutionOccurrenceSpecification1" />
+            </start>
+            <nestedOccurrences>
+              <messageOccurrenceSpecificationMoniker Id="283d0382-2d3f-41c0-9253-73b824c07400" LastKnownName="MessageOccurrenceSpecification2" />
+              <messageOccurrenceSpecificationMoniker Id="7a5282ca-cf47-4317-91d3-2a5bc4cc7b35" LastKnownName="MessageOccurrenceSpecification5" />
+              <messageOccurrenceSpecificationMoniker Id="5fab1a90-ef7b-4aaf-906f-5fc10dcd32d1" LastKnownName="MessageOccurrenceSpecification8" />
+            </nestedOccurrences>
+          </behaviorExecutionSpecification>
+          <executionOccurrenceSpecification Id="e08e1d80-467d-4a10-a8bf-687a2f9821ee" name="ExecutionOccurrenceSpecification1">
+            <elementDefinition Id="a890bc61-a10a-47df-9436-aed824e422dd" />
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="02e12a43-b5c3-4b68-ad4c-75761f4d56a8" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="0d235ea3-940e-4a2a-a985-47294636164e" LastKnownName="CallCenterHomeController" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="283d0382-2d3f-41c0-9253-73b824c07400" name="MessageOccurrenceSpecification2">
+            <elementDefinition Id="a8818161-0452-422f-90aa-b65d83555aad" />
+            <covered>
+              <lifelineMoniker Id="0d235ea3-940e-4a2a-a985-47294636164e" LastKnownName="CallCenterHomeController" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <behaviorExecutionSpecification Id="43ae401e-aaf7-4b38-83d9-9d9d54136895" name="BehaviorExecutionSpecification3">
+            <elementDefinition Id="7490ad4a-8725-4495-98ef-c327347d4897" />
+            <coveredLifelines>
+              <lifelineMoniker Id="881ba056-021d-4a36-8854-d2ac125d394d" LastKnownName="CallCenterHomeFacade" />
+            </coveredLifelines>
+            <finish>
+              <executionOccurrenceSpecificationMoniker Id="1ff9afeb-35fa-4df9-b6e8-e905bf7a4c84" LastKnownName="ExecutionOccurrenceSpecification6" />
+            </finish>
+            <start>
+              <executionOccurrenceSpecificationMoniker Id="7609991c-08b6-4a4f-9f2f-0fd09e336e19" LastKnownName="ExecutionOccurrenceSpecification5" />
+            </start>
+            <nestedOccurrences>
+              <messageOccurrenceSpecificationMoniker Id="65f6a206-19b3-4cc1-9e44-be775b395307" LastKnownName="MessageOccurrenceSpecification6" />
+              <messageOccurrenceSpecificationMoniker Id="47e88f14-6626-454d-90f7-3bda1a4264bc" LastKnownName="MessageOccurrenceSpecification9" />
+              <executionOccurrenceSpecificationMoniker Id="8613d26f-e240-4d22-9280-8316db61f801" LastKnownName="ExecutionOccurrenceSpecification7" />
+              <executionOccurrenceSpecificationMoniker Id="2172385f-560e-4249-ac21-f2b2479fa1e1" LastKnownName="ExecutionOccurrenceSpecification8" />
+              <messageOccurrenceSpecificationMoniker Id="7a3c86bc-9632-4b88-ac75-758d0f2161cb" LastKnownName="MessageOccurrenceSpecification11" />
+              <executionOccurrenceSpecificationMoniker Id="1c19d2c8-64fc-457a-87cc-1e88ab39079e" LastKnownName="ExecutionOccurrenceSpecification9" />
+              <executionOccurrenceSpecificationMoniker Id="4adc5a3b-4a1e-4a7c-8995-39cc380240ce" LastKnownName="ExecutionOccurrenceSpecification10" />
+              <messageOccurrenceSpecificationMoniker Id="39ee7dd6-9470-4318-946f-df483d7d2dab" LastKnownName="MessageOccurrenceSpecification13" />
+              <messageOccurrenceSpecificationMoniker Id="3149412c-bf3e-4eff-829f-21c082f6b095" LastKnownName="MessageOccurrenceSpecification16" />
+              <messageOccurrenceSpecificationMoniker Id="879dd839-ae21-4a03-ae42-0a6042d3400f" LastKnownName="MessageOccurrenceSpecification19" />
+              <executionOccurrenceSpecificationMoniker Id="a3d2e4d3-2a0c-4b51-a569-57a3f7033fb8" LastKnownName="ExecutionOccurrenceSpecification15" />
+              <executionOccurrenceSpecificationMoniker Id="a3f03fc0-94f1-45fb-9566-6481cb5db3da" LastKnownName="ExecutionOccurrenceSpecification16" />
+              <messageOccurrenceSpecificationMoniker Id="02162b2c-aca3-4129-85ec-0461abdb4970" LastKnownName="MessageOccurrenceSpecification21" />
+              <messageOccurrenceSpecificationMoniker Id="dd6c1ed8-2a89-4704-bf03-a13063e2a2eb" LastKnownName="MessageOccurrenceSpecification24" />
+              <messageOccurrenceSpecificationMoniker Id="7a6b7881-912d-4389-bbc8-cb5954fa8c61" LastKnownName="MessageOccurrenceSpecification25" />
+              <executionOccurrenceSpecificationMoniker Id="cdfa16bc-ba2d-4af0-bdac-8f07da212e4a" LastKnownName="ExecutionOccurrenceSpecification19" />
+              <executionOccurrenceSpecificationMoniker Id="a65923a5-5657-483a-8b98-086794476f0b" LastKnownName="ExecutionOccurrenceSpecification20" />
+              <messageOccurrenceSpecificationMoniker Id="2bd02966-00cb-4474-a04f-d1f1b45f359e" LastKnownName="MessageOccurrenceSpecification17" />
+              <executionOccurrenceSpecificationMoniker Id="c00a8efc-73fd-4ec1-9f33-fa5ea76d6ffa" LastKnownName="ExecutionOccurrenceSpecification13" />
+              <executionOccurrenceSpecificationMoniker Id="024b9cb2-9427-46fc-a4dc-619480e3e9c6" LastKnownName="ExecutionOccurrenceSpecification14" />
+              <messageOccurrenceSpecificationMoniker Id="5ad28d4a-855a-4a62-be8c-19579d3c8534" LastKnownName="MessageOccurrenceSpecification7" />
+            </nestedOccurrences>
+          </behaviorExecutionSpecification>
+          <executionOccurrenceSpecification Id="7609991c-08b6-4a4f-9f2f-0fd09e336e19" name="ExecutionOccurrenceSpecification5">
+            <elementDefinition Id="98402e73-b424-4598-82ca-bab627f91974" />
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="21a881e5-693e-4208-bd04-f590fa698b81" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="881ba056-021d-4a36-8854-d2ac125d394d" LastKnownName="CallCenterHomeFacade" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="7a5282ca-cf47-4317-91d3-2a5bc4cc7b35" name="MessageOccurrenceSpecification5">
+            <elementDefinition Id="210f8a88-86de-4f95-a118-e030b6654921" />
+            <covered>
+              <lifelineMoniker Id="0d235ea3-940e-4a2a-a985-47294636164e" LastKnownName="CallCenterHomeController" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="65f6a206-19b3-4cc1-9e44-be775b395307" name="MessageOccurrenceSpecification6">
+            <elementDefinition Id="3e504db1-25a8-403b-bba6-134aebc95eb5" />
+            <covered>
+              <lifelineMoniker Id="881ba056-021d-4a36-8854-d2ac125d394d" LastKnownName="CallCenterHomeFacade" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="47e88f14-6626-454d-90f7-3bda1a4264bc" name="MessageOccurrenceSpecification9">
+            <elementDefinition Id="b41b5b4c-3fe2-4695-8db6-6af5b0afd127" />
+            <covered>
+              <lifelineMoniker Id="881ba056-021d-4a36-8854-d2ac125d394d" LastKnownName="CallCenterHomeFacade" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <behaviorExecutionSpecification Id="c30b9c75-a63b-4b1c-9575-7377ac72abd4" name="BehaviorExecutionSpecification4">
+            <elementDefinition Id="7fb082fc-143d-422a-97b8-210adbb7dcb4" />
+            <coveredLifelines>
+              <lifelineMoniker Id="881ba056-021d-4a36-8854-d2ac125d394d" LastKnownName="CallCenterHomeFacade" />
+            </coveredLifelines>
+            <finish>
+              <executionOccurrenceSpecificationMoniker Id="2172385f-560e-4249-ac21-f2b2479fa1e1" LastKnownName="ExecutionOccurrenceSpecification8" />
+            </finish>
+            <start>
+              <executionOccurrenceSpecificationMoniker Id="8613d26f-e240-4d22-9280-8316db61f801" LastKnownName="ExecutionOccurrenceSpecification7" />
+            </start>
+            <nestedOccurrences>
+              <messageOccurrenceSpecificationMoniker Id="0bf5750f-bea3-4e95-89ec-e2942a42b4c3" LastKnownName="MessageOccurrenceSpecification10" />
+            </nestedOccurrences>
+          </behaviorExecutionSpecification>
+          <executionOccurrenceSpecification Id="8613d26f-e240-4d22-9280-8316db61f801" name="ExecutionOccurrenceSpecification7">
+            <elementDefinition Id="3db7afb9-d9e1-4079-936c-3367ce2c9c95" />
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="d8765a23-4d32-429c-a553-6fbe33ff06e2" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="881ba056-021d-4a36-8854-d2ac125d394d" LastKnownName="CallCenterHomeFacade" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="0bf5750f-bea3-4e95-89ec-e2942a42b4c3" name="MessageOccurrenceSpecification10">
+            <elementDefinition Id="56f88841-34f2-4630-b427-8e8028bd1fc8" />
+            <covered>
+              <lifelineMoniker Id="881ba056-021d-4a36-8854-d2ac125d394d" LastKnownName="CallCenterHomeFacade" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <executionOccurrenceSpecification Id="2172385f-560e-4249-ac21-f2b2479fa1e1" name="ExecutionOccurrenceSpecification8">
+            <elementDefinition Id="03dbdfdb-cb9f-44d4-9f8b-7d7c21c060be" />
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="383f78a5-6cb8-4037-a203-3cace6230724" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="881ba056-021d-4a36-8854-d2ac125d394d" LastKnownName="CallCenterHomeFacade" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="7a3c86bc-9632-4b88-ac75-758d0f2161cb" name="MessageOccurrenceSpecification11">
+            <elementDefinition Id="abd55f2f-904f-4217-a5c4-8ec85ae4f019" />
+            <covered>
+              <lifelineMoniker Id="881ba056-021d-4a36-8854-d2ac125d394d" LastKnownName="CallCenterHomeFacade" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <behaviorExecutionSpecification Id="91725d7c-a5d1-4b7b-a07c-29a1331dc882" name="BehaviorExecutionSpecification5">
+            <elementDefinition Id="0e9e0351-84db-40de-bc1d-b4662b67d9be" />
+            <coveredLifelines>
+              <lifelineMoniker Id="881ba056-021d-4a36-8854-d2ac125d394d" LastKnownName="CallCenterHomeFacade" />
+            </coveredLifelines>
+            <finish>
+              <executionOccurrenceSpecificationMoniker Id="4adc5a3b-4a1e-4a7c-8995-39cc380240ce" LastKnownName="ExecutionOccurrenceSpecification10" />
+            </finish>
+            <start>
+              <executionOccurrenceSpecificationMoniker Id="1c19d2c8-64fc-457a-87cc-1e88ab39079e" LastKnownName="ExecutionOccurrenceSpecification9" />
+            </start>
+            <nestedOccurrences>
+              <messageOccurrenceSpecificationMoniker Id="a99ecf68-fa28-4082-8352-04fc357e60ce" LastKnownName="MessageOccurrenceSpecification12" />
+            </nestedOccurrences>
+          </behaviorExecutionSpecification>
+          <executionOccurrenceSpecification Id="1c19d2c8-64fc-457a-87cc-1e88ab39079e" name="ExecutionOccurrenceSpecification9">
+            <elementDefinition Id="3b1fbe4a-8853-47a3-bebd-b2d7ec15ec60" />
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="913e5c52-c489-42e0-9a2f-84d5cbbf72f6" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="881ba056-021d-4a36-8854-d2ac125d394d" LastKnownName="CallCenterHomeFacade" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="a99ecf68-fa28-4082-8352-04fc357e60ce" name="MessageOccurrenceSpecification12">
+            <elementDefinition Id="f3334dac-e987-4f88-a786-fa65b9c15569" />
+            <covered>
+              <lifelineMoniker Id="881ba056-021d-4a36-8854-d2ac125d394d" LastKnownName="CallCenterHomeFacade" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <executionOccurrenceSpecification Id="4adc5a3b-4a1e-4a7c-8995-39cc380240ce" name="ExecutionOccurrenceSpecification10">
+            <elementDefinition Id="7ade1286-a3be-44de-8161-f5aab1692ebf" />
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="94a11709-d5d4-4f19-bd57-6080af76a30e" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="881ba056-021d-4a36-8854-d2ac125d394d" LastKnownName="CallCenterHomeFacade" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <behaviorExecutionSpecification Id="877e859e-c98b-4c1a-874f-d38ea3c0014f" name="BehaviorExecutionSpecification6">
+            <elementDefinition Id="0b5c2b81-e5f7-4380-ab26-71243b994e45" />
+            <coveredLifelines>
+              <lifelineMoniker Id="b5213196-a4f1-4bd7-911f-77f1bb7f9b9c" LastKnownName="IMSSQLRepository[T1,T2]" />
+            </coveredLifelines>
+            <finish>
+              <executionOccurrenceSpecificationMoniker Id="c4e0074e-e186-492b-acef-605115af58a9" LastKnownName="ExecutionOccurrenceSpecification12" />
+            </finish>
+            <start>
+              <executionOccurrenceSpecificationMoniker Id="a3232945-8883-4b0a-b37c-c0c8b0f3a847" LastKnownName="ExecutionOccurrenceSpecification11" />
+            </start>
+            <nestedOccurrences>
+              <messageOccurrenceSpecificationMoniker Id="cdda6812-97bc-46c0-96a6-79f2080b2cb4" LastKnownName="MessageOccurrenceSpecification14" />
+              <messageOccurrenceSpecificationMoniker Id="97e98dc8-f558-43b3-9ebc-d9df72902279" LastKnownName="MessageOccurrenceSpecification15" />
+            </nestedOccurrences>
+          </behaviorExecutionSpecification>
+          <executionOccurrenceSpecification Id="a3232945-8883-4b0a-b37c-c0c8b0f3a847" name="ExecutionOccurrenceSpecification11">
+            <elementDefinition Id="bce474f8-98b7-453f-9f08-a74ac55c760e" />
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="01883d0d-d743-4ca8-9de1-f8747e2fd11a" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="b5213196-a4f1-4bd7-911f-77f1bb7f9b9c" LastKnownName="IMSSQLRepository[T1,T2]" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="39ee7dd6-9470-4318-946f-df483d7d2dab" name="MessageOccurrenceSpecification13">
+            <elementDefinition Id="49d09acd-c93d-48d5-95a2-ca5aa625f032" />
+            <covered>
+              <lifelineMoniker Id="881ba056-021d-4a36-8854-d2ac125d394d" LastKnownName="CallCenterHomeFacade" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="cdda6812-97bc-46c0-96a6-79f2080b2cb4" name="MessageOccurrenceSpecification14">
+            <elementDefinition Id="6819ce36-5107-4407-bf9d-d0c867118761" />
+            <covered>
+              <lifelineMoniker Id="b5213196-a4f1-4bd7-911f-77f1bb7f9b9c" LastKnownName="IMSSQLRepository[T1,T2]" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="97e98dc8-f558-43b3-9ebc-d9df72902279" name="MessageOccurrenceSpecification15">
+            <elementDefinition Id="f53993cf-ee19-483a-a92e-f00cfa9df31e" />
+            <covered>
+              <lifelineMoniker Id="b5213196-a4f1-4bd7-911f-77f1bb7f9b9c" LastKnownName="IMSSQLRepository[T1,T2]" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="3149412c-bf3e-4eff-829f-21c082f6b095" name="MessageOccurrenceSpecification16">
+            <elementDefinition Id="350c2f9d-ba85-44a1-9ee6-0d065aae846b" />
+            <covered>
+              <lifelineMoniker Id="881ba056-021d-4a36-8854-d2ac125d394d" LastKnownName="CallCenterHomeFacade" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <executionOccurrenceSpecification Id="c4e0074e-e186-492b-acef-605115af58a9" name="ExecutionOccurrenceSpecification12">
+            <elementDefinition Id="5084a2fd-d7de-481a-84b6-fef169f40462" />
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="8728f03d-bfaa-435b-a844-47a425d3121e" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="b5213196-a4f1-4bd7-911f-77f1bb7f9b9c" LastKnownName="IMSSQLRepository[T1,T2]" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="879dd839-ae21-4a03-ae42-0a6042d3400f" name="MessageOccurrenceSpecification19">
+            <elementDefinition Id="905c9853-2dda-4daf-bb27-94ecb26418e5" />
+            <covered>
+              <lifelineMoniker Id="881ba056-021d-4a36-8854-d2ac125d394d" LastKnownName="CallCenterHomeFacade" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <behaviorExecutionSpecification Id="39d37f2f-04b3-447c-a423-f2217a6641ad" name="BehaviorExecutionSpecification8">
+            <elementDefinition Id="92b0ff96-a714-411a-8a6c-5320b30fa918" />
+            <coveredLifelines>
+              <lifelineMoniker Id="881ba056-021d-4a36-8854-d2ac125d394d" LastKnownName="CallCenterHomeFacade" />
+            </coveredLifelines>
+            <finish>
+              <executionOccurrenceSpecificationMoniker Id="a3f03fc0-94f1-45fb-9566-6481cb5db3da" LastKnownName="ExecutionOccurrenceSpecification16" />
+            </finish>
+            <start>
+              <executionOccurrenceSpecificationMoniker Id="a3d2e4d3-2a0c-4b51-a569-57a3f7033fb8" LastKnownName="ExecutionOccurrenceSpecification15" />
+            </start>
+            <nestedOccurrences>
+              <messageOccurrenceSpecificationMoniker Id="053fb60b-f600-42c3-9a96-34de796a993f" LastKnownName="MessageOccurrenceSpecification20" />
+            </nestedOccurrences>
+          </behaviorExecutionSpecification>
+          <executionOccurrenceSpecification Id="a3d2e4d3-2a0c-4b51-a569-57a3f7033fb8" name="ExecutionOccurrenceSpecification15">
+            <elementDefinition Id="631b0b3a-9835-48d6-8370-a16a95608f12" />
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="4673bd3f-3f18-49c3-af97-0684ccaa9b43" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="881ba056-021d-4a36-8854-d2ac125d394d" LastKnownName="CallCenterHomeFacade" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="053fb60b-f600-42c3-9a96-34de796a993f" name="MessageOccurrenceSpecification20">
+            <elementDefinition Id="45d542a4-0fbd-49b5-a71c-d7309a2601af" />
+            <covered>
+              <lifelineMoniker Id="881ba056-021d-4a36-8854-d2ac125d394d" LastKnownName="CallCenterHomeFacade" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <executionOccurrenceSpecification Id="a3f03fc0-94f1-45fb-9566-6481cb5db3da" name="ExecutionOccurrenceSpecification16">
+            <elementDefinition Id="84bab2ca-6f53-4e7e-a7fa-f2e09e22660a" />
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="48127658-da51-4dcb-8e5e-b8692f697034" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="881ba056-021d-4a36-8854-d2ac125d394d" LastKnownName="CallCenterHomeFacade" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <behaviorExecutionSpecification Id="6a3887b7-6744-49d2-88d1-0bdfc78f01f6" name="BehaviorExecutionSpecification9">
+            <elementDefinition Id="116ddb3a-cdf3-4845-8e7a-2bdaf6ae8db8" />
+            <coveredLifelines>
+              <lifelineMoniker Id="b5213196-a4f1-4bd7-911f-77f1bb7f9b9c" LastKnownName="IMSSQLRepository[T1,T2]" />
+            </coveredLifelines>
+            <finish>
+              <executionOccurrenceSpecificationMoniker Id="e3fe2228-29db-4166-ba2b-fd92713a55e5" LastKnownName="ExecutionOccurrenceSpecification18" />
+            </finish>
+            <start>
+              <executionOccurrenceSpecificationMoniker Id="5017d92a-ff0e-4ce8-9c87-e9a7fb68c7ac" LastKnownName="ExecutionOccurrenceSpecification17" />
+            </start>
+            <nestedOccurrences>
+              <messageOccurrenceSpecificationMoniker Id="c7de5a4f-7c17-4f88-aa15-af97de7a1df9" LastKnownName="MessageOccurrenceSpecification22" />
+              <messageOccurrenceSpecificationMoniker Id="3be30eed-cf17-4c8b-ae75-a8f6c549a067" LastKnownName="MessageOccurrenceSpecification23" />
+            </nestedOccurrences>
+          </behaviorExecutionSpecification>
+          <executionOccurrenceSpecification Id="5017d92a-ff0e-4ce8-9c87-e9a7fb68c7ac" name="ExecutionOccurrenceSpecification17">
+            <elementDefinition Id="4d4644a7-4330-47ac-9a1f-9e35e9e51b4c" />
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="a54d7695-5855-4513-909b-7c393196cd35" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="b5213196-a4f1-4bd7-911f-77f1bb7f9b9c" LastKnownName="IMSSQLRepository[T1,T2]" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="02162b2c-aca3-4129-85ec-0461abdb4970" name="MessageOccurrenceSpecification21">
+            <elementDefinition Id="d7a0c63b-d01b-4f06-82bb-af16a8b9fc5b" />
+            <covered>
+              <lifelineMoniker Id="881ba056-021d-4a36-8854-d2ac125d394d" LastKnownName="CallCenterHomeFacade" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="c7de5a4f-7c17-4f88-aa15-af97de7a1df9" name="MessageOccurrenceSpecification22">
+            <elementDefinition Id="48bcdd4b-28f5-4ce5-b047-fd4db6326164" />
+            <covered>
+              <lifelineMoniker Id="b5213196-a4f1-4bd7-911f-77f1bb7f9b9c" LastKnownName="IMSSQLRepository[T1,T2]" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="dd6c1ed8-2a89-4704-bf03-a13063e2a2eb" name="MessageOccurrenceSpecification24">
+            <elementDefinition Id="c26e9374-4406-4dbe-9769-ccbe67bf6bd7" />
+            <covered>
+              <lifelineMoniker Id="881ba056-021d-4a36-8854-d2ac125d394d" LastKnownName="CallCenterHomeFacade" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="3be30eed-cf17-4c8b-ae75-a8f6c549a067" name="MessageOccurrenceSpecification23">
+            <elementDefinition Id="e2028cdb-f1f9-4c71-be56-3492f0a33a7a" />
+            <covered>
+              <lifelineMoniker Id="b5213196-a4f1-4bd7-911f-77f1bb7f9b9c" LastKnownName="IMSSQLRepository[T1,T2]" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <executionOccurrenceSpecification Id="e3fe2228-29db-4166-ba2b-fd92713a55e5" name="ExecutionOccurrenceSpecification18">
+            <elementDefinition Id="c323d6d4-5d27-4b1d-80ca-7d4d958b25f4" />
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="c353826d-23f2-444a-bc9e-a4c03518694c" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="b5213196-a4f1-4bd7-911f-77f1bb7f9b9c" LastKnownName="IMSSQLRepository[T1,T2]" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="7a6b7881-912d-4389-bbc8-cb5954fa8c61" name="MessageOccurrenceSpecification25">
+            <elementDefinition Id="ee8df9e9-edd7-4f97-af6a-73cb4e5f730f" />
+            <covered>
+              <lifelineMoniker Id="881ba056-021d-4a36-8854-d2ac125d394d" LastKnownName="CallCenterHomeFacade" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <behaviorExecutionSpecification Id="aa06be57-5162-4533-a39b-c6529b684b1b" name="BehaviorExecutionSpecification10">
+            <elementDefinition Id="5e8c576b-996a-494f-a940-ad8ac21d268b" />
+            <coveredLifelines>
+              <lifelineMoniker Id="881ba056-021d-4a36-8854-d2ac125d394d" LastKnownName="CallCenterHomeFacade" />
+            </coveredLifelines>
+            <finish>
+              <executionOccurrenceSpecificationMoniker Id="a65923a5-5657-483a-8b98-086794476f0b" LastKnownName="ExecutionOccurrenceSpecification20" />
+            </finish>
+            <start>
+              <executionOccurrenceSpecificationMoniker Id="cdfa16bc-ba2d-4af0-bdac-8f07da212e4a" LastKnownName="ExecutionOccurrenceSpecification19" />
+            </start>
+            <nestedOccurrences>
+              <messageOccurrenceSpecificationMoniker Id="ea0c2b5a-d3bb-4541-8e92-0eb52b83fb00" LastKnownName="MessageOccurrenceSpecification26" />
+            </nestedOccurrences>
+          </behaviorExecutionSpecification>
+          <executionOccurrenceSpecification Id="cdfa16bc-ba2d-4af0-bdac-8f07da212e4a" name="ExecutionOccurrenceSpecification19">
+            <elementDefinition Id="b82ce87d-f9dc-478f-a63d-67c49c03292a" />
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="5a96a572-adf4-4498-b07d-abdbdb10236a" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="881ba056-021d-4a36-8854-d2ac125d394d" LastKnownName="CallCenterHomeFacade" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="ea0c2b5a-d3bb-4541-8e92-0eb52b83fb00" name="MessageOccurrenceSpecification26">
+            <elementDefinition Id="49f8869f-6dad-4e43-aa9f-fb3e0559e8d8" />
+            <covered>
+              <lifelineMoniker Id="881ba056-021d-4a36-8854-d2ac125d394d" LastKnownName="CallCenterHomeFacade" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <executionOccurrenceSpecification Id="a65923a5-5657-483a-8b98-086794476f0b" name="ExecutionOccurrenceSpecification20">
+            <elementDefinition Id="fe5dfad5-2344-47be-a123-6487dd58578b" />
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="69deabca-6b72-49b5-9594-bc3226d5ea83" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="881ba056-021d-4a36-8854-d2ac125d394d" LastKnownName="CallCenterHomeFacade" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="2bd02966-00cb-4474-a04f-d1f1b45f359e" name="MessageOccurrenceSpecification17">
+            <elementDefinition Id="da0b9a68-42bf-4993-8303-a5ac1f98598d" />
+            <covered>
+              <lifelineMoniker Id="881ba056-021d-4a36-8854-d2ac125d394d" LastKnownName="CallCenterHomeFacade" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <behaviorExecutionSpecification Id="1aed3b49-03c8-448f-a028-27f12dc45c02" name="BehaviorExecutionSpecification7">
+            <elementDefinition Id="4a9eef97-4504-4c12-ad09-bbd136082da3" />
+            <coveredLifelines>
+              <lifelineMoniker Id="881ba056-021d-4a36-8854-d2ac125d394d" LastKnownName="CallCenterHomeFacade" />
+            </coveredLifelines>
+            <finish>
+              <executionOccurrenceSpecificationMoniker Id="024b9cb2-9427-46fc-a4dc-619480e3e9c6" LastKnownName="ExecutionOccurrenceSpecification14" />
+            </finish>
+            <start>
+              <executionOccurrenceSpecificationMoniker Id="c00a8efc-73fd-4ec1-9f33-fa5ea76d6ffa" LastKnownName="ExecutionOccurrenceSpecification13" />
+            </start>
+            <nestedOccurrences>
+              <messageOccurrenceSpecificationMoniker Id="41a609a0-ceef-4738-843d-fd04da708ef4" LastKnownName="MessageOccurrenceSpecification18" />
+            </nestedOccurrences>
+          </behaviorExecutionSpecification>
+          <executionOccurrenceSpecification Id="c00a8efc-73fd-4ec1-9f33-fa5ea76d6ffa" name="ExecutionOccurrenceSpecification13">
+            <elementDefinition Id="f8f9cb13-dc91-4bef-9510-bc6d3501a498" />
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="c0ba8b20-d3e7-44ab-9048-c7c27c36007e" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="881ba056-021d-4a36-8854-d2ac125d394d" LastKnownName="CallCenterHomeFacade" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="41a609a0-ceef-4738-843d-fd04da708ef4" name="MessageOccurrenceSpecification18">
+            <elementDefinition Id="ba2d7c51-14e0-4f66-8e65-463625ad506d" />
+            <covered>
+              <lifelineMoniker Id="881ba056-021d-4a36-8854-d2ac125d394d" LastKnownName="CallCenterHomeFacade" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <executionOccurrenceSpecification Id="024b9cb2-9427-46fc-a4dc-619480e3e9c6" name="ExecutionOccurrenceSpecification14">
+            <elementDefinition Id="dc04f705-1f3e-4e83-b3e7-7fb1a72eecb9" />
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="df6b10d6-7210-4532-bf88-019a067477e3" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="881ba056-021d-4a36-8854-d2ac125d394d" LastKnownName="CallCenterHomeFacade" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="5ad28d4a-855a-4a62-be8c-19579d3c8534" name="MessageOccurrenceSpecification7">
+            <elementDefinition Id="a4e59a08-963a-49e6-9dbc-4759f1261e8c" />
+            <covered>
+              <lifelineMoniker Id="881ba056-021d-4a36-8854-d2ac125d394d" LastKnownName="CallCenterHomeFacade" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="5fab1a90-ef7b-4aaf-906f-5fc10dcd32d1" name="MessageOccurrenceSpecification8">
+            <elementDefinition Id="ab9d9105-4878-4d14-879a-960dc1ff7901" />
+            <covered>
+              <lifelineMoniker Id="0d235ea3-940e-4a2a-a985-47294636164e" LastKnownName="CallCenterHomeController" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <executionOccurrenceSpecification Id="1ff9afeb-35fa-4df9-b6e8-e905bf7a4c84" name="ExecutionOccurrenceSpecification6">
+            <elementDefinition Id="1d400ff2-afb1-4c31-a262-afc84c68d98d" />
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="5e84f90b-db4d-40ed-961b-234254748a09" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="881ba056-021d-4a36-8854-d2ac125d394d" LastKnownName="CallCenterHomeFacade" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <executionOccurrenceSpecification Id="89923336-ba5b-4ab3-a121-4c97b4a7d35a" name="ExecutionOccurrenceSpecification2">
+            <elementDefinition Id="cc52182b-6c05-46b2-b11d-38e52db77cd3" />
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="04fb2372-a72b-4058-936f-2dd5333c780a" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="0d235ea3-940e-4a2a-a985-47294636164e" LastKnownName="CallCenterHomeController" />
+            </covered>
+          </executionOccurrenceSpecification>
+        </fragments>
+        <lifelines>
+          <lifeline Id="0d235ea3-940e-4a2a-a985-47294636164e" name="CallCenterHomeController" isActor="false" lifelineDisplayName="CallCenterHomeController">
+            <elementDefinition Id="57618472-fdc8-46db-b24f-cc86633b005c" />
+            <represents>
+              <propertyMoniker Id="8ce07e67-b245-40e5-9ba3-f1bf6136e1ad" />
+            </represents>
+            <topLevelOccurrences>
+              <messageOccurrenceSpecificationMoniker Id="f8c53c54-55ad-4431-b95e-fca1df715fa7" LastKnownName="MessageOccurrenceSpecification31" />
+              <executionOccurrenceSpecificationMoniker Id="b269abca-08d0-4dc7-9086-f84dcab1c766" LastKnownName="ExecutionOccurrenceSpecification23" />
+              <executionOccurrenceSpecificationMoniker Id="1b2131c3-d33f-4fe1-b843-c790b09e2a63" LastKnownName="ExecutionOccurrenceSpecification24" />
+              <messageOccurrenceSpecificationMoniker Id="1fb36840-9dbd-476f-b5d7-33cd80050646" LastKnownName="MessageOccurrenceSpecification1" />
+              <executionOccurrenceSpecificationMoniker Id="e08e1d80-467d-4a10-a8bf-687a2f9821ee" LastKnownName="ExecutionOccurrenceSpecification1" />
+              <executionOccurrenceSpecificationMoniker Id="89923336-ba5b-4ab3-a121-4c97b4a7d35a" LastKnownName="ExecutionOccurrenceSpecification2" />
+            </topLevelOccurrences>
+          </lifeline>
+          <lifeline Id="881ba056-021d-4a36-8854-d2ac125d394d" name="CallCenterHomeFacade" isActor="false" lifelineDisplayName="CallCenterHomeFacade">
+            <elementDefinition Id="4920c204-0302-4be5-bc65-8ccee1566628" />
+            <represents>
+              <propertyMoniker Id="ccb697d2-3b37-4a4f-b350-6c7f0b27ee32" />
+            </represents>
+            <topLevelOccurrences>
+              <executionOccurrenceSpecificationMoniker Id="7609991c-08b6-4a4f-9f2f-0fd09e336e19" LastKnownName="ExecutionOccurrenceSpecification5" />
+              <executionOccurrenceSpecificationMoniker Id="1ff9afeb-35fa-4df9-b6e8-e905bf7a4c84" LastKnownName="ExecutionOccurrenceSpecification6" />
+            </topLevelOccurrences>
+          </lifeline>
+          <lifeline Id="b8ca1792-14d0-4b41-90d9-d497ce9b8290" name="UserProfider" isActor="false" lifelineDisplayName="UserProfider">
+            <elementDefinition Id="3c6b091e-5378-4f42-969d-3e56f0a9ea46" />
+            <represents>
+              <propertyMoniker Id="953229a3-2b58-4951-9061-577fbad30cf3" />
+            </represents>
+          </lifeline>
+          <lifeline Id="b5213196-a4f1-4bd7-911f-77f1bb7f9b9c" name="IMSSQLRepository[T1,T2]" isActor="false" lifelineDisplayName="IMSSQLRepository[T1,T2]">
+            <elementDefinition Id="ac203f05-8cae-4279-a12e-ce562e05db76" />
+            <represents>
+              <propertyMoniker Id="cd70941e-96af-4041-a8bb-4d5c73ea5d24" />
+            </represents>
+            <topLevelOccurrences>
+              <executionOccurrenceSpecificationMoniker Id="a3232945-8883-4b0a-b37c-c0c8b0f3a847" LastKnownName="ExecutionOccurrenceSpecification11" />
+              <executionOccurrenceSpecificationMoniker Id="c4e0074e-e186-492b-acef-605115af58a9" LastKnownName="ExecutionOccurrenceSpecification12" />
+              <executionOccurrenceSpecificationMoniker Id="5017d92a-ff0e-4ce8-9c87-e9a7fb68c7ac" LastKnownName="ExecutionOccurrenceSpecification17" />
+              <executionOccurrenceSpecificationMoniker Id="e3fe2228-29db-4166-ba2b-fd92713a55e5" LastKnownName="ExecutionOccurrenceSpecification18" />
+            </topLevelOccurrences>
+          </lifeline>
+        </lifelines>
+        <messages>
+          <message Id="a091e7b1-213a-4484-b1e0-8b80fafc3ba4" name="Bu數計算" messageKind="Complete" messageSort="SynchCall" createSelfMessage="true" signatureText="+ GetAllBu() : String[1..*]">
+            <elementDefinition Id="def996e7-48a3-4e72-80fc-3e20c87f9078" />
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="f8c53c54-55ad-4431-b95e-fca1df715fa7" LastKnownName="MessageOccurrenceSpecification31" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="09cb1623-0049-45aa-90da-7f5a3080a586" LastKnownName="MessageOccurrenceSpecification32" />
+            </receiveEvent>
+          </message>
+          <message Id="18b34b4f-1d2c-45c5-b0c4-37be4e905291" name="取得負責人BU LIST" messageKind="Complete" messageSort="SynchCall" createSelfMessage="true">
+            <elementDefinition Id="1dadef74-00ed-4ac2-b466-dbda0e54850a" />
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="3c4232da-b8ad-48ab-96fc-a40980f36b08" LastKnownName="MessageOccurrenceSpecification37" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="dc525e55-ccbc-49e5-8ee8-1ac7f2b76df2" LastKnownName="MessageOccurrenceSpecification38" />
+            </receiveEvent>
+          </message>
+          <message Id="9950c7a8-1db5-4ba7-8dd7-c2098ca7255e" name="案件數計算" messageKind="Complete" messageSort="SynchCall" createSelfMessage="true" signatureText="+ UncloseCount(BuID : Integer) : Module::CallCenterHomeCountDomainModel">
+            <elementDefinition Id="7f328116-edcf-4b08-9386-749aec1cb6ea" />
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="1fb36840-9dbd-476f-b5d7-33cd80050646" LastKnownName="MessageOccurrenceSpecification1" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="283d0382-2d3f-41c0-9253-73b824c07400" LastKnownName="MessageOccurrenceSpecification2" />
+            </receiveEvent>
+          </message>
+          <message Id="70c9f0b5-80a3-4292-95f8-add5c54678c0" name="案件數計算" messageKind="Complete" messageSort="SynchCall" createSelfMessage="false" signatureText="+ UncloseCount(BuID) : Module::CallCenterHomeCountDomainModel">
+            <elementDefinition Id="7b577975-32ed-479c-ab1d-f2ab06ca699a" />
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="7a5282ca-cf47-4317-91d3-2a5bc4cc7b35" LastKnownName="MessageOccurrenceSpecification5" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="65f6a206-19b3-4cc1-9e44-be775b395307" LastKnownName="MessageOccurrenceSpecification6" />
+            </receiveEvent>
+          </message>
+          <message Id="b7bca3c7-b48b-4bad-9c57-906b29c17dc2" name="初始化回傳物件" messageKind="Complete" messageSort="SynchCall" createSelfMessage="true">
+            <elementDefinition Id="9d2935cb-43fc-4466-8942-c205ff005a8c" />
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="47e88f14-6626-454d-90f7-3bda1a4264bc" LastKnownName="MessageOccurrenceSpecification9" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="0bf5750f-bea3-4e95-89ec-e2942a42b4c3" LastKnownName="MessageOccurrenceSpecification10" />
+            </receiveEvent>
+          </message>
+          <message Id="6b441d6c-64f8-4c4c-a41a-ebe5e302332f" name="組合con物件" messageKind="Complete" messageSort="SynchCall" createSelfMessage="true">
+            <elementDefinition Id="7bc9a968-9d4e-4f4f-a2be-ed464c2ce970" />
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="7a3c86bc-9632-4b88-ac75-758d0f2161cb" LastKnownName="MessageOccurrenceSpecification11" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="a99ecf68-fa28-4082-8352-04fc357e60ce" LastKnownName="MessageOccurrenceSpecification12" />
+            </receiveEvent>
+          </message>
+          <message Id="1dfcadf5-3c7b-4fad-ac9b-8d5772b87631" name="計算總案件數" messageKind="Complete" messageSort="SynchCall" createSelfMessage="false" signatureText="+ Count()">
+            <elementDefinition Id="59ed5e3d-66a9-48b7-90a7-90edf6a3c0ec" />
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="39ee7dd6-9470-4318-946f-df483d7d2dab" LastKnownName="MessageOccurrenceSpecification13" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="cdda6812-97bc-46c0-96a6-79f2080b2cb4" LastKnownName="MessageOccurrenceSpecification14" />
+            </receiveEvent>
+          </message>
+          <message Id="bc8cdb6f-6ca2-418f-a6d1-171f75387293" name="&lt;&lt;return&gt;&gt;" messageKind="Complete" messageSort="Reply" createSelfMessage="false">
+            <elementDefinition Id="02b37038-aff7-49a6-b0cd-cdc18c7d8965" />
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="97e98dc8-f558-43b3-9ebc-d9df72902279" LastKnownName="MessageOccurrenceSpecification15" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="3149412c-bf3e-4eff-829f-21c082f6b095" LastKnownName="MessageOccurrenceSpecification16" />
+            </receiveEvent>
+          </message>
+          <message Id="1cc2e0a9-aa41-42dd-ba08-64ade597a455" name="增加個人條件" messageKind="Complete" messageSort="SynchCall" createSelfMessage="true">
+            <elementDefinition Id="f57d83a7-79ae-4a0e-9d96-0b4ff404c147" />
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="879dd839-ae21-4a03-ae42-0a6042d3400f" LastKnownName="MessageOccurrenceSpecification19" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="053fb60b-f600-42c3-9a96-34de796a993f" LastKnownName="MessageOccurrenceSpecification20" />
+            </receiveEvent>
+          </message>
+          <message Id="debc09a4-736b-43bd-92dc-d068f16517bb" name="計算個人案件數" messageKind="Complete" messageSort="SynchCall" createSelfMessage="false" signatureText="+ Count()">
+            <elementDefinition Id="2d465910-b54f-46ef-b59a-c6702dc99aa6" />
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="02162b2c-aca3-4129-85ec-0461abdb4970" LastKnownName="MessageOccurrenceSpecification21" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="c7de5a4f-7c17-4f88-aa15-af97de7a1df9" LastKnownName="MessageOccurrenceSpecification22" />
+            </receiveEvent>
+          </message>
+          <message Id="dc16f9a7-7737-4032-a424-e96188326917" name="&lt;&lt;return&gt;&gt;" messageKind="Complete" messageSort="Reply" createSelfMessage="false">
+            <elementDefinition Id="2114e325-282d-4c75-8a71-a15a286090b0" />
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="3be30eed-cf17-4c8b-ae75-a8f6c549a067" LastKnownName="MessageOccurrenceSpecification23" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="dd6c1ed8-2a89-4704-bf03-a13063e2a2eb" LastKnownName="MessageOccurrenceSpecification24" />
+            </receiveEvent>
+          </message>
+          <message Id="b500345d-302c-4a53-8468-cd85c515c21f" name="新增至回傳結果" messageKind="Complete" messageSort="SynchCall" createSelfMessage="true">
+            <elementDefinition Id="84bdf474-631f-4d9e-b4aa-ed0531f0baf6" />
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="7a6b7881-912d-4389-bbc8-cb5954fa8c61" LastKnownName="MessageOccurrenceSpecification25" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="ea0c2b5a-d3bb-4541-8e92-0eb52b83fb00" LastKnownName="MessageOccurrenceSpecification26" />
+            </receiveEvent>
+          </message>
+          <message Id="601056f7-208c-4213-84f7-4e72cbcb95e5" name="回傳查詢結果" messageKind="Complete" messageSort="SynchCall" createSelfMessage="true">
+            <elementDefinition Id="7ecbf858-ee24-4bcd-b0ba-604cae147bc5" />
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="2bd02966-00cb-4474-a04f-d1f1b45f359e" LastKnownName="MessageOccurrenceSpecification17" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="41a609a0-ceef-4738-843d-fd04da708ef4" LastKnownName="MessageOccurrenceSpecification18" />
+            </receiveEvent>
+          </message>
+          <message Id="1425c558-8b41-4ede-b8f2-c8566f072fc0" name="&lt;&lt;return&gt;&gt;" messageKind="Complete" messageSort="Reply" createSelfMessage="false">
+            <elementDefinition Id="15857f07-d4e7-40e9-8fea-c41e3cc49196" />
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="5ad28d4a-855a-4a62-be8c-19579d3c8534" LastKnownName="MessageOccurrenceSpecification7" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="5fab1a90-ef7b-4aaf-906f-5fc10dcd32d1" LastKnownName="MessageOccurrenceSpecification8" />
+            </receiveEvent>
+          </message>
+        </messages>
+        <ownedAttributesInternal>
+          <property Id="8ce07e67-b245-40e5-9ba3-f1bf6136e1ad" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="700f3b07-55a7-423d-bde7-3ed953a59487" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="e0dc1483-2393-4645-a266-bee686298b8e" LastKnownName="CallCenterHomeController" />
+            </type_NamedElement>
+          </property>
+          <property Id="ccb697d2-3b37-4a4f-b350-6c7f0b27ee32" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="b6674e31-d696-4040-978c-25e79f1c5ba3" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="272f37d8-3ab6-487e-aeba-98dd0a100d21" LastKnownName="CallCenterHomeFacade" />
+            </type_NamedElement>
+          </property>
+          <property Id="cd70941e-96af-4041-a8bb-4d5c73ea5d24" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="ca35664d-4f18-463c-a641-5d5458124a60" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="3a8a9ff9-b956-49e8-9110-93d94f0b6077" LastKnownName="IMSSQLRepository[T1,T2]" />
+            </type_NamedElement>
+          </property>
+          <property Id="953229a3-2b58-4951-9061-577fbad30cf3" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="010d4cf6-57dd-42de-9c04-73bc44796076" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="79b7e0b6-1d95-4130-8fa7-3559f0650d6b" LastKnownName="UserFacade" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributesInternal>
+      </interaction>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="02e12a43-b5c3-4b68-ad4c-75761f4d56a8" name="ExecutionEvent">
+        <elementDefinition Id="cde2624c-ca70-4d4b-af29-e19705170248" />
+      </executionEvent>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="04fb2372-a72b-4058-936f-2dd5333c780a" name="ExecutionEvent">
+        <elementDefinition Id="cfd56c6b-f45f-4956-b485-d3d820cfa3e2" />
+      </executionEvent>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="21a881e5-693e-4208-bd04-f590fa698b81" name="ExecutionEvent">
+        <elementDefinition Id="ab234f27-de68-4d07-b450-bf46c9c179f6" />
+      </executionEvent>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="5e84f90b-db4d-40ed-961b-234254748a09" name="ExecutionEvent">
+        <elementDefinition Id="47f41a61-a047-4003-978e-6d9782ebbb60" />
+      </executionEvent>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="913e5c52-c489-42e0-9a2f-84d5cbbf72f6" name="ExecutionEvent">
+        <elementDefinition Id="a9f46429-307d-463a-9fe6-372a8485498f" />
+      </executionEvent>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="94a11709-d5d4-4f19-bd57-6080af76a30e" name="ExecutionEvent">
+        <elementDefinition Id="5dfea7c8-c3f5-4bf9-8a70-b981133c87f7" />
+      </executionEvent>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="c0ba8b20-d3e7-44ab-9048-c7c27c36007e" name="ExecutionEvent">
+        <elementDefinition Id="6c2e04e8-de2d-4d36-8f65-99593dd795f8" />
+      </executionEvent>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="df6b10d6-7210-4532-bf88-019a067477e3" name="ExecutionEvent">
+        <elementDefinition Id="6ea9adcc-cfab-45a7-bed0-b4fa872d7cc4" />
+      </executionEvent>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="01883d0d-d743-4ca8-9de1-f8747e2fd11a" name="ExecutionEvent">
+        <elementDefinition Id="ffc26ea3-55ab-4f91-b2c0-bdf673a065c6" />
+      </executionEvent>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="8728f03d-bfaa-435b-a844-47a425d3121e" name="ExecutionEvent">
+        <elementDefinition Id="b9a39365-37c4-473d-a756-ebeab9032972" />
+      </executionEvent>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="a54d7695-5855-4513-909b-7c393196cd35" name="ExecutionEvent">
+        <elementDefinition Id="9ab55b11-b2e5-4a3c-a725-7e522e57f73c" />
+      </executionEvent>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="c353826d-23f2-444a-bc9e-a4c03518694c" name="ExecutionEvent">
+        <elementDefinition Id="9793fc9e-2f5b-41b8-8be6-f1aeb88a8740" />
+      </executionEvent>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="4673bd3f-3f18-49c3-af97-0684ccaa9b43" name="ExecutionEvent">
+        <elementDefinition Id="e02d55c1-126d-44b6-bb36-fa23e9bf7c89" />
+      </executionEvent>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="48127658-da51-4dcb-8e5e-b8692f697034" name="ExecutionEvent">
+        <elementDefinition Id="34f49aa2-6bd8-4756-99e4-5716118d8768" />
+      </executionEvent>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="5a96a572-adf4-4498-b07d-abdbdb10236a" name="ExecutionEvent">
+        <elementDefinition Id="fa080c11-7dd8-4988-b6d9-034aa3b96c11" />
+      </executionEvent>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="69deabca-6b72-49b5-9594-bc3226d5ea83" name="ExecutionEvent">
+        <elementDefinition Id="ed710c26-f595-430c-aad2-4b0066f17d8b" />
+      </executionEvent>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="e0dc1483-2393-4645-a266-bee686298b8e" name="CallCenterHomeController" isAbstract="false" isLeaf="false" cachedFullName="Module::CallCenterHomeController">
+        <elementDefinition Id="b86e524e-f69f-434e-8ce6-6a60d47e84da" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="272f37d8-3ab6-487e-aeba-98dd0a100d21" name="CallCenterHomeFacade" isAbstract="false" isLeaf="false" cachedFullName="Module::CallCenterHomeFacade">
+        <elementDefinition Id="bc8f99c2-c7e7-481d-a21a-2f5a5c71bc68" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="3a8a9ff9-b956-49e8-9110-93d94f0b6077" name="IMSSQLRepository[T1,T2]" isAbstract="false" isLeaf="false" cachedFullName="Module::IMSSQLRepository[T1,T2]">
+        <elementDefinition Id="8605ad38-02a3-45b5-bdc9-efee97c2e387" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="79b7e0b6-1d95-4130-8fa7-3559f0650d6b" name="UserFacade" isAbstract="false" isLeaf="false" cachedFullName="Module::UserFacade">
+        <elementDefinition Id="63b117d0-a8cc-40f5-a14b-7dd92b7f2ae8" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="09c489b3-30cd-439d-ac4b-b61cba2c894c" name="ExecutionEvent">
+        <elementDefinition Id="48e1a7cb-b48c-498a-8e8e-5845ef307e03" />
+      </executionEvent>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="391bbd4f-071b-44d8-9d0b-7237efe60c6a" name="ExecutionEvent">
+        <elementDefinition Id="ba8186dc-ca6a-47dd-a8c6-6412d761969e" />
+      </executionEvent>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="d8765a23-4d32-429c-a553-6fbe33ff06e2" name="ExecutionEvent">
+        <elementDefinition Id="09831e0b-fb8d-4672-b1e1-6a3065645b28" />
+      </executionEvent>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="383f78a5-6cb8-4037-a203-3cace6230724" name="ExecutionEvent">
+        <elementDefinition Id="2a485ef0-6f9e-4ca9-9864-e72b27d79af7" />
+      </executionEvent>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="72384bab-0a44-4ceb-a4b0-aee50107d1dc" name="ExecutionEvent">
+        <elementDefinition Id="78f5ed46-aa81-496c-9677-16246d6edee6" />
+      </executionEvent>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="4861ccdc-58d9-4501-8618-d3e7438e28e4" name="ExecutionEvent">
+        <elementDefinition Id="66cf30f9-7a25-4cb1-843f-9b7dd9e492cf" />
+      </executionEvent>
+    </packageHasNamedElement>
+  </packagedElements>
+  <package Id="088ce270-a0bc-4c00-ab93-4c14df19130c" name="Module">
+    <elementDefinition Id="e05459b0-ab30-45e9-8e52-c83bd85f6da1" />
+    <profileInstances>
+      <packageHasProfileInstances Id="a3d6e18f-2318-4d4a-a7cc-6cd51bebcc2b">
+        <profileInstance Id="b259ab23-65fe-4ec0-a130-ec5042e00d43" name="StandardProfileL2">
+          <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+        </profileInstance>
+        <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+      </packageHasProfileInstances>
+      <packageHasProfileInstances Id="fefc7dac-ef54-4df9-a6a9-b23d6af1dcf2">
+        <profileInstance Id="d5c5c2f1-b9e6-4052-8ff4-0af74b851262" name="StandardProfileL3">
+          <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+        </profileInstance>
+        <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+      </packageHasProfileInstances>
+    </profileInstances>
+  </package>
+</SequenceDesignerModel>

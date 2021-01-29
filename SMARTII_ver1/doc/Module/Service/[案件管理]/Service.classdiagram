@@ -1,0 +1,945 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<logicalClassDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm5="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/ModelStore" xmlns:dm9="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner" dslVersion="1.0.0.0" Id="a2c1745a-20f7-4d81-ae38-e3b3e7af0942" name="Service" linkedPackageId="77580274-c153-4212-847f-84c6175e83ca" xmlns="http://schemas.microsoft.com/dsltools/LogicalClassDesigner">
+  <ownedCommentsInternal>
+    <comment Id="dbcbfee3-ac90-468d-8edd-8cbfc31d7c7a">
+      <elementDefinition Id="c22badc4-391d-4dbb-8cb6-0e6c308ebaea" />
+      <body>屆時有可能抽到workflow </body>
+      <annotatedElements>
+        <classMoniker Id="c10e69a3-4c43-4a2a-b5a4-91ee1b8d06cd" LastKnownName="CaseManager" />
+      </annotatedElements>
+    </comment>
+  </ownedCommentsInternal>
+  <packagedElements>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="c12b6ccc-5fef-4c85-9cd0-99088ca4a294" name="CaseService" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="d48aa848-846d-4625-91d1-4c07f3a71662" />
+        <suppliersInternal>
+          <dependency Id="0b7ff626-3eed-4829-a60d-b00ec70651e4">
+            <classMoniker Id="5e33698b-2f8c-4441-b840-082a6cb40e43" LastKnownName="CaseFacade" />
+            <elementDefinition Id="d48baf9c-ad1c-4ecb-9073-f26838c4b428" />
+          </dependency>
+        </suppliersInternal>
+        <ownedOperationsInternal>
+          <operation Id="cde53f41-ef77-43e7-84e8-b800e2578491" name="Filling" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="fb2e30db-cd9c-4507-aca0-df252f4f7d40" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="ef373843-0c6c-4b83-bd4e-89c044593682" name="case" direction="In">
+                  <elementDefinition Id="33482072-e0c0-433a-b495-54ea97ba97aa" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="855c8a0d-03a0-40b9-a38f-b338c22db17d" LastKnownName="Case" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="786c1fe2-8fc0-41b4-90bd-b073d47ed1c7" direction="Return">
+                  <elementDefinition Id="0c7e5c39-7cc5-43e1-8486-155a7f309675" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="94726e1d-e4bf-4701-91f5-eb17f4b43743" LastKnownName="Case" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="cd06f1e6-2af7-4e73-ab97-e87fe5498902" name="Processed" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="d64e24b6-96a0-428b-8065-9c9e834bf2e6" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="b594c8a6-0ee6-4f1e-bfee-20183017ee9a" name="case" direction="In" isUnique="false">
+                  <elementDefinition Id="66a24cbc-4f7e-457e-ad95-1d6611b2cd14" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="855c8a0d-03a0-40b9-a38f-b338c22db17d" LastKnownName="Case" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="547c77de-d1d1-4b19-98f9-99a207966f4a" direction="Return">
+                  <elementDefinition Id="397e1c69-fb31-420e-b0e4-b102d6d5c34e" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="5758e2fa-6ba7-456d-9be1-50ea721b369f" LastKnownName="Case" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="89205638-4d1f-4a21-811d-b7642eddaf12" name="Finished" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="ca2cc318-f054-4f15-8d43-cf58d15bade7" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="be0bfcfe-bf19-4aac-b7c6-1a58cd4476d2" name="case" direction="In" isUnique="false">
+                  <elementDefinition Id="522816f3-ebf1-4201-a51c-6648b2628ca7" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="855c8a0d-03a0-40b9-a38f-b338c22db17d" LastKnownName="Case" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="3126231f-b38e-4337-84b7-7997e1687bee" direction="Return">
+                  <elementDefinition Id="d6ae3751-5f35-4daf-be53-14504e185e30" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="8b0d3f1c-bfc4-47cc-b466-9ce4446dfc50" LastKnownName="Case" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="71ff8e87-d456-49c4-a4c2-78c29f5bb8ea" name="CaseAssignmentService" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="af3a6830-020a-4f4b-ac3f-1dcada0261ee" />
+        <suppliersInternal>
+          <dependency Id="771c2694-2d7b-4d10-870e-36ec45fdc0ed">
+            <classMoniker Id="703c028c-2086-4a3c-8962-797aae960a41" LastKnownName="CaseAssignmentFacade" />
+            <elementDefinition Id="75481590-bd4a-463c-9139-df93a3b56139" />
+          </dependency>
+        </suppliersInternal>
+        <ownedOperationsInternal>
+          <operation Id="4558207d-e5fe-47ee-85ae-81c50444c39f" name="Assigned" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="8ef5e51f-d0ad-4635-84ee-ed083f097057" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="def8c472-e959-4169-ac4c-256467b55772" name="assignment" direction="In" isUnique="false">
+                  <elementDefinition Id="85980511-b16c-42a1-8521-d28c3bde2d2d" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="8c8ac311-6edf-4e6e-aa0d-13c22c1b2fa6" LastKnownName="CaseAssignment" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="7d8fdfdf-4d7d-4b3e-9cbf-b06a6662e5b0" direction="Return">
+                  <elementDefinition Id="6843d67f-25f7-426e-9a14-c7a87cd09483" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="b73856c6-c9b9-47c5-b030-f6d9fe0006bb" LastKnownName="CaseAssignment" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="24250c04-2992-4084-8020-dd0f71ae9452" name="Processed" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="649d3a00-169f-416d-a5d4-247fe93a05fc" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="23dee10c-d381-4114-a717-4f3c2331b79c" direction="Return">
+                  <elementDefinition Id="c8bd4b70-6143-45a8-a2c4-ad9d1a39771c" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="f1504943-62e5-4659-805a-bba41f438a0e" LastKnownName="CaseAssignment" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="4396f4d3-ed98-4434-8489-d4e642142b63" name="assignment" direction="In" isUnique="false">
+                  <elementDefinition Id="f16fee1e-18f4-4fed-8048-d86b6c323be3" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="8c8ac311-6edf-4e6e-aa0d-13c22c1b2fa6" LastKnownName="CaseAssignment" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="090310e8-3d4f-48d1-85c2-de3247c1c9f4" name="Finished" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="d5213c00-8741-4606-bd58-6b1b2bd5afbd" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="10074802-3712-4b4b-b1b6-900a08b83b41" direction="Return">
+                  <elementDefinition Id="dc24af14-43e3-4dd0-b99f-405410d74fe2" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="2901ffc6-b77d-4143-a076-384849a7c533" LastKnownName="CaseAssignment" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="d8a492ff-e5be-4a5d-af1d-20adefcfb2e6" name="assignment" direction="In" isUnique="false">
+                  <elementDefinition Id="98bf1b53-51d8-4e92-96c9-e2805bbf2722" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="8c8ac311-6edf-4e6e-aa0d-13c22c1b2fa6" LastKnownName="CaseAssignment" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="daa63179-2cf3-4c81-8978-c959d2d0223c" name="ComplatintInvoice" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="bcf8d0ba-381e-423d-936f-336fd1f092ef" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="7ded2acb-aa4e-476c-b8c5-5216bb73f954" direction="Return">
+                  <elementDefinition Id="211084ae-cf0c-4ffc-abf3-a4b46cdd6d9c" />
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="fabec79b-bf68-4fc2-8ec6-64dd78fa6abe" name="invoice" direction="In">
+                  <elementDefinition Id="96dbc949-73dd-4c25-80db-a3985d83b86f" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="d5e171d8-ecc9-487b-b21a-58dc847fc6f9" LastKnownName="CaseAssimentInvoice" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="36b1f456-1d81-40ab-a337-774852dbac72" name="Notification" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="2cd26358-18bf-4989-8d35-fba5258b9cd1" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="8e2e6c61-7fc8-4360-8347-e046336e3b21" name="Notice" direction="In">
+                  <elementDefinition Id="76061c16-4a12-487e-ad54-757fd190cedb" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="d55e7e1d-1d29-4d7b-9b61-2e458d034ead" LastKnownName="CaseAssignmentNotice" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="c10e69a3-4c43-4a2a-b5a4-91ee1b8d06cd" name="CaseManager" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="f97c99f8-abc9-4ad2-8c18-4f8cbb1ab5b8" />
+        <suppliersInternal>
+          <dependency Id="8c03f9b1-8e06-453e-bf62-5d9f9ed7ebb6">
+            <classMoniker Id="f742c028-f8bc-45dc-b5d5-0358ef7a5313" LastKnownName="CaseSourceService" />
+            <elementDefinition Id="a43c2c96-97bf-4dc2-ac92-4eaaf6b8f973" />
+          </dependency>
+          <dependency Id="4db5cb6f-c48f-4214-ae66-3c63001713ee">
+            <classMoniker Id="c12b6ccc-5fef-4c85-9cd0-99088ca4a294" LastKnownName="CaseService" />
+            <elementDefinition Id="8feb05bb-9b78-433a-bcd5-7bae480a5d8d" />
+          </dependency>
+          <dependency Id="ccc55a86-65f9-4e8c-8225-048086c89417">
+            <classMoniker Id="71ff8e87-d456-49c4-a4c2-78c29f5bb8ea" LastKnownName="CaseAssignmentService" />
+            <elementDefinition Id="6127528d-f556-42d4-8bc0-6233556cb569" />
+          </dependency>
+        </suppliersInternal>
+        <ownedOperationsInternal>
+          <operation Id="1ac4701a-bd09-486f-8ce6-b1d0fc4220ad" name="CaseFilling" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="93880bc9-772d-4fef-a935-c7099744c191" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="c4fa93d2-f21c-41c2-81a7-1c3a956001c9" name="source" direction="In" isUnique="false">
+                  <elementDefinition Id="583306ca-d4d7-4b5a-8092-b5e938077555" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="d738f7b6-f129-4d1c-b2ef-c05ae7dc65aa" LastKnownName="CaseSource" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="7142ffdb-da6b-4edf-849d-e2cf2d0e6aef" name="Assigned" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="c986d65d-4007-407d-a9df-d9d9df830d6b" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="70c68e84-3e65-4ec9-8c54-07aab8dcd7b2" name="assignment" direction="In" isUnique="false">
+                  <elementDefinition Id="80350e2f-d741-41be-9a95-23c8dcd8c9f4" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="8c8ac311-6edf-4e6e-aa0d-13c22c1b2fa6" LastKnownName="CaseAssignment" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="b361d682-96e1-40e4-bb73-f39d5dcb24a7" name="AssignProcessFinished" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="eebb179c-d1f4-4de1-9f96-cf5b67acc3c3" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="962e6361-e8ce-4546-8f44-98f3a6e45950" name="assignment" direction="In" isUnique="false">
+                  <elementDefinition Id="490d14d8-9b23-480d-8a5a-cded0c6e1002" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="8c8ac311-6edf-4e6e-aa0d-13c22c1b2fa6" LastKnownName="CaseAssignment" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="224d28f9-2f3e-4af9-9949-4ee5f9b6d82a" name="AssignedFinished" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="ea548307-274e-4d74-891a-e6a4e8067f48" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="df07ea97-2a5c-418e-9748-64fdda96e866" name="assignment" direction="In" isUnique="false">
+                  <elementDefinition Id="d916f1a4-ea77-4179-af49-52ed9354e231" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="8c8ac311-6edf-4e6e-aa0d-13c22c1b2fa6" LastKnownName="CaseAssignment" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="e5199057-0a95-4ae8-8b0b-16e92f4ccd58" name="AssignComplaintInvoice" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="136b3057-658a-4c82-af02-766a45723c85" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="63339ccf-6804-4e55-a09d-cecb6f7389d2" name="invoice" direction="In" isUnique="false">
+                  <elementDefinition Id="2a875c23-b37e-4f9d-a53f-01a02075efbe" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="d5e171d8-ecc9-487b-b21a-58dc847fc6f9" LastKnownName="CaseAssimentInvoice" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="b38dc0a4-98e3-4403-89be-d1911a68b81c" name="AssignNotification" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="540473fa-9999-480d-97cd-505337c78726" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="8f3b97ab-b450-44b2-b8f0-b0ff4496766e" name="Notice" direction="In" isUnique="false">
+                  <elementDefinition Id="79764731-ba7a-42de-8e03-78fe4d7bb229" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="d55e7e1d-1d29-4d7b-9b61-2e458d034ead" LastKnownName="CaseAssignmentNotice" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="55de8519-6c60-4d84-ad5e-c44402e519d6" name="CaseFinished" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="71be4ce7-34f2-49b6-89a1-1f68808763de" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="eaec4e5e-6a96-40e3-9006-07222398ac75" name="source" direction="In" isUnique="false">
+                  <elementDefinition Id="7335c49e-4f63-418e-a792-5c01e8e34f1a" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="d738f7b6-f129-4d1c-b2ef-c05ae7dc65aa" LastKnownName="CaseSource" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="5e33698b-2f8c-4441-b840-082a6cb40e43" name="CaseFacade" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="ef012b9d-693c-4564-a7cd-456e6708e616" />
+        <ownedOperationsInternal>
+          <operation Id="b445d56d-7e92-4f2f-8d7b-453924e419bb" name="GetCaseID" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="072794a3-0d32-43d5-8ba3-2e0372839615" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="e4e8e082-13e7-45be-9796-96660cb81c91" direction="Return">
+                  <elementDefinition Id="3bfc2a48-a99f-4014-9b1f-b4e80d978488" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="fe24d8b6-622a-4777-b236-3344b009d888" LastKnownName="String" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="5cd33a7f-eb9e-437c-b859-2b15e7b98aaa" name="nodeID" direction="In">
+                  <elementDefinition Id="6f8691ea-a611-4caf-91a7-fd653501b369" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="2b2b18da-1ce8-4938-bfc6-3268eaa132d8" LastKnownName="Integer" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="1f8b210a-22e2-4a74-b6e3-7c892fd52159" name="GetComplete" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="7db9c9c3-b2ff-43f8-b67a-cb1fdb4bdb95" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="f6b0071c-d542-49f0-ad7c-cd5b4d1423ca" name="caseID" direction="In" isUnique="false">
+                  <elementDefinition Id="128bc367-2552-41fa-9d3c-750f8265fde5" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="fe24d8b6-622a-4777-b236-3344b009d888" LastKnownName="String" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="3c2df467-6e49-42d4-956f-70667fffbd83" direction="Return">
+                  <elementDefinition Id="8e355fc3-5cdb-463a-a047-1ff19e516d3a" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="855c8a0d-03a0-40b9-a38f-b338c22db17d" LastKnownName="Case" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="9e186886-bc92-4b73-b782-2576257e863c" name="Create" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="bc9da279-850e-4f84-bb27-d6b4e601bd99" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="c5d2d84b-a191-4007-9546-85624a80cf7a" name="case" direction="In" isUnique="false">
+                  <elementDefinition Id="1ca25733-b015-42d6-81d6-7aec72c03794" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="855c8a0d-03a0-40b9-a38f-b338c22db17d" LastKnownName="Case" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="e4ca9574-b155-480a-b882-80637a04f4d0" direction="Return">
+                  <elementDefinition Id="9dfc7ad4-5392-4621-b8b2-e9a277103452" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="7efcabea-ea6c-4229-bc6d-b01a4c927eca" LastKnownName="Case" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="5bb66f20-530f-49da-b787-1edda323e257" name="Update" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="35bf5373-12fb-4860-b53c-5f3cc987114b" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="20112f88-ba7d-4d14-97f8-b51cb43ad63c" name="case" direction="In" isUnique="false">
+                  <elementDefinition Id="92404d8f-997b-417f-81ae-f7e8e1e3bdfc" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="855c8a0d-03a0-40b9-a38f-b338c22db17d" LastKnownName="Case" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="d59dbd5c-c8b3-4c01-b116-fc667015564d" direction="Return">
+                  <elementDefinition Id="c5645939-cc8f-4c59-a569-bf54c3681835" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="51e7120f-2263-4791-b3a9-3c9368742ee4" LastKnownName="Case" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <packageHasNamedElement>
+      <referencedType Id="fe24d8b6-622a-4777-b236-3344b009d888" name="String" isAbstract="false" isLeaf="false" cachedFullName="String">
+        <elementDefinition Id="59259974-6d55-42c6-b7bd-763d77ac8ef9" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="2b2b18da-1ce8-4938-bfc6-3268eaa132d8" name="Integer" isAbstract="false" isLeaf="false" cachedFullName="Integer">
+        <elementDefinition Id="220a3521-e091-4221-bae9-3ef9018e845c" />
+      </referencedType>
+    </packageHasNamedElement>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="df3c3ecf-186a-48a0-b707-496ffc5b1a53" name="VoiceFacade" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="1f75ec5a-bca7-40b1-9758-20fa0b53a1c7" />
+        <ownedOperationsInternal>
+          <operation Id="9a7849ae-d9c1-43be-9f3a-11c3bd483a5a" name="GetList" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="83760279-a241-4799-a6e2-e09e68c0191d" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="27d6ac0b-5d0c-4ded-84cf-39088addd609" direction="Return">
+                  <elementDefinition Id="b157499d-3d9c-4f96-b30c-bf9a8264ff3a" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="0951b191-ceea-4dee-902d-ca1b5722bbc2" LastKnownName="VoiceSearchResponse" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="08b58318-4254-4403-8131-30bc8c9e87ae" name="data" direction="In">
+                  <elementDefinition Id="556f827b-1af5-4533-8bb4-5b3c8caeb26c" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="5ef68e93-418f-47db-a058-f7bff3c80e59" LastKnownName="VoiceRequest" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="759e0b37-3998-426c-b0de-b93fd9a8d796" name="Match" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="9cf88c94-c176-475b-8456-07d25c374958" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="2cb06e95-422e-487c-a4cc-6e54efe4fec0" direction="Return">
+                  <elementDefinition Id="5024af93-fa63-4666-be9d-04846d06286b" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="497e506a-ed91-44d6-8836-019bdf7d17a1" LastKnownName="VoiceMatchResponse" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="c8c02bca-8f1c-4a21-9ea0-deda93be3e22" name="eid" direction="In">
+                  <elementDefinition Id="88f79963-40b4-43d6-b756-e6de892e6fda" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="fe24d8b6-622a-4777-b236-3344b009d888" LastKnownName="String" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <packageHasNamedElement>
+      <referencedType Id="0951b191-ceea-4dee-902d-ca1b5722bbc2" name="VoiceSearchResponse" isAbstract="false" isLeaf="false" cachedFullName="Module::VoiceSearchResponse">
+        <elementDefinition Id="a75ede1c-7d3e-4130-a0be-f5d88eb661bf" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="5ef68e93-418f-47db-a058-f7bff3c80e59" name="VoiceRequest" isAbstract="false" isLeaf="false" cachedFullName="Module::VoiceRequest">
+        <elementDefinition Id="f0d0ee0b-9eac-4f8f-91d1-1ec2fc1db8a2" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="497e506a-ed91-44d6-8836-019bdf7d17a1" name="VoiceMatchResponse" isAbstract="false" isLeaf="false" cachedFullName="Module::VoiceMatchResponse">
+        <elementDefinition Id="af384e58-c25f-4acb-a8cd-012f1b941060" />
+      </referencedType>
+    </packageHasNamedElement>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="703c028c-2086-4a3c-8962-797aae960a41" name="CaseAssignmentFacade" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="36c2d634-7962-4832-8e44-13ebba5a37ea" />
+        <ownedOperationsInternal>
+          <operation Id="f8afdbf5-6c9d-4761-9e53-bc0a75832798" name="GetComplete" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="5e3d9394-3ff7-498f-927b-f65617296193" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="8065f6ca-c071-49de-aec8-ac197d5371eb" name="assignmentID" direction="In" isUnique="false">
+                  <elementDefinition Id="33b7b7d0-e0b2-4ef7-986e-263a7d1fccfe" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="2b2b18da-1ce8-4938-bfc6-3268eaa132d8" LastKnownName="Integer" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="83126e6c-af4a-4bf7-ba43-58406f23e439" name="GetComplaintedInvoiceNumber" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="6c62729f-4bcd-4b3e-959f-cdf36034a564" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="ca1e5095-8497-40b6-8fa5-cf0af66d8b1d" direction="Return">
+                  <elementDefinition Id="cadc97bf-251f-43f1-9076-8e93071514f2" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="518a4bf6-2f7b-4be5-9204-d4e1180fa1da" LastKnownName="String" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="69bc8aee-5827-49bc-9f11-7113b375008a" name="nodeID" direction="In" isUnique="false">
+                  <elementDefinition Id="47a53f7a-32c3-4126-b12d-13c7dd9fc524" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="2b2b18da-1ce8-4938-bfc6-3268eaa132d8" LastKnownName="Integer" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="fa7afa99-fd1f-4899-9ccb-c30fc1e07949" name="key" direction="In">
+                  <elementDefinition Id="68d42475-4b93-4f41-b176-f462c5e96c1a" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="fe24d8b6-622a-4777-b236-3344b009d888" LastKnownName="String" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="bc67107f-50e1-4380-b041-23910047465b" name="GetAssignmentID" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="58b3e9f1-dd72-4acb-a853-fdc7d5e28144" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="19117b4a-b97b-4e56-a74c-4947d4d8da59" direction="Return">
+                  <elementDefinition Id="060bad91-cbf9-44b8-bcba-dc1e3dcc0a34" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="335e82a8-9dbf-4118-9463-5268aeadd5ed" LastKnownName="Integer" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="4a52fed3-6f72-4a65-9ca7-a92fd9a4e073" name="nodeID" direction="In" isUnique="false">
+                  <elementDefinition Id="a84d4dcd-df38-4814-b2ae-6ba544f35773" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="2b2b18da-1ce8-4938-bfc6-3268eaa132d8" LastKnownName="Integer" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="f44a51ba-7456-414f-9bd0-9867a523b934" name="Update" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="4c1e7318-4597-49b1-b8a7-bf8d848220f0" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="d3fdd9f0-ebfe-42bc-bcc3-446f79004b22" name="assignment" direction="In" isUnique="false">
+                  <elementDefinition Id="419cc8d4-1377-4c42-8c26-d14287a05fc1" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="8c8ac311-6edf-4e6e-aa0d-13c22c1b2fa6" LastKnownName="CaseAssignment" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="0d4eeadf-36dc-4d2f-b171-e731cbf2cf50" direction="Return">
+                  <elementDefinition Id="3ff875c1-cb2c-45fb-bd88-aae48f74518e" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="d6433b51-a774-4924-8684-eec02c659ddc" LastKnownName="CaseAssignment" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="61366136-9628-4f24-b2ba-431b94923193" name="Create" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="6d1c955e-77ff-42c3-8acc-62119a16372c" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="570259ed-f431-4cb8-8f1a-d69170b7d47f" name="assignment" direction="In" isUnique="false">
+                  <elementDefinition Id="13d5de6d-4b59-4bb9-b9de-cae5c86845bf" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="8c8ac311-6edf-4e6e-aa0d-13c22c1b2fa6" LastKnownName="CaseAssignment" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="e7e8e12e-146f-46ad-a4c5-a771fff64553" direction="Return">
+                  <elementDefinition Id="cec4c200-a0c4-4a27-b54d-72ad000e10ff" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="1d4b2570-6521-432e-bf87-f9a61dddea4f" LastKnownName="CaseAssignment" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <packageHasNamedElement>
+      <referencedType Id="518a4bf6-2f7b-4be5-9204-d4e1180fa1da" name="String" isAbstract="false" isLeaf="false" cachedFullName="String">
+        <elementDefinition Id="59259974-6d55-42c6-b7bd-763d77ac8ef9" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="335e82a8-9dbf-4118-9463-5268aeadd5ed" name="Integer" isAbstract="false" isLeaf="false" cachedFullName="Integer">
+        <elementDefinition Id="220a3521-e091-4221-bae9-3ef9018e845c" />
+      </referencedType>
+    </packageHasNamedElement>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="f742c028-f8bc-45dc-b5d5-0358ef7a5313" name="CaseSourceService" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="fc035777-d1b6-44b2-8965-9df805701e42" />
+        <suppliersInternal>
+          <dependency Id="f8635873-b8af-4d64-9002-3a5ca2e3838e">
+            <classMoniker Id="d2e67d5c-4603-48cf-a4ff-ac0f8ecb4357" LastKnownName="CaseSourceFacade" />
+            <elementDefinition Id="099c699c-6cc0-4730-8511-79fb14f69bdf" />
+          </dependency>
+          <dependency Id="d531d150-7b58-4949-90bb-ea78746f9db5">
+            <classMoniker Id="df3c3ecf-186a-48a0-b707-496ffc5b1a53" LastKnownName="VoiceFacade" />
+            <elementDefinition Id="a12ea3ae-4386-4c8d-99fa-e822f19fcd36" />
+          </dependency>
+        </suppliersInternal>
+        <ownedOperationsInternal>
+          <operation Id="979bae82-255e-466c-b2fb-e2b1eb0a7f3a" name="Create" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="a403325b-68d4-48df-b95d-24c3f8423ba0" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="52897af7-4987-4fe7-b1db-c3d1e83e6642" name="source" direction="In" isUnique="false">
+                  <elementDefinition Id="661ab5b0-69e5-44d9-8104-f0b294e90313" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="d738f7b6-f129-4d1c-b2ef-c05ae7dc65aa" LastKnownName="CaseSource" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="1a21c9de-b2f1-428a-afe7-fcf178aaf979" direction="Return">
+                  <elementDefinition Id="0ae984d7-b592-4a98-8fca-4ce0326cfd16" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="df7c6050-112f-4ebd-88e7-16409b19879f" LastKnownName="source : CaseSource" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="d2e67d5c-4603-48cf-a4ff-ac0f8ecb4357" name="CaseSourceFacade" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="1d961fee-bc94-453e-9438-fea00471b451" />
+        <ownedOperationsInternal>
+          <operation Id="3c040b2e-2804-42f0-b904-3227c5b9dd5b" name="GetComplete" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="72809c4e-7fab-4588-b92a-8ea53b3fc68b" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="4b371f25-6ae1-4d0a-9e26-aa909d1e7588" name="sourceID" direction="In">
+                  <elementDefinition Id="9218da02-89b9-463a-8cfb-4d681c23a1dc" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="fe24d8b6-622a-4777-b236-3344b009d888" LastKnownName="String" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="fc09a90a-7415-400b-9bcf-e8dfab29e215" direction="Return">
+                  <elementDefinition Id="b2e9bb8a-aa21-4541-bf6e-148fb958556a" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="6fc9d080-5192-4798-b2d6-f605d3430f23" LastKnownName="CaseSource" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="621ad92d-2d1a-448c-b108-54098cfde8f6" name="Create" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="623b67e0-fa45-4218-94c5-17ca6eb31517" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="cee52ac7-dfe0-4554-bef0-4fb9355a3ca3" name="source" direction="In">
+                  <elementDefinition Id="a29e21ea-1c5c-4362-8995-466a65c70900" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="d738f7b6-f129-4d1c-b2ef-c05ae7dc65aa" LastKnownName="CaseSource" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="402c8bbc-dc26-424c-9e7d-f01fbca16c1f" direction="Return">
+                  <elementDefinition Id="f5c3781c-45b7-401e-9cce-35c608bebfd4" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="e7a5c825-e0fe-4aa6-a1af-642caf4061cc" LastKnownName="CaseSource" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation Id="53977d3a-4b1e-435d-a86c-324036fd6747" name="Update" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="b53bf562-542c-477f-9318-2ece934d7b51" />
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="130f13fa-987e-4b11-afd2-a9b2d395acd5" direction="Return">
+                  <elementDefinition Id="8df12ec8-7a25-443a-960a-10c1d00990df" />
+                  <type_NamedElement>
+                    <referencedTypeMoniker Id="8ad28e57-66a6-4c2b-a9a0-5915df2deb40" LastKnownName="source : CaseSource" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter Id="ceb2f8a5-1382-4276-906b-713e8c38aa88" name="CaseSource" direction="In" isUnique="false">
+                  <elementDefinition Id="36e6b2cf-cd52-40f0-a35d-602b0c8afe01" />
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <packageHasNamedElement>
+      <referencedType Id="855c8a0d-03a0-40b9-a38f-b338c22db17d" name="Case" isAbstract="false" isLeaf="false" cachedFullName="Module::Case">
+        <elementDefinition Id="f5bd74b5-5c1b-4558-bc7b-95540d115f4f" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="d738f7b6-f129-4d1c-b2ef-c05ae7dc65aa" name="CaseSource" isAbstract="false" isLeaf="false" cachedFullName="CaseSource">
+        <elementDefinition Id="208a16f0-27c5-45cc-ac5f-c9d7c391aa81" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="e7a5c825-e0fe-4aa6-a1af-642caf4061cc" name="CaseSource" isAbstract="false" isLeaf="false" cachedFullName="CaseSource">
+        <elementDefinition Id="208a16f0-27c5-45cc-ac5f-c9d7c391aa81" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="6fc9d080-5192-4798-b2d6-f605d3430f23" name="CaseSource" isAbstract="false" isLeaf="false" cachedFullName="CaseSource">
+        <elementDefinition Id="208a16f0-27c5-45cc-ac5f-c9d7c391aa81" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="df7c6050-112f-4ebd-88e7-16409b19879f" name="source : CaseSource" isAbstract="false" isLeaf="false" cachedFullName="source : CaseSource">
+        <elementDefinition Id="d1595883-26ce-413a-bf31-aab81716e6dd" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="94726e1d-e4bf-4701-91f5-eb17f4b43743" name="Case" isAbstract="false" isLeaf="false" cachedFullName="Module::Case">
+        <elementDefinition Id="f5bd74b5-5c1b-4558-bc7b-95540d115f4f" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="8b0d3f1c-bfc4-47cc-b466-9ce4446dfc50" name="Case" isAbstract="false" isLeaf="false" cachedFullName="Module::Case">
+        <elementDefinition Id="f5bd74b5-5c1b-4558-bc7b-95540d115f4f" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="5758e2fa-6ba7-456d-9be1-50ea721b369f" name="Case" isAbstract="false" isLeaf="false" cachedFullName="Module::Case">
+        <elementDefinition Id="f5bd74b5-5c1b-4558-bc7b-95540d115f4f" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="8c8ac311-6edf-4e6e-aa0d-13c22c1b2fa6" name="CaseAssignment" isAbstract="false" isLeaf="false" cachedFullName="Module::CaseAssignment">
+        <elementDefinition Id="6aa64841-74b9-449f-9bb7-111bdb2ffd15" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="b73856c6-c9b9-47c5-b030-f6d9fe0006bb" name="CaseAssignment" isAbstract="false" isLeaf="false" cachedFullName="Module::CaseAssignment">
+        <elementDefinition Id="6aa64841-74b9-449f-9bb7-111bdb2ffd15" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="2901ffc6-b77d-4143-a076-384849a7c533" name="CaseAssignment" isAbstract="false" isLeaf="false" cachedFullName="Module::CaseAssignment">
+        <elementDefinition Id="6aa64841-74b9-449f-9bb7-111bdb2ffd15" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="f1504943-62e5-4659-805a-bba41f438a0e" name="CaseAssignment" isAbstract="false" isLeaf="false" cachedFullName="Module::CaseAssignment">
+        <elementDefinition Id="6aa64841-74b9-449f-9bb7-111bdb2ffd15" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="7efcabea-ea6c-4229-bc6d-b01a4c927eca" name="Case" isAbstract="false" isLeaf="false" cachedFullName="Module::Case">
+        <elementDefinition Id="f5bd74b5-5c1b-4558-bc7b-95540d115f4f" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="8ad28e57-66a6-4c2b-a9a0-5915df2deb40" name="source : CaseSource" isAbstract="false" isLeaf="false" cachedFullName="source : CaseSource">
+        <elementDefinition Id="d1595883-26ce-413a-bf31-aab81716e6dd" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="51e7120f-2263-4791-b3a9-3c9368742ee4" name="Case" isAbstract="false" isLeaf="false" cachedFullName="Module::Case">
+        <elementDefinition Id="f5bd74b5-5c1b-4558-bc7b-95540d115f4f" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="1d4b2570-6521-432e-bf87-f9a61dddea4f" name="CaseAssignment" isAbstract="false" isLeaf="false" cachedFullName="Module::CaseAssignment">
+        <elementDefinition Id="6aa64841-74b9-449f-9bb7-111bdb2ffd15" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="d6433b51-a774-4924-8684-eec02c659ddc" name="CaseAssignment" isAbstract="false" isLeaf="false" cachedFullName="Module::CaseAssignment">
+        <elementDefinition Id="6aa64841-74b9-449f-9bb7-111bdb2ffd15" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="d5e171d8-ecc9-487b-b21a-58dc847fc6f9" name="CaseAssimentInvoice" isAbstract="false" isLeaf="false" cachedFullName="Module::CaseAssimentInvoice">
+        <elementDefinition Id="f7a7b71d-3999-4ad8-9549-ece549812ed4" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="d55e7e1d-1d29-4d7b-9b61-2e458d034ead" name="CaseAssignmentNotice" isAbstract="false" isLeaf="false" cachedFullName="Module::CaseAssignmentNotice">
+        <elementDefinition Id="2277b847-9534-40d1-89b4-dc1a0cb75c36" />
+      </referencedType>
+    </packageHasNamedElement>
+    <logicalClassDesignerModelHasTypes>
+      <Interface Id="4bf8b7ee-5c8f-469e-bd59-e732c76d9423" name="IFlowableTask" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="a209d53a-bbb0-4cc6-a744-8ec44961fa01" />
+        <suppliersInternal>
+          <dependency Id="4099ec52-ed79-411a-9c26-bd1ae8b10827">
+            <classMoniker Id="71ff8e87-d456-49c4-a4c2-78c29f5bb8ea" LastKnownName="CaseAssignmentService" />
+            <elementDefinition Id="a62a99b7-b48b-4536-9075-ec554622d2f5" />
+          </dependency>
+          <dependency Id="ef25ee36-b3b4-46a2-939f-5ed698361c1a">
+            <classMoniker Id="c12b6ccc-5fef-4c85-9cd0-99088ca4a294" LastKnownName="CaseService" />
+            <elementDefinition Id="4df8e6d7-f5b5-484f-8c93-4d04cdd4e4b9" />
+          </dependency>
+          <dependency Id="31be2633-4d8b-4811-9f1b-5e82dde42a0d">
+            <classMoniker Id="f742c028-f8bc-45dc-b5d5-0358ef7a5313" LastKnownName="CaseSourceService" />
+            <elementDefinition Id="a072d3c1-d0a1-48e3-a7f3-b07f7db6e2bd" />
+          </dependency>
+        </suppliersInternal>
+        <ownedOperations>
+          <operation Id="96bc09d5-3318-4711-ae0d-30ca26f8df7c" name="Execute" isLeaf="false" isStatic="false" isAbstract="true" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="f446371f-e6c6-4c6b-a58e-cd8ee0d1dbd6" />
+          </operation>
+        </ownedOperations>
+      </Interface>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="4e0bfb84-f20f-4c0d-b40f-05f58c042d98" name="FlowManager" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="bb261a17-6dbb-43cf-ac76-bfeee13926bc" />
+        <targetEnds>
+          <association Id="0ffd5b22-320b-4eaf-bb74-4dc8a550d607" isDerived="false" sourceEndRoleName="FlowManager" targetEndRoleName="IFlow" isLeaf="false" isAbstract="false">
+            <interfaceMoniker Id="a23bc801-5d97-4eb6-8e3e-01cf37b54e71" LastKnownName="IFlow" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="5f7ab09c-afa0-46f6-a1bb-467f7e743cf3" name="FlowManager" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="Shared" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="bd6ad5df-a31a-479c-95cc-f939a6cafde1" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="8112c7f1-7940-4d4d-934b-819e1ca808d7" name="IFlow" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <lowerValueInternal>
+                    <literalString Id="11386c4b-ea39-478b-b0aa-6b173033f216" name="Lower" value="0">
+                      <elementDefinition Id="0747b87a-069c-4115-8367-1e5d3307efda" />
+                    </literalString>
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString Id="9fa1562b-cb65-4612-bd2a-13682936503d" name="Upper" value="*">
+                      <elementDefinition Id="d03ef41f-a545-4f9f-ae17-b3e65e111690" />
+                    </literalString>
+                  </upperValueInternal>
+                  <elementDefinition Id="eac4a7d2-83cf-4b79-944d-dbac149a7478" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="c43f4f8c-baa4-4ae0-aa69-02ec194f84b7" />
+          </association>
+        </targetEnds>
+        <ownedAttributesInternal>
+          <property Id="362a64f4-af28-4f37-8fc6-1e3f529203c9" name="Flows" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="8a91b211-9a55-4759-abe6-7a899f12b867" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="702c741c-b8c0-4d87-b76a-b1790062cfac" LastKnownName="IDictionary&lt;string , IFlow&gt;" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributesInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+    <logicalClassDesignerModelHasTypes>
+      <Interface Id="a23bc801-5d97-4eb6-8e3e-01cf37b54e71" name="IFlow" isAbstract="false" isLeaf="false">
+        <elementDefinition Id="59e04e90-0537-45a4-846f-2c333414bf6a" />
+        <targetEnds>
+          <association Id="63de4845-61ae-44ba-9f8f-e48d3e887737" isDerived="false" sourceEndRoleName="IFlow" targetEndRoleName="IFlowableTask" isLeaf="false" isAbstract="false">
+            <interfaceMoniker Id="4bf8b7ee-5c8f-469e-bd59-e732c76d9423" LastKnownName="IFlowableTask" />
+            <relationshipOwnedElementsInternal>
+              <associationHasOwnedEnds>
+                <memberEnd Id="d18adbf8-8be2-45a8-ba1a-1b528d4a9fc0" name="IFlow" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="Shared" isComposite="false" isNavigableOwned="false">
+                  <elementDefinition Id="83e730d6-e2b3-4668-b27b-5d2159880e28" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+              <associationHasOwnedEnds>
+                <memberEnd Id="18966598-77c6-4a11-b4ef-5de83ad361de" name="IFlowableTask" isLeaf="false" isStatic="false" isReadOnly="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+                  <lowerValueInternal>
+                    <literalString Id="25eed032-6599-4131-963e-389d3c300de9" name="Lower" value="0">
+                      <elementDefinition Id="1caa8865-7b81-4a8d-8b4b-753acf7882a8" />
+                    </literalString>
+                  </lowerValueInternal>
+                  <upperValueInternal>
+                    <literalString Id="cff8a533-fe04-4db8-9d27-f7ef302f0ce4" name="Upper" value="*">
+                      <elementDefinition Id="e7f40812-02af-4e3f-bdf6-575849014131" />
+                    </literalString>
+                  </upperValueInternal>
+                  <elementDefinition Id="f8468cbc-82c6-408f-b517-a06b40b3fcbd" />
+                </memberEnd>
+              </associationHasOwnedEnds>
+            </relationshipOwnedElementsInternal>
+            <elementDefinition Id="5f0675ec-d29f-4d88-9f94-4061dd2173d1" />
+          </association>
+        </targetEnds>
+        <ownedAttributes>
+          <property Id="2c6b2538-ca5a-49ed-90b8-e198a1357b18" name="Tasks" isLeaf="false" isStatic="false" isReadOnly="false" isUnique="false" isDerived="false" isDerivedUnion="false" aggregation="None" isComposite="false">
+            <elementDefinition Id="43e3e032-8aea-4bb4-bad7-2bbae921e7eb" />
+            <type_NamedElement>
+              <referencedTypeMoniker Id="9ae4c04c-d153-4e5a-871c-36ba1c601d4b" LastKnownName="IDictionary&lt;string , IFlowableTask&gt;" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributes>
+      </Interface>
+    </logicalClassDesignerModelHasTypes>
+    <packageHasNamedElement>
+      <referencedType Id="9ae4c04c-d153-4e5a-871c-36ba1c601d4b" name="IDictionary&lt;string , IFlowableTask&gt;" isAbstract="false" isLeaf="false" cachedFullName="IDictionary&lt;string , IFlowableTask&gt;">
+        <elementDefinition Id="9d92f216-ae8a-4891-a237-5c312bb628ba" />
+      </referencedType>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <referencedType Id="702c741c-b8c0-4d87-b76a-b1790062cfac" name="IDictionary&lt;string , IFlow&gt;" isAbstract="false" isLeaf="false" cachedFullName="IDictionary&lt;string , IFlow&gt;">
+        <elementDefinition Id="aeb2f3c1-cc31-4c9b-ac25-610a03a58da7" />
+      </referencedType>
+    </packageHasNamedElement>
+    <logicalClassDesignerModelHasTypes>
+      <class Id="34b9e8a5-456f-443d-a913-48dc3540b9ec" name="CaseController" isAbstract="false" isLeaf="false" isActiveClass="false">
+        <elementDefinition Id="28cd2f79-fc56-4736-83e7-7e827aade073" />
+        <suppliersInternal>
+          <dependency Id="8ffd9add-256f-471d-b803-a6884900b53b">
+            <classMoniker Id="c10e69a3-4c43-4a2a-b5a4-91ee1b8d06cd" LastKnownName="CaseManager" />
+            <elementDefinition Id="e0e4d41e-2cbe-4a0c-8363-cc84128c87cd" />
+          </dependency>
+        </suppliersInternal>
+        <ownedOperationsInternal>
+          <operation Id="5b36ec07-e8f7-4a93-b49e-e46f99e8b188" name="CaseFilling" isLeaf="false" isStatic="false" isAbstract="false" concurrency="Sequential" isQuery="false">
+            <elementDefinition Id="7e9ac183-9425-432b-a41c-701f66910f4b" />
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </logicalClassDesignerModelHasTypes>
+  </packagedElements>
+  <package Id="77580274-c153-4212-847f-84c6175e83ca" name="Module">
+    <elementDefinition Id="e05459b0-ab30-45e9-8e52-c83bd85f6da1" />
+    <profileInstances>
+      <packageHasProfileInstances Id="0ee4c25f-f477-4990-89a3-b5f498bd95c9">
+        <profileInstance Id="a16710de-978d-4b8e-9931-ce1d850393fb" name="StandardProfileL2">
+          <elementDefinition Id="e34d544e-0fea-4ed6-ac5e-1b74119ac791" />
+        </profileInstance>
+        <elementDefinition Id="0caec977-1f8c-4ba3-a7db-8cc9ad9cc73b" />
+      </packageHasProfileInstances>
+      <packageHasProfileInstances Id="bdbf6bae-4079-46e2-8894-634d044ad362">
+        <profileInstance Id="14700099-1058-472a-a852-68f4db4333e7" name="StandardProfileL3">
+          <elementDefinition Id="532ea607-fb19-44b8-8502-3351b05452be" />
+        </profileInstance>
+        <elementDefinition Id="29349502-908c-4fda-9054-c48619c59ed0" />
+      </packageHasProfileInstances>
+    </profileInstances>
+  </package>
+</logicalClassDesignerModel>

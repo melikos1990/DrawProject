@@ -1,0 +1,118 @@
+<!-- 查詢條件 -->
+<div class="row search-condition">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header class="nb-card-header">{{ translations.COMMON.SEARCH_CONDITION_TITLE | translate }}</nb-card-header>
+      <nb-card-body class="nb-card-body">
+        <form autocomplete="off" (keyup.enter)="btnRender($event)">
+          <div class="row">
+            <!-- 使用者帳戶 -->
+            <div class="col-sm-4 input-group">
+              <label for="Account" class="col-sm-4 col-form-label">{{ translations.USER.ACCOUNT | translate }}</label>
+              <div class="col-sm-8">
+                <input class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="model.Account"
+                  placeholder="{{translations.USER.ACCOUNT_PLACEHOLDER | translate}}" id="ACCOUNT" type="text" />
+              </div>
+            </div>
+            <!-- END 使用者帳戶 -->
+            <!-- 使用者名稱 -->
+            <div class="col-sm-4 input-group">
+              <label for="Name" class="col-sm-4 col-form-label">{{ translations.USER.USER_NAME | translate }}</label>
+              <div class="col-sm-8">
+                <input class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="model.Name"
+                  placeholder="{{translations.USER.USER_NAME_PLACEHOLDER | translate}}" id="Name" type="text" />
+              </div>
+            </div>
+            <!-- END 使用者名稱 -->
+            <!-- 系統操作權限 -->
+            <div class="col-sm-4 input-group">
+              <label for="RoleName"
+                class="col-sm-4 col-form-label">{{ translations.USER.ROLE_NAME | translate }}</label>
+              <div class="col-sm-8">
+                <app-role-select [ngModelOptions]="{standalone: true}" [(ngModel)]="model.RoleIDs"
+                  [placeholder]="translations.USER.ROLE_NAME_PLACEHOLDER | translate" #roleSelect>
+                </app-role-select>
+              </div>
+            </div>
+            <!-- END 系統操作權限 -->
+
+          </div>
+          <div class="row">
+            <!-- 是否為AD登入 -->
+            <div class="col-sm-4 input-group">
+              <label for="IsAD" class="col-sm-4 col-form-label">{{ translations.USER.IS_AD | translate }}</label>
+              <div class="col-sm-8">
+                <app-open-select [placeholder]="translations.USER.IS_AD_PLACEHOLDER | translate "
+                  [ngModelOptions]="{standalone: true}" [(ngModel)]="model.IsAD" [items]="adItems">
+                </app-open-select>
+              </div>
+            </div>
+            <!-- END 是否為AD登入 -->
+            <!-- 是否啟用 -->
+            <div class="col-sm-4 input-group">
+              <label for="IsEnable"
+                class="col-sm-4 col-form-label">{{ translations.USER.IS_ENABLED | translate }}</label>
+              <div class="col-sm-8">
+                <app-open-select [placeholder]="translations.USER.IS_ENABLED_PLACEHOLDER | translate "
+                  [ngModelOptions]="{standalone: true}" [(ngModel)]="model.IsEnable" [items]="enabledItems">
+                </app-open-select>
+              </div>
+            </div>
+            <!-- END 是否啟用 -->
+            <!-- 系統使用者 -->
+            <div class="col-sm-4 input-group">
+              <label for="IsSystemUser"
+                class="col-sm-4 col-form-label">{{ translations.USER.IS_SYSTEM_USER | translate }}</label>
+              <div class="col-sm-8">
+                <app-open-select [placeholder]="translations.USER.IS_SYSTEM_USER_PLACEHOLDER | translate "
+                  [ngModelOptions]="{standalone: true}" [(ngModel)]="model.IsSystemUser" [items]="adItems">
+                </app-open-select>
+              </div>
+            </div>
+            <!-- END 系統使用者 -->
+          </div>
+          <!-- 控制按鈕 -->
+          <div class="form-group">
+            <div class="row">
+              <div class="offset-sm-6 col-sm-3">
+                <button type="button" class="btn btn-sm btn-ptc-search" [authorize]="authType.Read"
+                  (click)="btnRender($event)">{{ translations.COMMON.BTN_SEARCH | translate }}</button>
+              </div>
+            </div>
+          </div>
+          <!-- END 控制按鈕 -->
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+
+<!-- 查詢結果 -->
+<div class="row search-result" [attr.hidden]="isEnable">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header class="nb-card-header"> {{ translations.COMMON.SEARCH_RESULT_TITLE | translate }}
+        <button type="button" class="btn btn-sm btn-ptc-create float-right mx-1" (click)="btnAdd($event)"
+          [authorize]="authType.Add">{{ translations.COMMON.BTN_ADD | translate }}</button>
+          <button type="button" class="btn btn-sm btn-ptc-export float-right mx-1" (click)="btnReport()"
+            [authorize]="authType.Report">{{ translations.COMMON.BTN_EXPORT | translate }}</button>
+      </nb-card-header>
+      <nb-card-body class="nb-card-body">
+        <app-server-table #table [ajax]="ajax" [templateRefs]="{RoleNames : roleNamesRef}" [columns]="columns"
+          (critiria)="critiria($event)" (btnDelete)="onBtnDelete($event)" (btnEdit)="onBtnEdit($event)"
+          (btnSearch)="onBtnSearch($event)" [btnDeleteText]="translations.COMMON.BTN_DISABLED | translate">
+        </app-server-table>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<!-- 查詢結果 -->
+
+<!-- 自訂義渲染欄位 -->
+<ng-template #roleNamesRef let-row="row">
+  <div class="truncate" style="text-align:left !important;" [nbPopover]="name" nbPopoverTrigger="hover">
+  <button *ngFor="let name of row.RoleNames" outline status="success" nbButton class="m-1" size="xsmall">
+    {{ name }}</button>
+  </div>
+</ng-template>
+<!-- END 自訂義渲染欄位 -->

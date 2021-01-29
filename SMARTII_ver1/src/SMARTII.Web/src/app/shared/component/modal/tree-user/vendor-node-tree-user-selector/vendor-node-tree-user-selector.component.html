@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="col-lg-4">
+    <nb-card>
+      <nb-card-header>{{ translations.COMMON.ORGANIZAITON_TREE | translate }}</nb-card-header>
+      <nb-card-body>
+        <nb-card [nbSpinner]="loading" nbSpinnerStatus="info">
+          <app-organization-tree #organizationTree [options]="{idField : 'guid'}" (clickNode)="clickNode($event)"
+            [organizationNode]="treeModel">
+          </app-organization-tree>
+        </nb-card>
+      </nb-card-body>
+    </nb-card>
+  </div>
+  <div class="col-lg-8" *ngIf="currentItem">
+    <app-preview-node-tree-user [currentNodeItem]="currentItem" [isUserEnabled]="isUserEnabled" #table></app-preview-node-tree-user>
+  </div>
+</div>

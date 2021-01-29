@@ -1,0 +1,60 @@
+<div class="row">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header class="nb-card-header">
+        <span> {{ translations.OFFICIAL_EMAIL_ADOPT.ADMIN_ASSIGN_TITLE | translate }} </span>
+        <button class="close" aria-label="Close" (click)="btnClose()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </nb-card-header>
+      <nb-card-body class="nb-card-body">
+        <form [formGroup]="form">
+          <div class="row">
+
+            <!-- 指派對象 -->
+            <div class="col-sm-12 input-group my-2">
+              <label starsign for="Account"
+                class="col-sm-4 col-form-label">{{ translations.OFFICIAL_EMAIL_ADOPT.ASSIGN_TARGET_TITLE | translate }}</label>
+
+              <app-user-select id="UserID" validator formControlName="UserID"
+                [placeholder]="translations.OFFICIAL_EMAIL_ADOPT.ADMIN_ASSIGN_TITLE_PLACEHOLDER | translate"
+                [searchTerm]="{isEnable : true , isSystemUser : true , isSelf : true}" [(ngModel)]="model.UserID">
+              </app-user-select>
+            </div>
+            <!-- 指派對象 -->
+
+            <div class="col-sm-12">
+              <app-local-table [isVisibleBtnEdit]="false" [isVisibleBtnSearch]="false" [columns]="columns"
+                [items]="selectedEmails" [templateRefs]="{ Body : emailBodyRef, Subject: emailSubjectRef }"
+                (btnDelete)="btnDeleteUser($event)">
+              </app-local-table>
+            </div>
+
+
+            <div class="col-sm-12 d-flex justify-content-center">
+              <button class="btn btn-sm mx-2 btn-ptc-confirm"
+                (click)="btnConfirm()">{{ translations.COMMON.BTN_CONFIRM | translate }}</button>
+              <!-- <button class="btn btn-sm btn-primary btn-warning"
+                (click)="btnClose()">{{ translations.COMMON.BTN_BACK | translate }}</button> -->
+            </div>
+
+          </div>
+
+
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+
+
+<ng-template #emailBodyRef let-row="row">
+  <div class="truncate" [nbPopover]="row.Body" nbPopoverTrigger="hover">
+    <span>{{ row.Body }}</span>
+  </div>
+</ng-template>
+<ng-template #emailSubjectRef let-row="row">
+  <div class="truncateS" [nbPopover]="row.Subject" nbPopoverTrigger="hover">
+    <span>{{ row.Subject }}</span>
+  </div>
+</ng-template>

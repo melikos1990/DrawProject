@@ -1,0 +1,22 @@
+<div class="row">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header class="nb-card-header">{{ translations.NODE_DEFINITION.TITLE | translate }}-{{ uiActionType == actionType.Read ? (translations.COMMON.ENUM.AUTH_TYPE.READ | translate) :
+        uiActionType == actionType.Update ? (translations.COMMON.ENUM.AUTH_TYPE.EDIT | translate) : (translations.COMMON.ENUM.AUTH_TYPE.ADD | translate) }}</nb-card-header>
+      <nb-card-body class="nb-card-body">
+        <nb-tabset>
+          <nb-tab tabTitle="{{ translations.NODE_DEFINITION.BASIC_INFO | translate }}">
+            <app-node-definition-basic-information (actionTypeChanged)="uiActionType = $event"></app-node-definition-basic-information>
+          </nb-tab>
+          <nb-tab *ngIf="(uiActionType == actionType.Update || uiActionType == actionType.Read)"
+            tabTitle="{{ translations.NODE_DEFINITION.JOB_SETTING | translate }}">
+            <app-job-information
+            [mainUIActionType]="uiActionType"
+            (actionTypeChanged)="jobUIActionType = $event">
+          </app-job-information>
+          </nb-tab>
+        </nb-tabset>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

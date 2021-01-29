@@ -1,0 +1,59 @@
+<form [formGroup]="form">
+  <div class="row mb-2">
+
+    <div class="col-sm-3 input-group">
+      <label for="ApplyUserID"
+        class="col-sm-4 col-form-label">{{ translations.SEARCH_COMMON.CASE_COMPAINED_UNIT_TYPE | translate }}</label>
+      <div class="col-sm-8">
+        <app-enum-select [placeholder]="translations.COMMON.SELECT_PLACEHOLDER | translate : {key: ''}"
+          [enumName]="'UnitType'" [filter]="filter" [(ngModel)]="model.CaseComplainedUnitType"
+          formControlName="CaseComplainedUnitType" (onSelectedChange)="_onSelectedChange($event)">
+        </app-enum-select>
+      </div>
+    </div>
+
+
+    <ng-container [ngSwitch]="model.CaseComplainedUnitType">
+
+      <!-- 門市 -->
+      <ng-container *ngSwitchCase="unitType.Store">
+        <!-- 店名 -->
+        <div class="col-sm-3 input-group">
+          <label for="ApplyUserID"
+            class="col-sm-4 col-form-label">{{ translations.SEARCH_COMMON.STORE_NAME | translate }}</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" formControlName="CaseComplainedStoreName"
+              [(ngModel)]="model.CaseComplainedStoreName"
+              [placeholder]="translations.COMMON.INPUT_PLACEHOLDER | translate : {key: translations.SEARCH_COMMON.STORE_NAME | translate}" />
+          </div>
+        </div>
+        <!-- 店號 -->
+        <div class="col-sm-3 input-group">
+          <label for="ApplyUserID"
+            class="col-sm-4 col-form-label">{{ translations.SEARCH_COMMON.STORE_CODE | translate }}</label>
+          <div class="col-sm-8">
+            <input type="text" class="form-control" formControlName="CaseComplainedStoreNo"
+              [(ngModel)]="model.CaseComplainedStoreNo"
+              [placeholder]="translations.COMMON.INPUT_PLACEHOLDER | translate : {key: translations.SEARCH_COMMON.STORE_CODE | translate }" />
+          </div>
+        </div>
+      </ng-container>
+
+      <!-- 組織 -->
+      <ng-container *ngSwitchCase="unitType.Organization">
+        <!-- 單位名稱 -->
+        <div class="col-sm-3 input-group">
+          <label for="ApplyUserID"
+            class="col-sm-4 col-form-label">{{ translations.CALL_CENTER_CASE_SEARCH.ORGANIZAITON_NAME | translate }}</label>
+          <div class="col-sm-8 ">
+            <input type="text" class="form-control" formControlName="CaseComplainedNodeName"
+              [(ngModel)]="model.CaseComplainedNodeName"
+              [placeholder]="translations.COMMON.INPUT_PLACEHOLDER | translate : {key: translations.CALL_CENTER_CASE_SEARCH.ORGANIZAITON_NAME | translate}" />
+          </div>
+        </div>
+      </ng-container>
+
+    </ng-container>
+
+  </div>
+</form>

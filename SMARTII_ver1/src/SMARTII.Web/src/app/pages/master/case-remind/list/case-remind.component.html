@@ -1,0 +1,168 @@
+<!-- 查詢條件 -->
+<div class="row search-condition">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header class="nb-card-header">{{ translations.COMMON.SEARCH_CONDITION_TITLE | translate }}</nb-card-header>
+      <nb-card-body class="nb-card-body">
+        <form [formGroup]="form" autocomplete="off" (keyup.enter)="btnRender($event)">
+
+          <div class="row">
+            <!-- 企業別選單 -->
+            <div class="col-sm-4 input-group">
+              <label starsign for="NodeID"
+                class="col-sm-4 col-form-label">{{ translations.COMMON.BU_NAME | translate }}</label>
+              <div class="col-sm-8">
+                <app-bu-select validator formControlName="NodeID" name="NodeID"
+                  [placeholder]="translations.COMMON.BU_NAME_PLACEHOLDER | translate " [(ngModel)]="model.NodeID"
+                  [IsSearchEnabled]="true" [IsSearchEnabled]="IsSearchEnabled">
+                </app-bu-select>
+              </div>
+            </div>
+            <!-- END 企業別選單 -->
+            <!-- 通知內容 -->
+            <div class="col-sm-4 input-group">
+              <label for="Content"
+                class="col-sm-4 col-form-label">{{ translations.CASE_REMIND.CONTENT | translate }}</label>
+              <div class="col-sm-8">
+                <input class="form-control" validator formControlName="Content" [(ngModel)]="model.Content"
+                  placeholder="{{translations.CASE_REMIND.CONTENT_PLACEHOLDER | translate}}" id="Content" type="text" />
+              </div>
+            </div>
+            <!-- END 通知內容 -->
+          </div>
+
+          <!-- row 1 -->
+          <div class="row">
+            <!-- 案件編號 -->
+            <div class="col-sm-4 input-group">
+              <label for="CaseID"
+                class="col-sm-4 col-form-label">{{ translations.CASE_REMIND.CASE_ID | translate }}</label>
+              <div class="col-sm-8">
+                <input class="form-control" validator formControlName="CaseID" [(ngModel)]="model.CaseID"
+                  placeholder="{{translations.CASE_REMIND.CASE_ID_PLACEHOLDER | translate}}" id="CaseID" type="text" />
+              </div>
+            </div>
+            <!-- END 案件編號 -->
+            <!-- 生效時間 -->
+            <div class="col-sm-4 input-group">
+              <label for="ActiveDateTimeRange"
+                class="col-sm-4 col-form-label">{{ translations.CASE_REMIND.ACTIVE_DATETIME_RANGE | translate }}</label>
+              <div class="col-sm-8">
+                <input class="form-control" validator formControlName="ActiveDateTimeRange"
+                  [placeholder]="translations.CASE_REMIND.ACTIVE_DATETIME_RANGE_PLACEHOLDER | translate "
+                  [(ngModel)]="model.ActiveDateTimeRange" id="ActiveDateTimeRange" type="text" daterangepicker />
+              </div>
+            </div>
+            <!-- END 生效時間  -->
+            <!-- 建立時間 -->
+            <div class="col-sm-4 input-group">
+              <label for="CreateDateTimeRange"
+                class="col-sm-4 col-form-label">{{ translations.CASE_REMIND.CREATE_DATETIME_RANGE | translate }}</label>
+              <div class="col-sm-8">
+                <input class="form-control" validator formControlName="CreateDateTimeRange"
+                  [placeholder]="translations.CASE_REMIND.CREATE_DATETIME_RANGE_PLACEHOLDER | translate "
+                  [(ngModel)]="model.CreateDateTimeRange" id="CreateDateTimeRange" type="text" daterangepicker />
+              </div>
+            </div>
+            <!-- END 建立時間  -->
+          </div>
+          <!-- END row 1  -->
+
+          <!-- row 2 -->
+          <div class="row">
+            <!-- 轉派編號 -->
+            <div class="col-sm-4 input-group">
+              <label for="CaseAssignmentID"
+                class="col-sm-4 col-form-label">{{ translations.CASE_REMIND.CASE_ASSIGNMENT_ID | translate }}</label>
+              <div class="col-sm-8">
+                <input class="form-control" validator formControlName="CaseAssignmentID"
+                  [(ngModel)]="model.CaseAssignmentID"
+                  placeholder="{{translations.CASE_REMIND.CASE_ASSIGNMENT_ID_PLACEHOLDER | translate}}"
+                  id="CaseAssignmentID" type="text" />
+              </div>
+            </div>
+            <!-- END 轉派編號 -->
+            <!-- 通知對象 -->
+            <div class="col-sm-4 input-group">
+              <label for="UserIDs"
+                class="col-sm-4 col-form-label">{{ translations.CASE_REMIND.USER_IDS | translate }}</label>
+              <div class="col-sm-8">
+                <app-user-select id="UserIDs" validator formControlName="UserIDs" (itemChange)="onItemChange($event)"
+                  [placeholder]="translations.CASE_REMIND.USER_IDS_PLACEHOLDER | translate"
+                  [searchTerm]="{isEnable : true , isSystemUser : true , isSelf : true}" [(ngModel)]="model.UserIDs">
+                </app-user-select>
+              </div>
+            </div>
+            <!-- END 通知對象  -->
+            <!-- 建立人員 -->
+            <div class="col-sm-4 input-group">
+              <label for="CreateUserID"
+                class="col-sm-4 col-form-label">{{ translations.CASE_REMIND.CREATE_USER_ID | translate }}</label>
+              <div class="col-sm-8">
+                <app-user-select id="CreateUserID" validator formControlName="CreateUserID"
+                  (itemChange)="onItemChange($event)"
+                  [placeholder]="translations.CASE_REMIND.CREATE_USER_ID_PLACEHOLDER | translate"
+                  [searchTerm]="{isEnable : true , isSystemUser : true , isSelf : true}"
+                  [(ngModel)]="model.CreateUserID">
+                </app-user-select>
+              </div>
+            </div>
+            <!-- END 建立人員  -->
+          </div>
+          <!-- END row 2  -->
+
+          <!-- row 3 -->
+          <div class="row">
+            <!-- 通知狀態 -->
+            <div class="col-sm-4 input-group">
+              <label for="IsConfirm"
+                class="col-sm-4 col-form-label">{{ translations.CASE_REMIND.ISCONFIRM | translate }}</label>
+              <app-open-select class="col-sm-8" validator formControlName="IsConfirm" name="IsConfirm"
+                [(ngModel)]="model.IsConfirm" [placeholder]="translations.CASE_REMIND.ISCONFIRM_PLACEHOLDER | translate"
+                [items]="items">
+              </app-open-select>
+            </div>
+            <!-- END 通知狀態 -->
+            <!-- 通知等級 -->
+            <div class="col-sm-4 input-group">
+              <label for="Level"
+                class="col-sm-4 col-form-label">{{ translations.CASE_REMIND.LEVEL | translate }}</label>
+              <app-enum-select class="col-sm-8" validator formControlName="Level" name="Level" [(ngModel)]="model.Level"
+                [placeholder]=" translations.CASE_REMIND.LEVEL_PLACEHOLDER | translate" [enumName]="'CaseRemindType'">
+              </app-enum-select>
+            </div>
+            <!-- END 通知等級  -->
+
+          </div>
+          <!-- END row 3  -->
+
+          <div class="form-group">
+            <div class="row">
+              <div class="offset-sm-6 col-sm-3">
+                <button type="button" class="btn btn-sm btn-ptc-search" [authorize]="authType.Read"
+                  (click)="btnRender($event)">{{ translations.COMMON.BTN_SEARCH | translate }}</button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<!-- 查詢結果 -->
+<div class="row search-result" [attr.hidden]="isEnable">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header class="nb-card-header"> {{ translations.COMMON.SEARCH_RESULT_TITLE | translate }}
+        <button type="button" class="btn btn-sm btn-ptc-create float-right mx-1" (click)="btnAdd($event)"
+          [authorize]="authType.Add">{{ translations.COMMON.BTN_ADD | translate }}</button>
+      </nb-card-header>
+      <nb-card-body class="nb-card-body">
+        <app-server-table #table [ajax]="ajax" [columns]="columns" (critiria)="critiria($event)"
+          (btnDelete)="onBtnDelete($event)" (btnEdit)="onBtnEdit($event)" (btnSearch)="onBtnSearch($event)">
+        </app-server-table>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+<!-- 查詢結果 -->

@@ -1,0 +1,74 @@
+<nb-layout>
+  <nb-layout-column>
+    <form autocomplete="off" [formGroup]="form" (keyup.enter)="btnLogin($event)">
+      <div class="row show-grid">
+        <div class="col-md-6 offset-md-3">
+          <div id="login-container">
+            <h2 class="loginColor">{{ translations.LOGIN.TITLE | translate }}</h2>
+            <hr class="titleLine">
+            <div class="input-group">
+              <input type="text" nbInput fullWidth validator formControlName="Account"
+                placeholder="{{ translations.LOGIN.ACCOUNT_PLACEHOLDER | translate }}" class="form-control col-sm-12"
+                [(ngModel)]="user.Account" />
+            </div>
+            <div class="input-group">
+              <input type="password" nbInput fullWidth validator formControlName="Password" maxlength="20"
+                placeholder="{{ translations.LOGIN.PASSWORD_PLACEHOLDER | translate }}" class="form-control col-sm-12"
+                [(ngModel)]="user.Password">
+            </div>
+            <div>
+              <nb-select placeholder="{{ translations.APPLICATION.LANGUAGE.SELECT_LANGUAGE_PLACEHOLDER | translate }}"
+                (selectedChange)="onSelectLanguage($event)" [(ngModel)]="culture" [ngModelOptions]="{standalone: true}">
+                <nb-option value="zh-tw">
+                  <div>
+                    <img class="flag" src="assets/img/taiwan.png" alt="Italian Trulli">
+                    {{ translations.APPLICATION.LANGUAGE.ZH_TW | translate }} </div>
+                </nb-option>
+                <nb-option value="en-us">
+                  <div>
+                    <img class="flag" src="assets/img/america.png" alt="Italian Trulli">
+                    {{ translations.APPLICATION.LANGUAGE.EN_US | translate }} </div>
+                </nb-option>
+              </nb-select>
+            </div>
+
+            <div class="input-group flex-center">
+
+              <app-verification-code [model]="user"></app-verification-code>
+
+            </div>
+            <div class="input-group col-md-6 offset-md-4">
+              <nb-checkbox [(ngModel)]="isRemember" [ngModelOptions]="{standalone: true}">
+                {{ translations.LOGIN.REMEMBER | translate }}</nb-checkbox>
+            </div>
+            <div class="input-group flex-center">
+              <button type="button" class="login-btn btn btn-sm"
+                (click)="btnLogin($event)">{{ translations.LOGIN.LOGIN | translate }}</button>
+            </div>
+            <div class="input-group flex-center">
+              <h6 class="loginColor">{{ translations.LOGIN.VERSION | translate }} 0.0.1</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+  </nb-layout-column>
+</nb-layout>
+
+<ng-template #resetPasswordModel>
+  <div class="modal-header">
+    <span>{{translations.CHANGE_PASSWORD.TITLE | translate}}</span>
+    <button class="close" aria-label="Close" (click)="closeModel()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <app-change-password [data]="passwordModel" [form]="resetPasswordform"></app-change-password>
+  </div>
+  <div class="modal-footer">
+    <button (click)="btnResetPassword($event)"
+      class="btn btn-md btn-primary">{{ translations.CHANGE_PASSWORD.TITLE | translate }}</button>
+  </div>
+
+</ng-template>

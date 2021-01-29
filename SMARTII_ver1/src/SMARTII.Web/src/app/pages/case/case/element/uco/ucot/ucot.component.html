@@ -1,0 +1,28 @@
+<app-local-table #customerTable [columns]="customerColumns" [items]="customerData" [pageSize]="5"
+  [templateRefs]="{del : delCustomer , Gender : gender, UnitType: unitTypeRef}" [pageSizeOptions]="[5,20,30]"
+  (rowSelect)="onCustomerRowSelect($event)">
+</app-local-table>
+
+<app-local-table #unitTable [columns]="unitColumns" [items]="unitData" [pageSize]="5" [pageSizeOptions]="[5,20,30]"
+  [templateRefs]="{del : delUnit, UnitType: unitTypeRef}" (rowSelect)="onUnitRowSelect($event)">
+</app-local-table>
+
+<ng-template #delUnit let-row="row">
+  <button class="btn btn-sm btn-ptc-delete m-3" type="button" *ngIf="uiActionType != actionType.Read"
+    (click)="btnRemoveUnitUser(row)">{{ translations.COMMON.BTN_DELETE | translate }}</button>
+</ng-template>
+
+<ng-template #delCustomer let-row="row">
+  <button class="btn btn-sm btn-ptc-delete m-3" type="button" *ngIf="uiActionType != actionType.Read"
+    (click)="btnRemoveCustomerUser(row)">{{ translations.COMMON.BTN_DELETE | translate }}</button>
+</ng-template>
+
+
+<ng-template #gender let-row="row">
+
+  {{row.Gender | enum : 'GenderType'}}
+</ng-template>
+
+<ng-template #unitTypeRef let-row="row">
+  {{row.UnitType | enum: 'UnitType'}}
+</ng-template>

@@ -1,0 +1,53 @@
+<div class="modal-header nb-card-header">
+  <span>{{ translations.CASE_COMMON.ADD_NEWRECEIVE | translate }}</span>
+  <button class="close" aria-label="Close" (click)="closeModel()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body nb-card-body">
+  <form [formGroup]="form">
+    <div class="row">
+      <!-- 收件姓名 -->
+      <div class="col-sm-12 input-group">
+        <label for="UserName" class="col-sm-4 col-form-label" starsign>{{ translations.CASE_COMMON.RECEIVE_NAME | translate }}</label>
+        <div class="col-sm-8">
+          <input validator type="text" class="form-control" [placeholder]="translations.COMMON.INPUT_PLACEHOLDER | translate : {key: translations.CASE_COMMON.RECEIVE_NAME | translate}" formControlName="UserName"
+            [(ngModel)]="model.UserName">
+        </div>
+      </div>
+      <!-- END 收件姓名 -->
+
+    </div>
+    <div class="row">
+      <!-- 收件EMAIL -->
+      <div class="col-sm-12 input-group">
+        <label for="Email" class="col-sm-4 col-form-label" starsign>{{ translations.CASE_COMMON.RECEIVE_MAIL | translate }}</label>
+        <div class="col-sm-8">
+          <input validator type="text" class="form-control" [placeholder]="translations.COMMON.INPUT_PLACEHOLDER | translate : {key: translations.CASE_COMMON.RECEIVE_MAIL | translate}" formControlName="Email"
+            [(ngModel)]="model.Email">
+        </div>
+      </div>
+
+
+    </div>
+    <div class="row">
+      <!-- 型態 -->
+      <div class="col-sm-12 input-group">
+        <label for="Email" class="col-sm-4 col-form-label" starsign>{{ translations.CASE_COMMON.RECEIVE_TYPE | translate }}</label>
+        <div class="col-sm-8">
+          <app-enum-select validator class="col-sm-10 " [(ngModel)]="model.NotificationRemark"
+            placeholder="{{translations.NOTIFICATION_GROUP.EMAIL_RECEIVER_TYPE | translate}}"
+            formControlName="NotificationRemark" [enumName]="'EmailReceiveType'">
+          </app-enum-select>
+
+        </div>
+      </div>
+
+
+    </div>
+  </form>
+</div>
+<div class="modal-footer flex-center">
+  <button (click)="addUser()" class="btn btn-md m-3 btn-ptc-confirm">{{ translations.COMMON.BTN_CHECK | translate }}</button>
+  <!-- <button (click)="closeModel()" class="btn btn-md m-3 btn-warning">{{ translations.COMMON.BTN_BACK | translate }}</button> -->
+</div>

@@ -1,0 +1,70 @@
+@import "../../../../../../basic.style.scss";
+@import "../../../../../@theme/styles/themes";
+
+@include nb-install-component() {
+
+  nb-card-body {
+    overflow: visible;
+  }
+
+  .input-group {
+    margin-bottom: 1rem;
+  }
+
+  .form-group label {
+    padding: 0 0 0.75rem;
+  }
+
+  app-smart-local-table {
+    width: 100%;
+  }
+
+
+  nb-tabset ::ng-deep {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+
+    ul {
+      align-items: center;
+      padding: 1rem;
+    }
+
+    ul li a {
+      font-weight: nb-theme(font-weight-bolder);
+      padding: 0.75rem 1rem;
+    }
+
+    ul li.active {
+      position: relative;
+      background-color: nb-theme(layout-bg);
+      border-radius: nb-theme(radius) nb-theme(radius) 0 0;
+
+      &::before {
+        position: absolute;
+        content: '';
+        width: 100%;
+        height: 5px;
+        border-radius: 2.5px;
+        bottom: 0;
+        left: 0;
+        background: nb-theme(color-success);
+      }
+
+      a {
+        font-size: 1rem;
+      }
+
+      a::before {
+        display: none;
+      }
+    }
+
+    nb-tab {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1rem;
+    }
+  }
+}

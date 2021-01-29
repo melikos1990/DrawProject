@@ -1,0 +1,18 @@
+<nb-card-body>
+  <nb-card [nbSpinner]="loading" nbSpinnerStatus="info">
+    <div style="width: 100%; margin: 0 auto;">
+      <app-ptc-local-table #ptcLocalTable [noDataLabel]="translations.COMMON.TABLE_NO_DATA | translate "
+        [itemsPerPageLabel]="translations.COMMON.PER_PAGE_COUNT | translate" [data]="items" [pageSize]="pageSize"
+        [pageIndex]="pageIndex" [columns]="columns" [pageSizeOptions]="pageSizeOptions"
+        [btnSearchText]="btnSearchText || (translations.COMMON.BTN_READ | translate)"
+        [btnEditText]="btnEditText || (translations.COMMON.BTN_EDIT | translate)"
+        [btnDeleteText]="btnDeleteText || (translations.COMMON.BTN_DELETE | translate)" [templateRefs]="templateRefs"
+        [setRangeLabel]="setRangeLabel.bind(this)" (onPageChange)="onPageChange($event)"
+        (onBtnDelete)="onBtnDelete($event)" (onBtnSearch)="onBtnSearch($event)" (onRowSelect)="onRowSelect($event)"
+        (onBtnEdit)="onBtnEdit($event)" [isVisibleBtnDelete]="isVisibleBtnDelete"
+        [isVisibleBtnSearch]="isVisibleBtnSearch" [isVisibleBtnEdit]="isVisibleBtnEdit" [isVisibleFooter]="isVisibleFooter"
+        [btnOrderSetting]="btnOrderSetting">
+      </app-ptc-local-table>
+    </div>
+  </nb-card>
+</nb-card-body>

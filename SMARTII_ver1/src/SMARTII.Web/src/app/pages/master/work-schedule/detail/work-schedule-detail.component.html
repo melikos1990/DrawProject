@@ -1,0 +1,161 @@
+<div class="row">
+  <div class="col-lg-12">
+    <nb-card>
+      <nb-card-header class="nb-card-header">{{translations.APPLICATION.FEATURE.WORK_SCHEDULE | translate}}-{{ titleTypeString }}
+      </nb-card-header>
+      <nb-card-body style="background-color: #a3c0d0!important;">
+        <form [formGroup]="form">
+
+          <div class="row ">
+            <!-- 企業別選單 -->
+            <div class="col-sm-4 input-group">
+              <label starsign for="BuID"
+                class="col-sm-4 col-form-label">{{ translations.COMMON.BU_NAME | translate }}</label>
+
+              <div class="col-sm-8">
+                <app-bu-select validator [multiple]="true" *ngIf="uiActionType == actionType.Add; else singleSelect"
+                  [disabled]="(uiActionType == actionType.Read || uiActionType == actionType.Update) ? true : null"
+                  formControlName="BuID" [(ngModel)]="model.BuID"
+                  [placeholder]="translations.COMMON.SELECT_BU_PLACEHOLDER | translate">
+                </app-bu-select>
+
+                <ng-template #singleSelect>
+                  <app-bu-select validator
+                    [disabled]="(uiActionType == actionType.Read || uiActionType == actionType.Update) ? true : null"
+                    formControlName="BuID" [(ngModel)]="model.BuID"
+                    [placeholder]="translations.COMMON.SELECT_BU_PLACEHOLDER | translate">
+                  </app-bu-select>
+                </ng-template>
+              </div>
+
+            </div>
+            <!-- END 企業別選單 -->
+          </div>
+
+          <div class="row mt-3">
+            <div class="col-sm-4 input-group">
+              <label starsign
+                class="col-sm-4 col-form-label">{{ translations.WORK_SCHEDULE.TABLE_DATATIME | translate }}</label>
+              <div class="col-sm-8">
+                <input validator type="text" class="form-control"
+                  [placeholder]="translations.WORK_SCHEDULE.DATATIME_PLACEHOLDER | translate" formControlName="DateStr"
+                  [attr.disabled]="(uiActionType == actionType.Update || uiActionType == actionType.Read)? true : null"
+                  [(ngModel)]="model.DateStr" daterangepicker #datePicker>
+              </div>
+            </div>
+
+            <div class="col-sm-4 input-group">
+              <label class="col-sm-4 col-form-label">{{ translations.WORK_SCHEDULE.TABLE_TITLE | translate }}</label>
+              <div class="col-sm-8">
+                <input validator type="text" class="form-control"
+                  [placeholder]="translations.WORK_SCHEDULE.TITLE_PLACEHOLDER | translate" formControlName="Title"
+                  [attr.readonly]="(uiActionType == actionType.Read)? true : null" [(ngModel)]="model.Title">
+              </div>
+            </div>
+
+            <div class="col-sm-4 input-group">
+              <label starsign
+                class="col-sm-4 col-form-label">{{ translations.WORK_SCHEDULE.TABLE_CLASSIFICATION | translate }}</label>
+
+              <div class="col-sm-8">
+                <nb-checkbox [disabled]="uiActionType == actionType.Read ? true : false" class="col-sm-6"
+                  [value]="model.WorkType == workType.WorkOff" (change)="checkboxChange(workType.WorkOff)">
+                  {{ translations.WORK_SCHEDULE.WORK_OFF | translate }}
+                </nb-checkbox>
+                <nb-checkbox [disabled]="uiActionType == actionType.Read ? true : false" class="col-sm-6"
+                  [value]="model.WorkType == workType.WorkOn" (change)="checkboxChange(workType.WorkOn)">
+                  {{ translations.WORK_SCHEDULE.WORK_ON | translate }}
+                </nb-checkbox>
+              </div>
+            </div>
+          </div>
+
+          <div class="row d-flex justify-content-center my-5" *ngIf="uiActionType == actionType.Add">
+            <button type="button" class="btn btn-sm btn-ptc-confirm" (click)="btnAddItem()">
+              {{ translations.COMMON.DUALLIST.ADD | translate }}
+            </button>
+          </div>
+
+          <div class="row" *ngIf="uiActionType == actionType.Add">
+            <div class="col-sm-12">
+              <app-local-table [columns]="columns" [items]="createModel" [pageSize]="1000" [isVisibleBtnSearch]="false"
+                [isVisibleBtnEdit]="false" [templateRefs]="{WorkType: workTypeRander}" (btnDelete)="btnDelete($event)">
+              </app-local-table>
+            </div>
+          </div>
+
+          <ng-container *ngIf="uiActionType == actionType.Read || uiActionType == actionType.Update">
+            <div class="row mt-5">
+              <div class="col-sm-6 input-group">
+                <label for="CreateUserName"
+                  class="col-sm-4 col-form-label">{{ translations.OFFICIAL_EMAIL_GROUP.CREATE_USERNAME_LABEL | translate }}</label>
+                <input type="text" class="form-control col-sm-8" disabled validator formControlName="CreateUserName"
+                  placeholder="{{ translations.OFFICIAL_EMAIL_GROUP.CREATE_USERNAME_PLACEHOLDER | translate }}"
+                  [(ngModel)]="model.CreateUserName">
+              </div>
+              <div class="col-sm-6 input-group">
+                <label for="CreateDateTime"
+                  class="col-sm-4 col-form-label">{{ translations.OFFICIAL_EMAIL_GROUP.CREATE_DATETIME_LABEL | translate }}</label>
+
+                <input type="text" class="form-control col-sm-8" disabled formControlName="CreateDateTime" validator
+                  placeholder="{{ translations.OFFICIAL_EMAIL_GROUP.CREATE_DATETIME_PLACEHOLDER | translate }}"
+                  [(ngModel)]="model.CreateDateTime">
+              </div>
+            </div>
+            &nbsp;
+            <div class="row ">
+              <div class="col-sm-6 input-group">
+                <label for="UpdateUserName"
+                  class="col-sm-4 col-form-label">{{ translations.OFFICIAL_EMAIL_GROUP.UPDATE_USERNAME_LABEL | translate }}</label>
+                <input type="text" class="form-control col-sm-8" disabled formControlName="UpdateUserName" validator
+                  placeholder="{{ translations.OFFICIAL_EMAIL_GROUP.UPDATE_USERNAME_PLACEHOLDER | translate }}"
+                  [(ngModel)]="model.UpdateUserName">
+              </div>
+              <div class="col-sm-6 input-group">
+                <label for="UpdateDateTime"
+                  class="col-sm-4 col-form-label">{{ translations.OFFICIAL_EMAIL_GROUP.UPDATE_DATETIME_LABEL | translate }}</label>
+                <input type="text" class="form-control col-sm-8" disabled formControlName="UpdateDateTime" validator
+                  placeholder="{{ translations.OFFICIAL_EMAIL_GROUP.UPDATE_DATETIME_PLACEHOLDER | translate }}"
+                  [(ngModel)]="model.UpdateDateTime">
+              </div>
+            </div>
+          </ng-container>
+
+          <div class="mt-5">
+            <div class="row d-flex justify-content-center">
+              <button type="button" *ngIf="uiActionType == actionType.Update" class="btn btn-sm btn-ptc-confirm mx-5"
+                [authorize]="authType.Update" (click)="btnEdit()">{{ translations.COMMON.BTN_CONFIRM | translate }}
+              </button>
+              <button type="button" *ngIf="uiActionType == actionType.Add" class="btn btn-sm btn-ptc-confirm mx-5"
+                [authorize]="authType.Add" (click)="btnAdd()">{{ translations.COMMON.BTN_CONFIRM | translate }}
+              </button>
+              <button type="button" class="btn btn-sm btn-kind-finished mx-5"
+                (click)="btnBack()">{{ translations.COMMON.BTN_BACK | translate }}</button>
+            </div>
+          </div>
+        </form>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+
+<ng-template let-row="row" #workTypeRander>
+  <span>{{row.WorkType | enum: 'WorkType'}}</span>
+</ng-template>
+
+<!-- LocalTable template -->
+<ng-template #localTableExportTemp let-exportData>
+  <div class="row search-result">
+    <div class="col-lg-12">
+      <nb-card>
+        <nb-card-header class="nb-card-header"> {{ translations.COMMON.SEARCH_RESULT_TITLE | translate }}</nb-card-header>
+        <nb-card-body class="nb-card-body">
+          <!-- table -->
+          <app-local-table [columns]="columnsExport" [items]="exportData" [isVisibleBtnEdit]="false"
+            [isVisibleBtnSearch]="false" [isVisibleBtnEdit]="false" [pageSizeOptions]="[100,200,300]">
+          </app-local-table>
+        </nb-card-body>
+      </nb-card>
+    </div>
+  </div>
+</ng-template>

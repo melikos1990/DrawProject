@@ -1,0 +1,21 @@
+<div class="modal-header nb-card-header">
+  <span>{{ translations.ROLE.USER_BINDING | translate }} </span>
+  <button (click)="closeModel()" class="close" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body nb-card-body">
+  <div class="row">
+    <!-- 使用者姓名 -->
+    <div class="col-sm-12 input-group">
+      <label for="Name" class="col-sm-4 col-form-label">{{ translations.ROLE.USER_NAME | translate }}</label>
+      <app-user-select  (itemChange)="onItemChange($event)" [placeholder]="translations.ROLE.USER_NAME_PLACEHOLDER | translate"
+      [searchTerm]="{isEnable : true , isSystemUser : true , isSelf : true}">
+      </app-user-select>
+    </div>
+    <!-- END 使用者姓名 -->
+  </div>
+</div>
+<div class="modal-footer flex-center">
+  <button class="btn btn-md btn-ptc-create" (click)="addUser()">{{ translations.COMMON.BTN_ADD | translate }}</button>
+</div>

@@ -1,0 +1,101 @@
+<app-local-table [loading]="loading" [columns]="columns" [items]="data" [pageSize]="5" [pageSizeOptions]="[5,20,30]"
+  [templateRefs]="{remind : remind ,
+    operator : operator,
+    FinishedContent: finishedContentRef,
+    NotifyContent: notifyContentRef
+  }">
+</app-local-table>
+
+<ng-template #remind let-row="row">
+  <ng-container *ngIf="+row.CaseAssignmentProcessType == caseAssignmentProcessType.Assignment">
+    <div class="flex">
+      <button type="button" class="btn btn-sm btn-ptc-save mx-3"
+        *ngIf="row.CaseRemindIDs && row.CaseRemindIDs.length > 0"
+        (click)="btnReadCaseRemind(row)">{{ translations.COMMON.VIEW | translate }}</button>
+      <button type="button" class="btn btn-sm btn-ptc-create mx-3"
+        (click)="btnAddCaseRemind(row)">{{ translations.COMMON.BTN_ADD | translate }}</button>
+    </div>
+  </ng-container>
+</ng-template>
+
+<ng-template #operator let-row="row">
+  <div class="flex">
+    <button type="button" class="btn btn-sm btn-ptc-search mx-1"
+      (click)="btnDetail(row)">{{ translations.COMMON.DETAIL | translate }}</button>
+
+    <button *ngIf="isAssignment(row)" type="button" class="btn btn-sm btn-kind-finished mx-1"
+      (click)="btnAssignmentModal(row)">{{ translations.CASE_COMMON.CC_ASSIGNMENT | translate }}</button>
+
+    <button *ngIf="isShowAssignmentSender(row)" type="button" class="btn btn-sm btn-kind-finished mx-1"
+      (click)="btnAssignmentSenderModal(row)">{{ translations.CASE_COMMON.SEND | translate }}</button>
+
+    <button *ngIf="isShowCaseAssignmentFinish(row)" type="button" class="btn btn-sm btn-kind-finished mx-1"
+      (click)="btnFinish(row)">{{ translations.CASE_COMMON.CC_FINISH | translate }}</button>
+
+    <button *ngIf="isShowCaseAssignmentReject(row)" type="button" class="btn btn-sm btn-ptc-delete mx-1"
+      (click)="rejectModal(row)">{{ translations.CASE_COMMON.REJECT | translate }}</button>
+
+    <button *ngIf="isShowIvoiceSender(row)" type="button" class="btn btn-sm btn-ptc-export mx-1"
+      (click)="btnInvoiceSenderModal(row)">{{ translations.CASE_COMMON.SEND | translate }}</button>
+
+    <button *ngIf="isShowIvoicePreview(row)" type="button" class="btn btn-sm btn-ptc-confirm mx-1"
+      (click)="btnPreviewInvoiceModal(row)">{{ translations.CASE_COMMON.INVOICE_VIEW | translate }}</button>
+
+    <button *ngIf="isShowInvoiceCancel(row)" type="button" class="btn btn-sm btn-ptc-delete mx-1"
+      (click)="btnInvoiceCancel(row)">{{ translations.COMMON.BTN_CANCEL | translate }}</button>
+  </div>
+</ng-template>
+
+
+<!-- 通知內容 -->
+<ng-template #notifyContentRef let-row="row">
+  <div style="text-align:left !important;" class="truncate" [nbPopover]="row.NotifyContent" nbPopoverTrigger="hover">
+    <span>{{ row.NotifyContent }}</span>
+  </div>
+
+</ng-template>
+
+
+<!-- 結案內容 -->
+<ng-template #finishedContentRef let-row="row">
+  <div style="text-align:left !important;" class="truncate" [nbPopover]="row.FinishedContent" nbPopoverTrigger="hover">
+    <span>{{ row.FinishedContent }}</span>
+  </div>
+</ng-template>
+
+
+
+<!-- 寄信  -->
+<ng-template #mailsender>
+  <div class="modal-header nb-card-header">
+    <span> {{translations.EMAIL_NOTIFICATION.SENDER_TITLE| translate }} </span>
+    <button class="close" aria-label="Close" (click)="btnOnBack($event)">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body nb-card-body">
+    <app-mail-sender [senderList]="senderList" [buID]="case.NodeID" [caseID]="case.CaseID"
+      [inviceID]="currentInvocie?.InvoiceID" [assignmentID]="currentAssignment?.AssignmentID" [model]="sender"
+      (onSend)="btnSend($event)" (onBack)="btnOnBack($event)">
+    </app-mail-sender>
+  </div>
+</ng-template>
+
+
+<!-- 瀏覽反應單 -->
+<ng-template #excelViewer>
+  <div class="modal-header nb-card-header">
+    <span> {{ translations.CASE_COMMON.INVOICE_VIEW | translate }} ({{currentInvocie.InvoiceID}}) </span>
+    <button class="close" aria-label="Close" (click)="modalService.dismissAll(); reportSrc = null">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body nb-card-body">
+    <app-pdf-preview [source]="reportSrc"></app-pdf-preview>
+    <div class="modal-footer">
+      <div class="row col-12 flex-center">
+        <!-- <button class="btn btn-md btn-warning m-3" (click)="modalService.dismissAll(); reportSrc = null">{{ translations.COMMON.BTN_BACK | translate }}</button> -->
+      </div>
+    </div>
+  </div>
+</ng-template>

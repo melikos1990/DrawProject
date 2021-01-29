@@ -1,0 +1,38 @@
+<ng-content></ng-content>
+
+<div *ngIf="controlName.invalid && (controlName.dirty || controlName.touched)" class="alert alert-danger">
+  <div *ngIf="controlName.errors.required">
+    {{ translations.ERROR.REQUIREMENT | translate }}
+  </div>
+  <div *ngIf="controlName.errors.minlength">
+    {{ translations.ERROR.LENGTH_LARGETHEN | translate:{length : controlName.errors.minlength.requiredLength} }}
+  </div>
+  <div *ngIf="controlName.errors.maxlength">
+    {{ translations.ERROR.LENGTH_LESSTHEN | translate:{length : controlName.errors.maxlength.requiredLength} }}
+  </div>
+  <div *ngIf="controlName.errors.email">
+    {{ translations.ERROR.EMAIL | translate }}
+  </div>
+  <div *ngIf="controlName.errors.min">
+    {{ translations.ERROR.NUMBER_LARGETHEN | translate:{number : controlName.errors.min.min} }}
+  </div>
+  <div *ngIf="controlName.errors.max">
+    {{ translations.ERROR.NUMBER_LESSTHEN | translate:{number : controlName.errors.max.max} }}
+  </div>
+  <div *ngIf="controlName.errors.number">
+    {{translations.ERROR.NUMBER_ONLY | translate}}
+  </div>
+  <div *ngIf="controlName.errors.passwordRule">
+    {{translations.ERROR.PASSWORD_STRENGTH | translate}}
+  </div>
+  <div *ngIf="controlName.errors.account">
+    {{translations.ERROR.ACCOUNT_ERROR | translate}}
+  </div>
+  <div *ngIf="controlName.errors.positiveNumber">
+    {{translations.ERROR.POSISTIVE_NUMBER_ONLY | translate}}
+  </div>
+  <div *ngIf="controlName.errors.telephoneNumber">
+    {{translations.ERROR.TELEPHONE_NUMBER_ONLY | translate}}
+  </div>
+
+</div>

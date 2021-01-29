@@ -1,0 +1,69 @@
+<div class="row">
+  <div class="col-lg-12">
+    <div class="header systitleRow">{{  title }}</div>
+
+    <nb-card>
+
+      <nb-card-header>
+        <div class="btnLeft">
+          <div *ngIf="ajax.showBtn">
+            <button class="btn btn-md btn-ptc-confirm m-3" (click)="btnClearNotice(ajax.body.UserId)">清空</button>
+          </div>
+        </div>
+      </nb-card-header>
+      <nb-card-body class="pt-0" style="overflow-y: scroll; max-height: 540px;">
+        <div class="row">
+          <div class="header">今天</div>
+          <div class="col-sm-12" *ngFor="let today of todayList">
+            <ng-container *ngTemplateOutlet="render; context: {$implicit: today}"></ng-container>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="header todayRow">今天以前</div>
+          <div class="col-sm-12" *ngFor="let befor of beforList">
+            <ng-container *ngTemplateOutlet="render; context: {$implicit: befor}"></ng-container>
+          </div>
+        </div>
+
+
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>
+
+<ng-template let-data #render>
+  <ng-container [ngSwitch]="data.PersonalNotificationType">
+
+    <!-- 大量通知 -->
+    <app-notify-group *ngSwitchCase="personalNotificationType.NotificationGroup" [model]="data"></app-notify-group>
+
+    <!-- 佈告欄通知 -->
+    <app-notify-billboard *ngSwitchCase="personalNotificationType.Billboard" [model]="data"></app-notify-billboard>
+
+    <!-- 職代分配 -->
+    <app-notify-case-assign *ngSwitchCase="personalNotificationType.CaseAssign" [model]="data"></app-notify-case-assign>
+
+    <!-- 案件銷案 -->
+    <app-notify-case-finished *ngSwitchCase="personalNotificationType.CaseFinish" [model]="data">
+    </app-notify-case-finished>
+
+    <!-- 官網來信認養 -->
+    <app-notify-mail-adopt *ngSwitchCase="personalNotificationType.MailAdopt" [model]="data"></app-notify-mail-adopt>
+
+    <!-- 案件異動 系統通知 小鈴鐺 -->
+    <app-notify-case-modify *ngSwitchCase="personalNotificationType.CaseModify" [model]="data"></app-notify-case-modify>
+
+    <!-- 案件追蹤 -->
+    <app-notify-case-remind *ngSwitchCase="personalNotificationType.CaseRemind" [model]="data"></app-notify-case-remind>
+
+    <!-- 官網來信 -->
+    <app-notify-mail-incoming *ngSwitchCase="personalNotificationType.MailIncoming" [model]="data">
+    </app-notify-mail-incoming>
+
+    <!-- PPCLIFE 大量叫修 -->
+    <app-notify-ppclife-effective-summary *ngSwitchCase="personalNotificationType.NotificationPPCLife" [model]="data">
+    </app-notify-ppclife-effective-summary>
+
+  </ng-container>
+</ng-template>
