@@ -1,0 +1,29 @@
+USE [OPTrade]
+GO
+BEGIN TRANSACTION
+
+
+
+
+ALTER TABLE [dbo].[ReportTradeActivityDetail_New] DROP CONSTRAINT [PK_ForReport_New] WITH ( ONLINE = OFF )
+
+
+SET ANSI_PADDING ON
+
+ALTER TABLE [dbo].[ReportTradeActivityDetail_New] ADD  CONSTRAINT [PK_ForReport_New] PRIMARY KEY CLUSTERED 
+(
+	[TradeTime] ASC,
+	[TransactionID] ASC,
+	[PartitionCode] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PartitionRTADScheme]([PartitionCode])
+
+
+
+
+
+
+
+
+COMMIT TRANSACTION
+
+
